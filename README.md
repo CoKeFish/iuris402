@@ -99,10 +99,10 @@ Agregar leyes: añade la norma a `ingesta/fuentes.json`, luego `npm run descarga
 
 ## Pago real en testnet
 
-0.01 USDC del agente a la API (`/asesoria` a precio de prueba), verificado por RPC.
+0.02 USDC del agente a la API por una consulta a `/asesoria` (24 nov 2026), verificado por RPC.
 
-- Hash: `17d9c8c464fee1b901a56c7330a985380fb1482f30ab50824dae5a9ed6b3288a`
-- Verlo: https://stellar.expert/explorer/testnet/tx/17d9c8c464fee1b901a56c7330a985380fb1482f30ab50824dae5a9ed6b3288a
+- Hash: `55c53632c2434d1b218052432d01c5f1a7be665800d11e3c39adee2ba1a99d9b`
+- Verlo: https://stellar.expert/explorer/testnet/tx/55c53632c2434d1b218052432d01c5f1a7be665800d11e3c39adee2ba1a99d9b
 
 ## Cobertura y límites
 

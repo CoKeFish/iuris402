@@ -1,0 +1,6 @@
+[
+  { "articulo": "ley-1712-2014:22", "enlace_de_la_fuente": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1474_2011.html#19", "correcto": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1712_2014.html#19", "motivo": "El texto dispone «las informaciones amparadas por el artículo 19», que corresponde a la misma ley (información exceptuada por daño a los intereses públicos)." },
+  { "articulo": "ley-1266-2008:16", "enlace_de_la_fuente": "http://www.secretariasenado.gov.co/senado/basedoc/ley_2573_2026.html#16", "correcto": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1266_2008.html#16", "motivo": "El texto dispone «numeral 3, parte II, artículo 16 de la presente ley»: corresponde a la misma disposición." },
+  { "articulo": "cst:119", "enlace_de_la_fuente": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1432_2011.html#17", "correcto": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1429_2010.html#17", "motivo": "La nota consigna «artículo 17 de la Ley 1429 de 2010»." },
+  { "articulo": "ley-2213-2022:13", "enlace_de_la_fuente": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1564_2012_pr002.html#83", "correcto": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_procedimental_laboral_pr002.html#83", "motivo": "El texto dispone «artículo 83 del Código Procesal del Trabajo y de la Seguridad Social»." }
+]

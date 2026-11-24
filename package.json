@@ -25,6 +25,7 @@
     "cambios": "node ingesta/cambios.js",
     "verificar-curado": "node ingesta/verificar-curado.js",
     "verificar-vigencia": "node ingesta/verificar-vigencia.js",
+    "muestra": "node ingesta/muestra.js",
     "indexar": "node --disable-warning=ExperimentalWarning ingesta/indexar.js",
     "evaluar": "node --disable-warning=ExperimentalWarning ingesta/evaluar.js",
     "api": "node --disable-warning=ExperimentalWarning server.js",

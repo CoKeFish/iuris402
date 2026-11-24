@@ -1,0 +1,42 @@
+{
+ "C-192-26": {
+  "tipo": "sentencia",
+  "nombre": "Sentencia C-192 de 2026",
+  "entidad": "Corte Constitucional",
+  "fecha": "2026-06-24",
+  "ponente": "Jorge Enrique Ibáñez Najar",
+  "url": "https://www.corteconstitucional.gov.co/relatoria/2026/C-192-26.htm",
+  "archivo": "datos/crudo/sentencias/C-192-26.htm",
+  "sha256": "7336504bcd5a7a38e12a0727f2f94be56f2d8d05cb0b8bca2ab62d2fb716a2b5"
+ },
+ "C-243-96": {
+  "tipo": "sentencia",
+  "nombre": "Sentencia C-243 de 1996",
+  "entidad": "Corte Constitucional",
+  "fecha": "1996-05-30",
+  "ponente": "Vladimiro Naranjo Mesa",
+  "url": "https://www.corteconstitucional.gov.co/relatoria/1996/C-243-96.htm",
+  "archivo": "datos/crudo/sentencias/C-243-96.htm",
+  "sha256": "0defa87e6d4f11f984fdf041883e50a406329902dae8e75a37d32e9a0fba8b74"
+ },
+ "C-367-14": {
+  "tipo": "sentencia",
+  "nombre": "Sentencia C-367 de 2014",
+  "entidad": "Corte Constitucional",
+  "fecha": "2014-06-11",
+  "ponente": "Mauricio González Cuervo",
+  "url": "https://www.corteconstitucional.gov.co/relatoria/2014/C-367-14.htm",
+  "archivo": "datos/crudo/sentencias/C-367-14.htm",
+  "sha256": "94cc6681b368618d6fa1afb6e9d473538106d5674bd996a25d4db44c6f2c9659"
+ },
+ "C-543-92": {
+  "tipo": "sentencia",
+  "nombre": "Sentencia C-543 de 1992",
+  "entidad": "Corte Constitucional",
+  "fecha": "1992-10-01",
+  "ponente": "José Gregorio Hernández Rodríguez",
+  "url": "https://www.corteconstitucional.gov.co/relatoria/1992/C-543-92.htm",
+  "archivo": "datos/crudo/sentencias/C-543-92.htm",
+  "sha256": "5f1455267c7a8d2c3c5922e7135321a30475382be4c9dcefd588952a5edf653b"
+ }
+}

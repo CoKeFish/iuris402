@@ -1,15 +1,17 @@
 // Rutas y catálogo de normas que comparten los pasos de la ingesta.
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const ruta = (r) => fileURLToPath(new URL(r, import.meta.url));
+// Sin la base completa (no está en el repo) se trabaja con la muestra publicada
+export const DATOS = ruta(existsSync(ruta("../datos/curado/")) ? "../datos/" : "../muestra/");
 export const CRUDO = ruta("../datos/crudo/");
-export const CURADO = ruta("../datos/curado/");
-export const OCR = ruta("../datos/ocr/");
-export const RESUMENES = ruta("../datos/resumenes/");
-export const VIGENCIA = ruta("../datos/vigencia/");
-export const CAMBIOS = ruta("../datos/cambios.json");
-export const CITADOS = ruta("../datos/citados.json");
+export const CURADO = `${DATOS}curado/`;
+export const OCR = `${DATOS}ocr/`;
+export const RESUMENES = `${DATOS}resumenes/`;
+export const VIGENCIA = `${DATOS}vigencia/`;
+export const CAMBIOS = `${DATOS}cambios.json`;
+export const CITADOS = `${DATOS}citados.json`;
 export const DECISIONES = `${VIGENCIA}decisiones.json`;
 export const fuentes = JSON.parse(readFileSync(ruta("./fuentes.json"), "utf8"));
 

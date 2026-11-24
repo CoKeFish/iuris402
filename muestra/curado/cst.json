@@ -1,0 +1,141 @@
+{
+ "id": "cst",
+ "tipo": "Código",
+ "nombre": "Código Sustantivo del Trabajo (arts. 1 a 237)",
+ "fuente": {
+  "entidad": "Secretaría del Senado",
+  "metodo": "extracción del HTML",
+  "archivos": [
+   {
+    "url": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo.html",
+    "archivo": "datos/crudo/cst.1.html",
+    "formato": "html",
+    "sha256": "f2d796d01b708d16895b2257f2f6a97f0f4d86094032cd52e2b4ddb995fdd1a1",
+    "descargado": "2026-11-23"
+   },
+   {
+    "url": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo_pr001.html",
+    "archivo": "datos/crudo/cst.2.html",
+    "formato": "html",
+    "sha256": "396b559d010f391aecd80abcf5a3a968bb880a6945efbc74402008f1b7b9f6ea",
+    "descargado": "2026-11-23"
+   },
+   {
+    "url": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo_pr002.html",
+    "archivo": "datos/crudo/cst.3.html",
+    "formato": "html",
+    "sha256": "cc631223ffd93d65ea7bc7692af98d83566b9ab611aee20220a96d9dc02b1340",
+    "descargado": "2026-11-23"
+   },
+   {
+    "url": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo_pr003.html",
+    "archivo": "datos/crudo/cst.4.html",
+    "formato": "html",
+    "sha256": "2f95bc4f0b1c19aaed25a2cc7a0d1d5fad6e4a4c43c9516f728131c70391cec9",
+    "descargado": "2026-11-23"
+   },
+   {
+    "url": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo_pr004.html",
+    "archivo": "datos/crudo/cst.5.html",
+    "formato": "html",
+    "sha256": "18d07e794c157f6855adf8849e3b8bfcb71106a9daa51a1135de48b0bfc02170",
+    "descargado": "2026-11-23"
+   },
+   {
+    "url": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo_pr005.html",
+    "archivo": "datos/crudo/cst.6.html",
+    "formato": "html",
+    "sha256": "22c1f3c183d7c57a6906ac84df75b92333dcf8f9f327f60e4401caf9c3ae68ff",
+    "descargado": "2026-11-23"
+   },
+   {
+    "url": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo_pr006.html",
+    "archivo": "datos/crudo/cst.7.html",
+    "formato": "html",
+    "sha256": "6651eabad96726d502ab0b6e9a0eb8a33fc71c7dd2741ee395659a667a2ad1bf",
+    "descargado": "2026-11-23"
+   },
+   {
+    "url": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo_pr007.html",
+    "archivo": "datos/crudo/cst.8.html",
+    "formato": "html",
+    "sha256": "df4ef8143fc30d4f33fb4cca3b8ede262d6bf5039b9dc5b47f9d74552dca3bac",
+    "descargado": "2026-11-23"
+   }
+  ]
+ },
+ "preambulo": "CODIGO SUSTANTIVO DEL TRABAJO\n[Nota de la fuente: Esta edición se trabajó sobre la publicación de la Edición Oficial del CÓDIGO SUSTANTIVO DEL TRABAJO, con sus modificaciones, ordenada por el artículo 46 del Decreto Ley 3743 de 1950, la cual fue publicada en el Diario Oficial No 27.622, del 7 de junio de 1951, compilando los Decretos 2663 y 3743 de 1950 y 905 de 1951]\nTITULO PRELIMINAR.\nPRINCIPIOS GENERALES",
+ "articulos": [
+  {
+   "id": "cst:64",
+   "articulo": "64",
+   "encabezado": "ARTICULO 64.",
+   "titulo": "TERMINACION UNILATERAL DEL CONTRATO DE TRABAJO SIN JUSTA CAUSA",
+   "seccion": [
+    "PRIMERA PARTE. DERECHO INDIVIDUAL DEL TRABAJO.",
+    "TITULO I. CONTRATO INDIVIDUAL DE TRABAJO.",
+    "CAPITULO VI. TERMINACION DEL CONTRATO DE TRABAJO."
+   ],
+   "texto": "[Nota de la fuente: Artículo modificado por el artículo 28 de la Ley 789 de 2002. El nuevo texto es el siguiente:] En todo contrato de trabajo va envuelta la condición resolutoria por incumplimiento de lo pactado, con indemnización de perjuicios a cargo de la parte responsable. Esta indemnización comprende el lucro cesante y el daño emergente.\nEn caso de terminación unilateral del contrato de trabajo sin justa causa comprobada, por parte del empleador o si éste da lugar a la terminación unilateral por parte del trabajador por alguna de las justas causas contempladas en la ley, el primero deberá al segundo una indemnización en los términos que a continuación se señalan:\nEn los contratos a término fijo, el valor de los salarios correspondientes al tiempo que faltare para cumplir el plazo estipulado del contrato; o el del lapso determinado por la duración de la obra o la labor contratada, caso en el cual la indemnización no será inferior a quince (15) días.\nEn los contratos a término indefinido la indemnización se pagará así:\na) Para trabajadores que devenguen un salario inferior a diez (10) salarios mínimos mensuales legales:\n1. Treinta (30) días de salario cuando el trabajador tuviere un tiempo de servicio no mayor de un (1) año.\n2. Si el trabajador tuviere más de un (1) año de servicio continuo se le pagarán veinte (20) días adicionales de salario sobre los treinta (30) básicos del numeral 1, por cada uno de los años de servicio subsiguientes al primero y proporcionalmente por fracción;\nb) Para trabajadores que devenguen un salario igual o superior a diez (10), salarios mínimos legales mensuales.\n1. Veinte (20) días de salario cuando el trabajador tuviere un tiempo de servicio no mayor de un (1) año.\n2. Si el trabajador tuviere más de un (1) año de servicio continuo, se le pagarán quince (15) días adicionales de salario sobre los veinte (20) días básicos del numeral 1 anterior, por cada uno de los años de servicio subsiguientes al primero y proporcionalmente por fracción.\nPARÁGRAFO TRANSITORIO. Los trabajadores que al momento de entrar en vigencia la presente ley, tuvieren diez (10) o más años al servicio continuo del empleador, se les aplicará la tabla de indemnización establecida en los literales b), c) y d) del artículo 6o. de la Ley 50 de 1990, exceptuando el parágrafo transitorio, el cual se aplica únicamente para los trabajadores que tenían diez (10) o más años el primero de enero de 1991.",
+   "notas": [
+    "Artículo modificado por el artículo 28 de la Ley 789 de 2002. El nuevo texto es el siguiente:"
+   ],
+   "referencias": [
+    {
+     "tipo": "vigencia",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_0789_2002.html#28",
+     "contexto": "N UNILATERAL DEL CONTRATO DE TRABAJO SIN JUSTA CAUSA. Artículo modificado por el artículo 28 de la Ley 789 de 2002. El nuevo texto es el siguiente: En todo contra"
+    },
+    {
+     "tipo": "cita",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_0050_1990.html",
+     "contexto": "blecida en los literales b), c) y d) del artículo 6o. de la Ley 50 de 1990, exceptuando el parágrafo transitorio,",
+     "sin_enlace": true
+    }
+   ],
+   "derogado": false,
+   "url": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo_pr001.html#64"
+  },
+  {
+   "id": "cst:161",
+   "articulo": "161",
+   "encabezado": "ARTICULO 161.",
+   "titulo": "DURACIÓN",
+   "seccion": [
+    "PRIMERA PARTE. DERECHO INDIVIDUAL DEL TRABAJO.",
+    "TITULO VI. JORNADA DE TRABAJO.",
+    "CAPITULO II. JORNADA MAXIMA."
+   ],
+   "texto": "[Nota de la fuente: Artículo modificado por el artículo 11 de la Ley 2466 de 2025. El nuevo texto es el siguiente:] La duración máxima de la jornada ordinaria de trabajo es de ocho (8) horas al día, sin perjuicio de lo establecido en el artículo 3o de la Ley 2101 de 2021 sobre la aplicación gradual, y una jornada máxima de cuarenta y dos (42) horas a la semana. La jornada máxima semanal podrá ser distribuida, de común acuerdo, entre empleador y trabajador(a), de cinco (5) a seis (6) días a la semana, garantizando siempre el día de descanso y sin afectar el salario.\nEl número de horas de trabajo diario podrá distribuirse de manera variable. Si en el horario pactado el trabajador o trabajadora debe laborar en jornada nocturna, tendrá derecho al pago de recargo nocturno.\nSe establecen las siguientes excepciones:\na) El empleador y el trabajador o la trabajadora podrán acordar que la jornada semanal de cuarenta y dos (42) horas se realice mediante jornadas diarias flexibles de trabajo, distribuidas en máximo seis días a la semana con un día de descanso obligatorio, que podrá coincidir con el día domingo.\nAsí, el número de horas de trabajo diario podrá distribuirse de manera variable durante la respectiva semana, teniendo como mínimo cuatro (4) horas continuas y máximo hasta nueve (9) horas diarias sin lugar a ningún recargo por trabajo suplementario, cuando el número de horas de trabajo no exceda el promedio de cuarenta y dos (42) horas semanales dentro de la Jornada Ordinaria. De conformidad con el artículo 160 del Código Sustantivo del Trabajo.\nb) En las labores que sean especialmente insalubres o peligrosas, el Gobierno puede ordenar la reducción de la jornada de trabajo de acuerdo con dictámenes al respecto.\nc) La duración máxima de la jornada laboral de los menores de edad, autorizados para trabajar, se sujetará a las siguientes reglas:\n1. Los menores de edad entre los 15 y los 17 años, solo podrán trabajar en jornada diurna máxima de seis (6) horas diarias y treinta (30) horas a la semana.\n2. Los menores de edad, mayores de diecisiete (17) años, solo podrán trabajar en una jornada máxima de ocho (8) horas diarias y cuarenta (40) horas a la semana.\nd) El empleador y el trabajador o la trabajadora pueden acordar, temporal o indefinidamente, la organización de turnos de trabajo sucesivos, que permitan operar a la empresa o secciones de esta, sin solución de continuidad durante todos los días de la semana, siempre y cuando el respectivo turno no exceda de seis (6) horas al día y treinta y seis (36) a la semana.\nEn este caso no habrá lugar a recargo nocturno ni al previsto para el trabajo dominical o festivo, pero el trabajador devengará el salario correspondiente a la jornada ordinaria de trabajo, respetando siempre el mínimo legal o convencional y tendrá derecho a un día de descanso remunerado.\nPARÁGRAFO 1o. El empleador no podrá, aún con el consentimiento del trabajador o trabajadora, contratarla para la ejecución de dos turnos en el mismo día, salvo en labores de supervisión, dirección, confianza o manejo.\nPARÁGRAFO 2o. Los empleadores y las Cajas de Compensación podrán facilitar, promover y gestionar una jornada semestral en la que sus empleados puedan compartir con su familia en un espacio suministrado por aquellas.",
+   "notas": [
+    "Artículo modificado por el artículo 11 de la Ley 2466 de 2025. El nuevo texto es el siguiente:"
+   ],
+   "referencias": [
+    {
+     "tipo": "vigencia",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_2466_2025.html#11",
+     "contexto": "ARTICULO 161. DURACIÓN. Artículo modificado por el artículo 11 de la Ley 2466 de 2025. El nuevo texto es el siguiente: La duración m"
+    },
+    {
+     "tipo": "cita",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_2101_2021.html#3",
+     "contexto": "ia de trabajo es de ocho (8) horas al día, sin perjuicio de lo establecido en el artículo 3o de la Ley 2101 de 2021 sobre la aplicación gradual, y una jornada máx"
+    },
+    {
+     "tipo": "cita",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo.html#160",
+     "contexto": "y dos (42) horas semanales dentro de la Jornada Ordinaria. De conformidad con el artículo 160 del Código Sustantivo del Trabajo. b) En las labores que sean especia"
+    },
+    {
+     "tipo": "cita",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_2101_2021.html#3o",
+     "contexto": "cho (8) horas al día, sin perjuicio de lo establecido en el artículo 3o de la Ley 2101 de 2021 sobre la aplicación gradual, y una jorn",
+     "sin_enlace": true
+    }
+   ],
+   "derogado": false,
+   "url": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo_pr005.html#161"
+  }
+ ],
+ "cierre": ""
+}

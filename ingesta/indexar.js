@@ -3,11 +3,12 @@
 // quien pregunta). Los JSON son la fuente de verdad; la base siempre se puede rehacer.
 // Lo derogado, lo que está en duda de estarlo (excluir) y lo que no tiene resumen queda en la
 // base pero no se vende.
-import { existsSync, readFileSync, renameSync, rmSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, renameSync, rmSync } from "node:fs";
+import { dirname } from "node:path";
 import { DatabaseSync } from "node:sqlite";
 import { ESQUEMA_LEYES, LEYES_DB } from "../base.js";
 import { embeber, MODELO, raices } from "../buscador.js";
-import { CAMBIOS, CITADOS, CURADO, fuentes, idsDe as ids, leerVigencia, RESUMENES } from "./comun-ingesta.js";
+import { CAMBIOS, CITADOS, CURADO, DATOS, fuentes, idsDe as ids, leerVigencia, RESUMENES } from "./comun-ingesta.js";
 
 const leer = (r) => JSON.parse(readFileSync(r, "utf8"));
 const json = (x) => JSON.stringify(x ?? []);
@@ -16,6 +17,7 @@ const excluidos = new Set(base.afectaciones.filter((v) => v.excluir).flatMap((v)
 
 // Se arma aparte y se cambia al final: si algo falla, la base anterior sigue intacta
 const temporal = `${LEYES_DB}.nueva`;
+mkdirSync(dirname(LEYES_DB), { recursive: true });
 rmSync(temporal, { force: true });
 const db = new DatabaseSync(temporal); // con llaves foráneas activas
 db.exec(ESQUEMA_LEYES);
@@ -30,7 +32,7 @@ const referencias = [];
 let totalVenta = 0;
 for (const norma of fuentes) {
   if (!existsSync(`${CURADO}${norma.id}.json`)) {
-    console.log(`⚠ ${norma.id}: falta el JSON curado`);
+    if (!DATOS.includes("muestra")) console.log(`⚠ ${norma.id}: falta el JSON curado`);
     continue;
   }
   const curado = leer(`${CURADO}${norma.id}.json`);

@@ -1,0 +1,34 @@
+{
+ "dec-2591-1991:40": {
+  "resumen": "Disposición derogada o declarada inexequible; carece de vigencia.",
+  "argumento": "",
+  "temas": [],
+  "preguntas": [
+   "¿Procede la acción de tutela contra providencias judiciales?",
+   "¿Es admisible la tutela frente a la decisión de un juez?",
+   "¿Qué autoridad judicial conoce de la tutela dirigida contra una providencia judicial?",
+   "¿Procede la acción de tutela contra sentencias judiciales, según la disposición que carece de vigencia por haber sido derogada o declarada inexequible?",
+   "¿Procede la acción de tutela contra la decisión o providencia de un juez, conforme a la disposición que carece de vigencia?",
+   "¿Cuál es la autoridad judicial competente para conocer de la tutela contra una providencia judicial, conforme a la disposición que carece de vigencia?"
+  ]
+ },
+ "dec-2591-1991:52": {
+  "resumen": "Quien incumpla una orden judicial proferida con base en el decreto incurre en desacato, sancionable con arresto hasta de seis meses y multa hasta de veinte salarios mínimos mensuales, sin perjuicio de las sanciones penales. El mismo juez impone la sanción por trámite incidental, con consulta al superior. El incidente debe resolverse en el término del artículo 86 de la Constitución (Sentencia C-367 de 2014).",
+  "argumento": "El accionante puede promover el incidente de desacato contra quien incumpla la orden de tutela, siempre que, conforme a la Sentencia C-367 de 2014, se resuelva en el término del artículo 86 de la Constitución, esto es, no más de diez días desde su apertura.",
+  "temas": [
+   "desacato",
+   "incidente de desacato",
+   "arresto y multa",
+   "consulta al superior",
+   "cumplimiento del fallo",
+   "exequibilidad condicionada"
+  ],
+  "preguntas": [
+   "¿Qué sanción corresponde a quien incumpla la orden del juez de tutela?",
+   "¿En qué término debe resolverse el incidente de desacato según la Corte Constitucional?",
+   "¿Quién impone la sanción por desacato y qué control se ejerce sobre ella?",
+   "¿Qué sanción corresponde a quien incumple la orden judicial proferida en una acción de tutela?",
+   "¿Cómo se tramita el incidente de desacato por incumplimiento del fallo de tutela y qué sanciones conlleva?"
+  ]
+ }
+}

@@ -1,0 +1,39 @@
+{
+ "cst:64": {
+  "resumen": "La terminación unilateral sin justa causa, o por causa imputable al empleador, genera indemnización. En el contrato a término fijo, el salario del tiempo faltante; en el de obra o labor, no menos de quince días. En el indefinido, treinta días de salario el primer año y veinte por cada año subsiguiente, o veinte y quince días con diez o más salarios mínimos.",
+  "argumento": "El trabajador cuyo contrato termine por decisión del empleador sin justa causa comprobada, o por justa causa imputable a este, puede reclamar la indemnización tarifada según la modalidad del contrato, el nivel salarial y el tiempo de servicio.",
+  "temas": [
+   "terminación unilateral sin justa causa",
+   "indemnización por terminación",
+   "lucro cesante y daño emergente",
+   "contrato a término fijo",
+   "contrato a término indefinido"
+  ],
+  "preguntas": [
+   "¿Cuál es la indemnización por terminación unilateral del contrato sin justa causa?",
+   "¿Cómo se calcula la indemnización en el contrato a término indefinido según el salario devengado?",
+   "¿Procede la indemnización cuando el trabajador termina el contrato por una justa causa atribuible al empleador?",
+   "¿Qué indemnización corresponde al trabajador cuando el empleador termina unilateralmente el contrato de trabajo sin justa causa?",
+   "¿Cómo se liquida la indemnización por terminación unilateral sin justa causa según la modalidad contractual y el salario devengado?"
+  ]
+ },
+ "cst:161": {
+  "resumen": "La jornada ordinaria máxima es de ocho horas diarias y cuarenta y dos semanales, distribuible de común acuerdo en cinco o seis días con día de descanso garantizado, con aplicación gradual de la Ley 2101 de 2021. Admite jornadas flexibles de cuatro a nueve horas, reducción en labores insalubres, límites para menores y turnos sucesivos de seis horas diarias y treinta y seis semanales.",
+  "argumento": "El empleador y el trabajador pueden acordar la distribución flexible de las cuarenta y dos horas semanales sin recargo por trabajo suplementario si el promedio semanal no se excede, y no puede contratarse al trabajador para dos turnos en el mismo día, salvo labores de dirección, confianza o manejo.",
+  "temas": [
+   "jornada máxima legal",
+   "cuarenta y dos horas semanales",
+   "jornada flexible",
+   "turnos sucesivos",
+   "jornada de menores de edad",
+   "reducción gradual de la jornada"
+  ],
+  "preguntas": [
+   "¿Cuál es la duración máxima de la jornada ordinaria de trabajo?",
+   "¿Qué límites de horas diarias admite la distribución flexible de la jornada sin recargo por trabajo suplementario?",
+   "¿Puede el empleador contratar al trabajador para dos turnos en el mismo día con su consentimiento?",
+   "¿Cuántas horas semanales puede laborar el trabajador conforme a la jornada ordinaria máxima legal vigente en Colombia?",
+   "¿Puede el empleador imponer al trabajador dos turnos sucesivos el mismo día dentro de la jornada máxima?"
+  ]
+ }
+}

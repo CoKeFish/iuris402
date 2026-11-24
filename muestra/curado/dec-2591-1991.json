@@ -1,0 +1,63 @@
+{
+ "id": "dec-2591-1991",
+ "tipo": "Decreto",
+ "nombre": "Decreto 2591 de 1991 (acción de tutela)",
+ "fuente": {
+  "entidad": "Secretaría del Senado",
+  "metodo": "extracción del HTML",
+  "archivos": [
+   {
+    "url": "http://www.secretariasenado.gov.co/senado/basedoc/decreto_2591_1991.html",
+    "archivo": "datos/crudo/dec-2591-1991.1.html",
+    "formato": "html",
+    "sha256": "64c3947d936b4084623db18a7c71c3b7f2407ccdbe9f82b3ddf95a2ed887c19f",
+    "descargado": "2026-11-23"
+   },
+   {
+    "url": "http://www.secretariasenado.gov.co/senado/basedoc/decreto_2591_1991_pr001.html",
+    "archivo": "datos/crudo/dec-2591-1991.2.html",
+    "formato": "html",
+    "sha256": "6663789a522a65e2a8d91a20ccaea108ded0d7cafd45538a4b7e6e093930e72a",
+    "descargado": "2026-11-23"
+   }
+  ]
+ },
+ "preambulo": "DECRETO [Nota de la fuente: LEY] 2591 DE 1991\n(noviembre 19)\nDiario Oficial No. 40.165 de 19 de noviembre de 1991\nDEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA\nPor el cual se reglamenta la acción de tutela consagrada en el artículo 86 de la Constitución Política.\nEL PRESIDENTE DE LA REPUBLICA DE COLOMBIA,\nen ejercicio de las facultades que le confiere el literal b) del artículo transitorio 5 de la Constitución Nacional oída y llevado a cabo el trámite de que trata el artículo transitorio 6, ante la Comisión Especial,\nDECRETA:\nCAPITULO I.\nDISPOSICIONES GENERALES Y PROCEDIMIENTO",
+ "articulos": [
+  {
+   "id": "dec-2591-1991:40",
+   "articulo": "40",
+   "encabezado": "ARTICULO 40.",
+   "titulo": "COMPETENCIA ESPECIAL",
+   "seccion": [
+    "CAPITULO II. COMPETENCIA"
+   ],
+   "texto": "[Nota de la fuente: Artículo INEXEQUIBLE]",
+   "notas": [
+    "Artículo INEXEQUIBLE"
+   ],
+   "referencias": [],
+   "derogado": true,
+   "url": "http://www.secretariasenado.gov.co/senado/basedoc/decreto_2591_1991.html#40"
+  },
+  {
+   "id": "dec-2591-1991:52",
+   "articulo": "52",
+   "encabezado": "ARTICULO 52.",
+   "titulo": "DESACATO",
+   "seccion": [
+    "CAPITULO V. SANCIONES"
+   ],
+   "texto": "[Nota de la fuente: Inciso CONDICIONALMENTE exequible] [Nota de la fuente: Ver Notas del Editor] La persona que incumpliere una orden de un juez proferida con base en el presente Decreto incurrirá en desacato sancionable con arresto hasta de seis meses y multa hasta de 20 salarios mínimos mensuales salvo que en este Decreto ya se hubiere señalado una consecuencia jurídica distinta y sin perjuicio de las sanciones penales a que hubiere lugar.\n[Nota de la fuente: Aparte tachado INEXEQUIBLE] La sanción será impuesta por el mismo juez mediante trámite incidental y será consultada al superior jerárquico quien decidirá dentro de los tres días siguientes si debe revocarse la sanción. ~~La consulta se hará en el efecto devolutivo~~.",
+   "notas": [
+    "Inciso CONDICIONALMENTE exequible",
+    "Ver Notas del Editor",
+    "Aparte tachado INEXEQUIBLE"
+   ],
+   "referencias": [],
+   "derogado": false,
+   "url": "http://www.secretariasenado.gov.co/senado/basedoc/decreto_2591_1991_pr001.html#52"
+  }
+ ],
+ "cierre": "PUBLIQUESE Y CUMPLASE.\nDado en Santafe de Bogotá D.C., a los 19 días de noviembre de 1991.\nCESAR GAVIRIA TRIJILLO\nEl Ministro de Gobierno,\nHUMBERTO DE LA CALLE LOMBANA\nEl Ministro de Justicia,\nFERNANDO CARRILLO FLOREZ"
+}

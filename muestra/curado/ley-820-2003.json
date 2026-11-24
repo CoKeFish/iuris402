@@ -1,0 +1,49 @@
+{
+ "id": "ley-820-2003",
+ "tipo": "Ley",
+ "nombre": "Ley 820 de 2003 (arrendamiento de vivienda urbana)",
+ "fuente": {
+  "entidad": "Secretaría del Senado",
+  "metodo": "extracción del HTML",
+  "archivos": [
+   {
+    "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_0820_2003.html",
+    "archivo": "datos/crudo/ley-820-2003.1.html",
+    "formato": "html",
+    "sha256": "7644361aa7cc59b40dd09d1a6217c3a91194d4a72765e3f141fd451429978824",
+    "descargado": "2026-11-23"
+   },
+   {
+    "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_0820_2003_pr001.html",
+    "archivo": "datos/crudo/ley-820-2003.2.html",
+    "formato": "html",
+    "sha256": "2101ebfdf8d1bee6720aa14a74984c36b112a1d6b4821c1ef99bae2d09b5cb4e",
+    "descargado": "2026-11-23"
+   }
+  ]
+ },
+ "preambulo": "LEY 820 DE 2003\n(julio 10)\nDiario Oficial No. 45.244, de 10 de julio de 2003\nPor la cual se expide el régimen de arrendamiento de vivienda urbana y se dictan otras disposiciones.\nEL CONGRESO DE COLOMBIA\nDECRETA:\nCAPITULO I.\nDISPOSICIONES GENERALES.",
+ "articulos": [
+  {
+   "id": "ley-820-2003:20",
+   "articulo": "20",
+   "encabezado": "ARTÍCULO 20.",
+   "titulo": "REAJUSTE DEL CANON DE ARRENDAMIENTO",
+   "seccion": [
+    "CAPITULO VI. RENTA DE ARRENDAMIENTO."
+   ],
+   "texto": "Cada doce (12) meses de ejecución del contrato bajo un mismo precio, el arrendador podrá incrementar el canon hasta en una proporción que no sea superior al ciento por ciento (100%) del incremento que haya tenido el índice de precios al consumidor en el año calendario inmediatamente anterior a aquél en que deba efectuarse el reajuste del canon, siempre y cuando el nuevo canon no exceda lo previsto en el artículo 18 de la presente ley.\nEl arrendador que opte por incrementar el canon de arrendamiento, deberá informarle al arrendatario el monto del incremento y la fecha en que se hará efectivo, a través del servicio postal autorizado o mediante el mecanismo de notificación personal expresamente establecido en el contrato, so pena de ser inoponible al arrendatario. El pago por parte del arrendatario de un reajuste del canon, no le dará derecho a solicitar el reintegro, alegando la falta de la comunicación.",
+   "notas": [],
+   "referencias": [
+    {
+     "tipo": "cita",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_0820_2003.html#18",
+     "contexto": "reajuste del canon, siempre y cuando el nuevo canon no exceda lo previsto en el artículo 18 de la presente ley. El arrendador que opte por incrementar el canon d"
+    }
+   ],
+   "derogado": false,
+   "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_0820_2003.html#20"
+  }
+ ],
+ "cierre": "El Presidente del honorable Senado de la República,\nLUIS ALFREDO RAMOS BOTERO.\nEl Secretario General del honorable Senado de la República,\nEMILIO RAMÓN OTERO DAJUD.\nEl President e de la honorable Cámara de Representantes,\nWILLIAM VÉLEZ MESA.\nEl Secretario General de la honorable Cámara de Representantes,\nANGELINO LIZCANO RIVERA.\nREPUBLICA DE COLOMBIA - GOBIERNO NACIONAL\nPUBLÍQUESE Y EJECÚTESE.\nDada en Bogotá, D. C., a 10 de julio de 2003.\nÁLVARO URIBE VÉLEZ\nEl Ministro del Interior y de Justicia,\nFERNANDO LONDOÑO HOYOS.\nEl Ministro de Hacienda y Crédito Público,\nALBERTO CARRASQUILLA BARRERA.\nLa Ministra de Ambiente, Vivienda y Desarrollo Territorial,\nCECILIA RODRÍGUEZ GONZÁLEZ RUBIO."
+}

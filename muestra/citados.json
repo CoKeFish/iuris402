@@ -1,0 +1,83 @@
+{
+ "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo.html#160": {
+  "cita": "Código Sustantivo del Trabajo, art. 160",
+  "tipo": "no consultable",
+  "url": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo.html#160",
+  "motivo": "Artículo de la base completa, no incluido en la muestra."
+ },
+ "http://www.secretariasenado.gov.co/senado/basedoc/decreto_2184_2012.html#5": {
+  "cita": "Decreto 2184 de 2012, art. 5",
+  "tipo": "documento",
+  "url": "https://normativa.colpensiones.gov.co/colpens/docs/decreto_2184_2012.htm#5",
+  "archivo": "datos/crudo/citados/alt_decreto_2184_2012.html",
+  "sha256": "b928b333dd00ec21877635c1cdd04fbc98b61b7ba7f7ca48c133ff67f6c41254",
+  "documento": "Decreto 2184 de 2012",
+  "entidad": "Colpensiones (normograma)"
+ },
+ "http://www.secretariasenado.gov.co/senado/basedoc/ley_0050_1990.html": {
+  "cita": "Ley 50 de 1990",
+  "tipo": "documento",
+  "url": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=281",
+  "archivo": "datos/crudo/citados/fp_ley_0050_1990.html",
+  "sha256": "3e080b125652a46049cb22a24b9708f83cc1c0030f963f0febe6d6b53f3bd2cb",
+  "documento": "Ley 50 de 1990",
+  "entidad": "Función Pública"
+ },
+ "http://www.secretariasenado.gov.co/senado/basedoc/ley_0472_1998.html#1": {
+  "cita": "Ley 472 de 1998, art. 1",
+  "tipo": "documento",
+  "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_0472_1998.html#1",
+  "archivo": "datos/crudo/citados/ley_0472_1998.html",
+  "sha256": "b658ebbd6513679c439f0bad1de2643e0c672e852454a14fdaa7344c289afc4d",
+  "documento": "Leyes desde 1992 - Vigencia expresa y control de constitucionalidad [LEY_0472_1998]"
+ },
+ "http://www.secretariasenado.gov.co/senado/basedoc/ley_0789_2002.html#28": {
+  "cita": "Ley 789 de 2002, art. 28",
+  "tipo": "documento",
+  "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_0789_2002.html#28",
+  "archivo": "datos/crudo/citados/ley_0789_2002.html",
+  "sha256": "f32cdf6cc6d2b3d5f96718edb91455e963671872948c5153ee2d872b78d6eb22",
+  "documento": "Leyes desde 1992 - Vigencia expresa y control de constitucionalidad [LEY_0789_2002]"
+ },
+ "http://www.secretariasenado.gov.co/senado/basedoc/ley_0820_2003.html#18": {
+  "cita": "Ley 820 de 2003, art. 18",
+  "tipo": "no consultable",
+  "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_0820_2003.html#18",
+  "motivo": "Artículo de la base completa, no incluido en la muestra."
+ },
+ "http://www.secretariasenado.gov.co/senado/basedoc/ley_1480_2011.html#18": {
+  "cita": "Ley 1480 de 2011, art. 18",
+  "tipo": "propio",
+  "articulo": "ley-1480-2011:18"
+ },
+ "http://www.secretariasenado.gov.co/senado/basedoc/ley_2101_2021.html#3": {
+  "cita": "Ley 2101 de 2021, art. 3",
+  "tipo": "documento",
+  "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_2101_2021.html#3",
+  "archivo": "datos/crudo/citados/ley_2101_2021.html",
+  "sha256": "36eed1e19852c8e976198f4de7676521341f4b9d4845212eb752c80f44a02217",
+  "documento": "Leyes desde 1992 - Vigencia expresa y control de constitucionalidad [LEY_2101_2021]"
+ },
+ "http://www.secretariasenado.gov.co/senado/basedoc/ley_2101_2021.html#3o": {
+  "cita": "Ley 2101 de 2021, art. 3",
+  "tipo": "documento",
+  "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_2101_2021.html#3o",
+  "archivo": "datos/crudo/citados/ley_2101_2021.html",
+  "sha256": "36eed1e19852c8e976198f4de7676521341f4b9d4845212eb752c80f44a02217",
+  "documento": "Leyes desde 1992 - Vigencia expresa y control de constitucionalidad [LEY_2101_2021]"
+ },
+ "http://www.secretariasenado.gov.co/senado/basedoc/ley_2439_2024.html#3": {
+  "cita": "Ley 2439 de 2024, art. 3",
+  "tipo": "no consultable",
+  "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_2439_2024.html#3",
+  "motivo": "Artículo de la base completa, no incluido en la muestra."
+ },
+ "http://www.secretariasenado.gov.co/senado/basedoc/ley_2466_2025.html#11": {
+  "cita": "Ley 2466 de 2025, art. 11",
+  "tipo": "documento",
+  "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_2466_2025.html#11",
+  "archivo": "datos/crudo/citados/ley_2466_2025.html",
+  "sha256": "ec3b64148b575b6200f81e6da733bcdc8aebc78eb6f598457a469ceed789d5f5",
+  "documento": "Leyes desde 1992 - Vigencia expresa y control de constitucionalidad [LEY_2466_2025]"
+ }
+}

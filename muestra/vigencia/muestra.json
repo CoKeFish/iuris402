@@ -1,0 +1,48 @@
+[
+ {
+  "articulo": "dec-2591-1991:40",
+  "alcance": "Todo el artículo",
+  "estado": "inexequible",
+  "por": "C-543-92",
+  "decision": "Declárase INEXEQUIBLE, dada su unidad normativa con los preceptos mencionados, el artículo 40 del mismo Decreto",
+  "condicion": null,
+  "razon": "la materia que constituye núcleo esencial de los preceptos no es otra que la examinada en este fallo, es decir, la procedencia de la acción de tutela contra sentencias judiciales",
+  "confirmado": true,
+  "nota": "Disposición expulsada del ordenamiento. La acción de tutela contra providencias judiciales procede de manera excepcional, conforme a la Sentencia C-590 de 2005 (https://www.corteconstitucional.gov.co/relatoria/2005/C-590-05.htm)."
+ },
+ {
+  "articulo": "dec-2591-1991:52",
+  "alcance": "Inciso 1",
+  "estado": "exequibilidad condicionada",
+  "por": "C-367-14",
+  "decision": "Declarar EXEQUIBLE el inciso primero del artículo 52 del Decreto 2591 de 1991",
+  "condicion": "en el entendido de que el incidente de desacato allí previsto debe resolverse en el término establecido en el artículo 86 de la Constitución Política",
+  "razon": "para resolver el trámite incidental de desacato a un fallo de tutela no habrán de transcurrir más de diez días, contados desde su apertura",
+  "confirmado": true
+ },
+ {
+  "articulo": "dec-2591-1991:52",
+  "alcance": "Inciso 2, expresión tachada",
+  "tachado": [
+   "La consulta se hará en el efecto devolutivo"
+  ],
+  "estado": "inexequible",
+  "por": "C-243-96",
+  "decision": "Declarar INEXEQUIBLE la expresión \"la consulta se hará en el efecto devolutivo” del artículo 52 del Decreto 2591 de 1991",
+  "condicion": null,
+  "razon": "no se ha desvirtuado judicialmente la presunción de inocencia, y no hay razón suficiente para imponer una sanción de tanta gravedad como lo es la privación de la libertad",
+  "confirmado": true,
+  "nota": "Conforme a la motivación de la misma providencia, la consulta se surte en el efecto suspensivo."
+ },
+ {
+  "articulo": "ley-1480-2011:47",
+  "alcance": "Expresión «en los casos de comercio electrónico»",
+  "estado": "exequibilidad condicionada",
+  "por": "C-192-26",
+  "decision": "Declarar EXEQUIBLE la expresión “En los casos de comercio electrónico” contenida en el artículo 3 de la Ley 2439 de 2024",
+  "condicion": "en el entendido de que el término máximo de quince (15) días calendario para la devolución del dinero derivada del ejercicio del derecho de retracto aplica de manera uniforme a todas las modalidades de contratación previstas en el artículo 47 de la Ley 1480 de 2011",
+  "razon": "desconoce la prohibición de regresividad y debe ser subsanada",
+  "confirmado": true,
+  "nota": "El término de quince días calendario para la devolución del dinero rige en todas las modalidades contractuales previstas en el artículo, y no exclusivamente en el comercio electrónico."
+ }
+]

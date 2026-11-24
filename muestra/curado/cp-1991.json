@@ -1,0 +1,51 @@
+{
+ "id": "cp-1991",
+ "tipo": "Constitución",
+ "nombre": "Constitución Política de Colombia (arts. 1 a 95)",
+ "fuente": {
+  "entidad": "Secretaría del Senado",
+  "metodo": "extracción del HTML",
+  "archivos": [
+   {
+    "url": "http://www.secretariasenado.gov.co/senado/basedoc/constitucion_politica_1991.html",
+    "archivo": "datos/crudo/cp-1991.1.html",
+    "formato": "html",
+    "sha256": "4338706dff614fe6a4f42e18c5f3d18ecb20866d45a44b7bac9f9e5c4fa4e781",
+    "descargado": "2026-11-23"
+   },
+   {
+    "url": "http://www.secretariasenado.gov.co/senado/basedoc/constitucion_politica_1991_pr001.html",
+    "archivo": "datos/crudo/cp-1991.2.html",
+    "formato": "html",
+    "sha256": "4eb58720e1db673a20d7d94c70697173d0b828a8f80e858c15f94584aa96a79e",
+    "descargado": "2026-11-23"
+   },
+   {
+    "url": "http://www.secretariasenado.gov.co/senado/basedoc/constitucion_politica_1991_pr002.html",
+    "archivo": "datos/crudo/cp-1991.3.html",
+    "formato": "html",
+    "sha256": "a25e4757d6c9a455c49e9403a83099a5e72f4988d37078276e385aa490fc5eb9",
+    "descargado": "2026-11-23"
+   }
+  ]
+ },
+ "preambulo": "Constitución Política de la República de Colombia\n[Nota de la fuente: Esta versión corresponde a la segunda edición corregida de la Constitución Política de Colombia, publicada en la Gaceta Constitucional No. 116 de 20 de julio de 1991]\nPREÁMBULO\nEl pueblo de Colombia,\nen ejercicio de su poder soberano, representado por sus delegatarios a la Asamblea Nacional Constituyente, invocando la protección de Dios, y con el fin de fortalecer la unidad de la Nación y asegurar a sus integrantes la vida, la convivencia, el trabajo, la justicia, la igualdad, el conocimiento, la libertad y la paz, dentro de un marco jurídico, democrático y participativo que garantice un orden político, económico y social justo, y comprometido a impulsar la integración de la comunidad latinoamericana, decreta, sanciona y promulga la siguiente:\nConstitución Política de Colombia\nTITULO I.\nDE LOS PRINCIPIOS FUNDAMENTALES",
+ "articulos": [
+  {
+   "id": "cp-1991:86",
+   "articulo": "86",
+   "encabezado": "ARTICULO 86.",
+   "titulo": "",
+   "seccion": [
+    "TITULO II. DE LOS DERECHOS, LAS GARANTIAS Y LOS DEBERES",
+    "CAPITULO 4. DE LA PROTECCION Y APLICACION DE LOS DERECHOS"
+   ],
+   "texto": "Toda persona tendrá acción de tutela para reclamar ante los jueces, en todo momento y lugar, mediante un procedimiento preferente y sumario, por sí misma o por quien actúe a su nombre, la protección inmediata de sus derechos constitucionales fundamentales, cuando quiera que éstos resulten vulnerados o amenazados por la acción o la omisión de cualquier autoridad pública.\nLa protección consistirá en una orden para que aquel respecto de quien se solicita la tutela, actúe o se abstenga de hacerlo. El fallo, que será de inmediato cumplimiento, podrá impugnarse ante el juez competente y, en todo caso, éste lo remitirá a la Corte Constitucional para su eventual revisión.\nEsta acción solo procederá cuando el afectado no disponga de otro medio de defensa judicial, salvo que aquella se utilice como mecanismo transitorio para evitar un perjuicio irremediable.\nEn ningún caso podrán transcurrir más de diez días entre la solicitud de tutela y su resolución.\nLa ley establecerá los casos en los que la acción de tutela procede contra particulares encargados de la prestación de un servicio público o cuya conducta afecte grave y directamente el interés colectivo, o respecto de quienes el solicitante se halle en estado de subordinación o indefensión.",
+   "notas": [],
+   "referencias": [],
+   "derogado": false,
+   "url": "http://www.secretariasenado.gov.co/senado/basedoc/constitucion_politica_1991_pr002.html#86"
+  }
+ ],
+ "cierre": ""
+}

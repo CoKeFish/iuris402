@@ -1,0 +1,126 @@
+{
+ "id": "ley-1480-2011",
+ "tipo": "Ley",
+ "nombre": "Ley 1480 de 2011 (Estatuto del Consumidor)",
+ "fuente": {
+  "entidad": "Secretaría del Senado",
+  "metodo": "extracción del HTML",
+  "archivos": [
+   {
+    "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1480_2011.html",
+    "archivo": "datos/crudo/ley-1480-2011.1.html",
+    "formato": "html",
+    "sha256": "77df2b530e8a5333caa631ba485c3498a7b7192cf6242f2b9b92b3af16617464",
+    "descargado": "2026-11-23"
+   },
+   {
+    "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1480_2011_pr001.html",
+    "archivo": "datos/crudo/ley-1480-2011.2.html",
+    "formato": "html",
+    "sha256": "dcd8b20ecb2da61ea7da3ee8519a58428756758f4d99ee2361f8a2fed7363e43",
+    "descargado": "2026-11-23"
+   },
+   {
+    "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1480_2011_pr002.html",
+    "archivo": "datos/crudo/ley-1480-2011.3.html",
+    "formato": "html",
+    "sha256": "a9aa8206d15f951ce3e86dbbc239d02206686f9e038c71c2b92ca63cc65e6506",
+    "descargado": "2026-11-23"
+   }
+  ]
+ },
+ "preambulo": "LEY 1480 DE 2011\n(octubre 12)\nDiario Oficial No. 48.220 de 12 de octubre de 2011\n[Nota de la fuente: Rige a partir del 12 de abril de 2012 (Art. 84)]\nCONGRESO DE LA REPÚBLICA\nPor medio de la cual se expide el Estatuto del Consumidor y se dictan otras disposiciones.\nEL CONGRESO DE COLOMBIA,\nDECRETA:\nTÍTULO I. [Nota de la fuente: No incluido en documento oficial].\nCAPÍTULO I. [Nota de la fuente: No incluido en documento oficial].",
+ "articulos": [
+  {
+   "id": "ley-1480-2011:8",
+   "articulo": "8",
+   "encabezado": "ARTÍCULO 8o.",
+   "titulo": "TÉRMINO DE LA GARANTÍA LEGAL",
+   "seccion": [
+    "TÍTULO III. GARANTÍAS.",
+    "CAPÍTULO I. DE LAS GARANTÍAS."
+   ],
+   "texto": "El término de la garantía legal será el dispuesto por la ley o por la autoridad competente. A falta de disposición de obligatorio cumplimiento, será el anunciado por el productor y/o proveedor. El término de la garantía legal empezará a correr a partir de la entrega del producto al consumidor.\nDe no indicarse el término de garantía, el término será de un año para productos nuevos. Tratándose de productos perecederos, el término de la garantía legal será el de la fecha de vencimiento o expiración.\nLos productos usados en los que haya expirado el término de la garantía legal podrán ser vendidos sin garantía, circunstancia que debe ser informada y aceptada por escrito claramente por el consumidor. En caso contrario se entenderá que el producto tiene garantía de tres (3) meses.\nLa prestación de servicios que suponen la entrega del bien para la reparación del mismo podrá ser prestada sin garantía, circunstancia que debe ser informada y aceptada por escrito claramente por el consumidor. En caso contrario se entenderá que el servicio tiene garantía de tres (3) meses, contados a partir de la entrega del bien a quien solicitó el servicio.\nPara los bienes inmuebles la garantía legal comprende la estabilidad de la obra por diez (10) años, y para los acabados un (1) año.",
+   "notas": [],
+   "referencias": [],
+   "derogado": false,
+   "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1480_2011.html#8"
+  },
+  {
+   "id": "ley-1480-2011:18",
+   "articulo": "18",
+   "encabezado": "ARTÍCULO 18.",
+   "titulo": "PRESTACIÓN DE SERVICIOS QUE SUPONEN LA ENTREGA DE UN BIEN",
+   "seccion": [
+    "TÍTULO III. GARANTÍAS.",
+    "CAPÍTULO II. PRESTACIÓN DE SERVICIOS QUE SUPONEN LA ENTREGA DE UN BIEN."
+   ],
+   "texto": "Cuando se exija la entrega de un bien respecto del cual se desarrollará una prestación de servicios, estará sometido a las siguientes reglas:\n1. Quien preste el servicio debe expedir un recibo del bien en el cual se mencione la fecha de la recepción, y el nombre del propietario o de quien hace entrega, su dirección y teléfono, la identificación del bien, la clase de servicio, las sumas que se abonan como parte del precio, el término de la garantía que otorga, y si es posible determinarlos en ese momento, el valor del servicio y la fecha de devolución.\nCuando en el momento de la recepción no sea posible determinar el valor del servicio y el plazo de devolución del bien, el prestador del servicio deberá informarlo al consumidor en el término que acuerden para ello, para que el consumidor acepte o rechace de forma expresa la prestación del servicio. De dicha aceptación o rechazo se dejará constancia, de tal forma que pueda ser verificada por la autoridad competente; si no se hubiere hecho salvedad alguna al momento de entrega del bien, se entenderá que el consumidor lo entregó en buen estado.\n2. Quien preste el servicio asume la custodia y conservación adecuada del bien y, por lo tanto, de la integridad de los elementos que lo componen, así como la de sus equipos anexos o complementarios, si los tuviere.\n3. En la prestación del servicio de parqueadero la persona natural o jurídica que preste el servicio deberá expedir un recibo del bien en el cual se mencione la fecha y hora de la recepción, la identificación del bien, el estado en que se encuentra y el valor del servicio en la modalidad en que se preste. Para la identificación y el estado en que se recibe el bien al momento del ingreso, podrá utilizarse medios tecnológicos que garanticen el cumplimiento de esta obligación. Cuando se trate de zonas de parqueo gratuito, el prestador del servicio responderá por los daños causados cuando medie dolo o culpa grave.\nPARÁGRAFO. Pasado un (1) mes a partir de la fecha prevista para la devolución o a la fecha en que el consumidor debía aceptar o rechazar expresamente el servicio, de conformidad con lo previsto en el numeral 1 anterior sin que el consumidor acuda a retirar el bien, el prestador del servicio lo requerirá para que lo retire dentro de los dos (2) meses siguientes a la remisión de la comunicación. Si el consumidor no lo retira se entenderá por ley que abandona el bien y el prestador del servicio deberá disponer del mismo conforme con la reglamentación que expida el Gobierno Nacional para el efecto.\nSin perjuicio del derecho de retención, el prestador del servicio no podrá lucrarse económicamente del bien, explotarlo, transferir el dominio o conservarlo para sí mismo. No obstante lo anterior, el consumidor deberá asumir los costos asociados al abandono del bien, tales como costos de almacenamiento bodegaje y mantenimiento.",
+   "notas": [],
+   "referencias": [],
+   "derogado": false,
+   "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1480_2011.html#18"
+  },
+  {
+   "id": "ley-1480-2011:47",
+   "articulo": "47",
+   "encabezado": "ARTÍCULO 47.",
+   "titulo": "RETRACTO",
+   "seccion": [
+    "TÍTULO VII. PROTECCIÓN CONTRACTUAL.",
+    "CAPÍTULO V. DE LAS VENTAS QUE UTILIZAN MÉTODOS NO TRADICIONALES O A DISTANCIA."
+   ],
+   "texto": "En todos los contratos para la venta de bienes y prestación de servicios mediante sistemas de financiación otorgada por el productor o proveedor, venta de tiempos compartidos o ventas que utilizan métodos no tradicionales o a distancia, que por su naturaleza no deban consumirse o no hayan comenzado a ejecutarse antes de cinco (5) días, se entenderá pactado el derecho de retracto por parte del consumidor [Nota de la fuente: sic] En el evento en que se haga uso de la facultad de retracto, se resolverá el contrato y se deberá reintegrar el dinero que el consumidor hubiese pagado.\nEl consumidor deberá devolver el producto al productor o proveedor por los mismos medios y en las mismas condiciones en que lo recibió. Los costos de transporte y los demás que conlleve la devolución del bien serán cubiertos por el consumidor.\nEl término máximo para ejercer el derecho de retracto será de cinco (5) días hábiles contados a partir de la entrega del bien o de la celebración del contrato en caso de la prestación de servicios.\nSe exceptúan del derecho de retracto, los siguientes casos:\n1. En los contratos de prestación de servicios cuya prestación haya comenzado con el acuerdo del consumidor;\n2. En los contratos de suministro de bienes o servicios cuyo precio esté sujeto a fluctuaciones de coeficientes del mercado financiero que el productor no pueda controlar;\n3. En los contratos de suministro de bienes confeccionados conforme a las especificaciones del consumidor o claramente personalizados;\n4. En los contratos de suministro de bienes que, por su naturaleza, no puedan ser devueltos o puedan deteriorarse o caducar con rapidez;\n5. En los contratos de servicios de apuestas y loterías;\n6. En los contratos de adquisición de bienes perecederos;\n7. En los contratos de adquisición de bienes de uso personal.\n[Nota de la fuente: Aparte subrayado CONDICIONALMENTE exequible] [Nota de la fuente: Inciso modificado por el artículo 3 de la Ley 2439 de 2024. El nuevo texto es el siguiente:] [_En los casos de comercio electrónico_] la devolución del dinero a favor del consumidor no podrá exceder de quince (15) días calendario desde el momento en que ejerció el derecho y haya cumplido con las obligaciones: i) suministrar los datos correctos y completos requeridos por el proveedor para efectuar el proceso, ii) la devolución del producto en los términos del presente artículo; la suma será aplicada directamente sobre el instrumento de pago o medio de pago correspondiente o a través del medio acordado entre las partes, para tal fin el proveedor deberá informar de manera clara, detallada y específica al consumidor las opciones de las cuales dispone.\nPARÁGRAFO 1o. [Nota de la fuente: Parágrafo adicionado por el artículo 3 de la Ley 2439 de 2024. El nuevo texto es el siguiente:] Todos los actores, incluida la entidad financiera, deberán cumplir con el término establecido en el presente artículo.",
+   "notas": [
+    "sic",
+    "Aparte subrayado CONDICIONALMENTE exequible",
+    "Inciso modificado por el artículo 3 de la Ley 2439 de 2024. El nuevo texto es el siguiente:",
+    "Parágrafo adicionado por el artículo 3 de la Ley 2439 de 2024. El nuevo texto es el siguiente:"
+   ],
+   "referencias": [
+    {
+     "tipo": "vigencia",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_2439_2024.html#3",
+     "contexto": "arte subrayado CONDICIONALMENTE exequible Inciso modificado por el artículo 3 de la Ley 2439 de 2024. El nuevo texto es el siguiente: [_En los casos de comercio"
+    }
+   ],
+   "derogado": false,
+   "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1480_2011_pr001.html#47"
+  },
+  {
+   "id": "ley-1480-2011:56",
+   "articulo": "56",
+   "encabezado": "ARTÍCULO 56.",
+   "titulo": "ACCIONES JURISDICCIONALES",
+   "seccion": [
+    "TÍTULO VIII. ASPECTOS PROCEDIMENTALES E INSTITUCIONALIDAD.",
+    "CAPÍTULO I. ACCIONES JURISDICCIONALES."
+   ],
+   "texto": "Sin perjuicio de otras formas de protección, las acciones jurisdiccionales de protección al consumidor son:\n1. Las populares y de grupo reguladas en la Ley 472 de 1998 y las que la modifiquen sustituyan o aclaren.\n2. Las de responsabilidad por daños por producto defectuoso, definidas en esta ley, que se adelantarán ante la jurisdicción ordinaria.\n3. [Nota de la fuente: Numeral corregido por el artículo 5 del Decreto 2184 de 2012. El nuevo texto es el siguiente:] La acción de protección al consumidor, mediante la cual se decidirán los asuntos contenciosos que tengan como fundamento la vulneración de los derechos del consumidor por la violación directa de las normas sobre protección a consumidores y usuarios, los originados en la aplicación de las normas de protección contractual contenidas en esta ley y en normas especiales de protección a consumidores y usuarios; los orientados a lograr que se haga efectiva una garantía; los encaminados a obtener la reparación de los daños causados a los bienes en la prestación de servicios contemplados en el artículo 18 de esta ley o por información o publicidad engañosa, independientemente del sector de la economía en que se hayan vulnerado los derechos del consumidor.\nPARÁGRAFO. La competencia, el procedimiento y demás aspectos procesales para conocer de las acciones de que trata la Ley 472 de 1998 serán las previstas en dicha ley, y para las de responsabilidad por daños por producto defectuoso que se establece en esta ley serán las previstas en el Código de Procedimiento Civil.\nEn las acciones a las que se refiere este artículo se deberán aplicar las reglas de responsabilidad establecidas en la presente ley.",
+   "notas": [
+    "Numeral corregido por el artículo 5 del Decreto 2184 de 2012. El nuevo texto es el siguiente:"
+   ],
+   "referencias": [
+    {
+     "tipo": "cita",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_0472_1998.html#1",
+     "contexto": "cionales de protección al consumidor son: 1. Las populares y de grupo reguladas en la Ley 472 de 1998 y las que la modifiquen sustituyan o aclaren. 2. Las de respo"
+    },
+    {
+     "tipo": "cita",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1480_2011.html#18",
+     "contexto": "los daños causados a los bienes en la prestación de servicios contemplados en el artículo 18 de esta ley o por información o publicidad engañosa, independientemen"
+    },
+    {
+     "tipo": "vigencia",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/decreto_2184_2012.html#5",
+     "contexto": "ordinaria. 3. [Nota de la fuente: Numeral corregido por el artículo 5 del Decreto 2184 de 2012. El nuevo texto es el siguiente:] La ac",
+     "sin_enlace": true
+    }
+   ],
+   "derogado": false,
+   "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1480_2011_pr001.html#56"
+  }
+ ],
+ "cierre": "El Presidente del honorable Senado de la República,\nJUAN MANUEL CORZO ROMÁN.\nEl Secretario General del honorable Senado de la República,\nEMILIO RAMÓN OTERO DAJUD.\nEl Presidente de la honorable Cámara de Representantes,\nSIMÓN GAVIRIA MUÑOZ.\nEl Secretario de la honorable Cámara de Representantes,\nJESÚS ALFONSO RODRÍGUEZ CAMARGO.\nREPÚBLICA DE COLOMBIA – GOBIERNO NACIONAL\nPublíquese y cúmplase.\nDada en Bogotá, D. C., a 12 de octubre de 2011.\nJUAN MANUEL SANTOS CALDERÓN\nEl Ministro de Interior,\nGERMÁN VARGAS LLERAS.\nEl Ministro de Hacienda y Crédito Público,\nJUAN CARLOS ECHEVERRY GARZÓN.\nEl Viceministro de Turismo, del Ministerio de Comercio, Industria y Turismo, encargado de las funciones del Despacho del Ministro de Comercio, Industria y Turismo,\nÓSCAR RUEDA GARCÍA."
+}

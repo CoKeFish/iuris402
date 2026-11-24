@@ -1,0 +1,76 @@
+{
+ "ley-1480-2011:8": {
+  "resumen": "El término de la garantía legal es el dispuesto por la ley o la autoridad, o el anunciado, y corre desde la entrega del producto. Si no se indica, es de un año para productos nuevos; de tres meses en los usados sin garantía no aceptada por escrito; en inmuebles, diez años de estabilidad de la obra y un año en acabados.",
+  "argumento": "El consumidor puede invocar la garantía legal dentro del término legal o anunciado, que corre desde la entrega, y, si el producto usado se vendió sin garantía no informada ni aceptada por escrito, exigir la garantía de tres meses.",
+  "temas": [
+   "término de la garantía legal",
+   "productos usados",
+   "productos perecederos",
+   "estabilidad de la obra",
+   "servicio de reparación",
+   "garantía de tres meses"
+  ],
+  "preguntas": [
+   "¿Cuál es el término de la garantía legal y desde cuándo se cuenta?",
+   "¿Qué término de garantía se aplica al producto usado vendido sin garantía que no fue informado ni aceptado por escrito por el consumidor?",
+   "¿Qué término de garantía cubre la estabilidad de la obra y los acabados de los bienes inmuebles?",
+   "¿Cuál es el término de la garantía legal de un producto nuevo cuando el proveedor no anunció expresamente término alguno?",
+   "¿Cuál es el término de la garantía legal aplicable a un inmueble, en estabilidad de la obra y en acabados?"
+  ]
+ },
+ "ley-1480-2011:18": {
+  "resumen": "Quien presta un servicio que supone la entrega de un bien debe expedir recibo con fecha, identificación, servicio, abonos y término de garantía, y asume su custodia; en parqueaderos, recibo del estado del bien. Si el consumidor no retira el bien en un mes, se le requiere, y a los dos meses se entiende abandonado.",
+  "argumento": "El consumidor puede exigir al prestador del servicio el recibo del bien y su custodia adecuada, y alegar que lo entregó en buen estado si no se hizo salvedad; el prestador no puede lucrarse del bien abandonado, cuyos costos de almacenamiento asume el consumidor.",
+  "temas": [
+   "servicio que supone la entrega de un bien",
+   "recibo del bien",
+   "custodia y conservación",
+   "parqueadero",
+   "abandono del bien"
+  ],
+  "preguntas": [
+   "¿Qué debe contener el recibo que expide el prestador de un servicio que supone la entrega de un bien?",
+   "¿Qué responsabilidad asume el prestador sobre la custodia y conservación del bien recibido?",
+   "¿Cuándo se entiende que el consumidor abandona el bien entregado para la prestación de un servicio?",
+   "¿Responde el parqueadero por los daños sufridos por el vehículo bajo su custodia, cuando expidió recibo del estado del bien?",
+   "¿Qué consecuencia jurídica tiene que el consumidor no retire el bien entregado para reparación tras el requerimiento del prestador del servicio?"
+  ]
+ },
+ "ley-1480-2011:47": {
+  "resumen": "En ventas con financiación del proveedor, tiempos compartidos, métodos no tradicionales o a distancia se entiende pactado el retracto, que se ejerce en cinco días hábiles desde la entrega o el contrato, devolviendo el producto a costa del consumidor, con excepciones taxativas. El dinero se devuelve en máximo quince días calendario, y todos los actores, incluida la entidad financiera, deben cumplirlo.",
+  "argumento": "El consumidor puede retractarse dentro de los cinco días hábiles y exigir la devolución del dinero en quince días calendario, aplicable, conforme a la Sentencia C-192 de 2026, a todas las modalidades del artículo y no solo al comercio electrónico.",
+  "temas": [
+   "derecho de retracto",
+   "devolución del dinero",
+   "excepciones al retracto",
+   "ventas a distancia",
+   "término de cinco días hábiles",
+   "exequibilidad condicionada"
+  ],
+  "preguntas": [
+   "¿En qué contratos se entiende pactado el derecho de retracto del consumidor y en qué término se ejerce?",
+   "¿Qué contratos están exceptuados del derecho de retracto?",
+   "¿Dentro de qué término debe devolverse el dinero al consumidor que ejerció el retracto en una venta a distancia no electrónica?",
+   "¿Procede el retracto del consumidor frente a un producto adquirido por medios electrónicos, cuando este manifiesta su arrepentimiento respecto de la compra realizada?",
+   "¿Dentro de qué término debe el proveedor reintegrar al consumidor el dinero pagado, una vez ejercido el derecho de retracto?"
+  ]
+ },
+ "ley-1480-2011:56": {
+  "resumen": "Las acciones jurisdiccionales de protección al consumidor son las populares y de grupo de la Ley 472 de 1998, las de responsabilidad por daños por producto defectuoso ante la jurisdicción ordinaria y la acción de protección al consumidor, para asuntos contenciosos por violación de normas de protección, protección contractual, garantía, servicios con entrega de un bien e información o publicidad engañosa.",
+  "argumento": "El consumidor puede ejercer la acción de protección al consumidor para hacer efectiva la garantía, o por la violación de normas de protección, de protección contractual o por información o publicidad engañosa, en cualquier sector de la economía.",
+  "temas": [
+   "acciones jurisdiccionales",
+   "acción de protección al consumidor",
+   "acciones populares y de grupo",
+   "producto defectuoso",
+   "efectividad de la garantía"
+  ],
+  "preguntas": [
+   "¿Cuáles son las acciones jurisdiccionales de protección al consumidor?",
+   "¿Qué asuntos contenciosos se deciden mediante la acción de protección al consumidor?",
+   "¿Ante qué jurisdicción se adelantan las acciones por daños por producto defectuoso?",
+   "¿Cuáles son las acciones jurisdiccionales de protección al consumidor que puede promover quien resulta afectado por la violación de sus derechos?",
+   "¿Ante qué jurisdicción debe promoverse la acción por responsabilidad derivada de daños causados por un producto defectuoso?"
+  ]
+ }
+}

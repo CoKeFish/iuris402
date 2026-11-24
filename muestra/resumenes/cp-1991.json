@@ -1,0 +1,21 @@
+{
+ "cp-1991:86": {
+  "resumen": "Toda persona tiene acción de tutela para reclamar ante los jueces, mediante procedimiento preferente y sumario, la protección inmediata de sus derechos fundamentales vulnerados o amenazados por la acción u omisión de cualquier autoridad pública. Solo procede si no existe otro medio de defensa judicial, salvo como mecanismo transitorio; el fallo se impugna y no pueden transcurrir más de diez días hasta su resolución.",
+  "argumento": "El accionante puede presentar acción de tutela, por sí o por quien actúe a su nombre, contra la autoridad pública que vulnere o amenace sus derechos fundamentales, cuando no disponga de otro medio judicial o para evitar un perjuicio irremediable, y contra particulares en los casos que la ley señale.",
+  "temas": [
+   "acción de tutela",
+   "derechos fundamentales",
+   "subsidiariedad",
+   "perjuicio irremediable",
+   "impugnación del fallo",
+   "tutela contra particulares"
+  ],
+  "preguntas": [
+   "¿Cuándo procede la acción de tutela conforme al artículo 86 de la Constitución?",
+   "¿En qué término debe resolverse la solicitud de tutela?",
+   "¿Procede la acción de tutela contra un particular que presta un servicio público respecto del cual el solicitante se encuentra en estado de indefensión?",
+   "¿En qué supuestos procede la acción de tutela por vulneración o amenaza de derechos fundamentales por la acción u omisión de una autoridad pública?",
+   "¿Cuál es el término máximo para resolver la acción de tutela mediante procedimiento preferente y sumario?"
+  ]
+ }
+}

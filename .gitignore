@@ -1,0 +1,5 @@
+node_modules/
+.env
+.modelos/
+# la base legal no se publica: se vende por la API
+datos/

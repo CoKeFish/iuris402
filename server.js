@@ -24,7 +24,7 @@ export function crearApp({ payTo, facilitador, ventas = abrirVentas(), traducir 
   // Gratis: qué se vende, a cuánto y con qué cobertura. El agente decide antes de pagar.
   app.get("/", (_, res) =>
     res.json({
-      servicio: "leyes-402: base normativa colombiana para agentes",
+      servicio: "Iuris402: base normativa colombiana para agentes",
       red: RED,
       cobra: payTo,
       rutas: {
@@ -197,6 +197,6 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   await embeber(["calentar el modelo"], "query"); // la primera consulta no espera la carga
   const puerto = Number(process.env.PORT || new URL(API_URL).port || 4021);
   crearApp({ payTo, facilitador: new HTTPFacilitatorClient({ url: FACILITATOR_URL }) }).listen(puerto, () =>
-    console.log(`leyes-402 en http://localhost:${puerto} (${PRECIO_BUSCAR} /buscar, ${PRECIO_ASESORIA} /asesoria → ${payTo})`),
+    console.log(`Iuris402 en http://localhost:${puerto} (${PRECIO_BUSCAR} /buscar, ${PRECIO_ASESORIA} /asesoria → ${payTo})`),
   );
 }

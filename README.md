@@ -1,4 +1,4 @@
-# leyes-402
+# Iuris402
 
 Base legal colombiana para agentes de IA, que se paga por consulta con **x402** en USDC sobre
 Stellar **testnet**. Un agente pregunta en lenguaje común, paga centavos y recibe los artículos

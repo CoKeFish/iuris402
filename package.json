@@ -1,5 +1,5 @@
 {
-  "name": "leyes-402",
+  "name": "iuris402",
   "version": "0.1.0",
   "description": "Base legal colombiana para agentes: búsqueda semántica de leyes que se paga con x402 en Stellar testnet",
   "type": "module",

@@ -8,7 +8,7 @@ se vende por suscripción a personas: un agente no llena formularios ni firma co
 **Usuario (20 s).** Quien construye agentes: de atención al cliente, de cobranza, de arriendos, de
 cumplimiento. Necesitan una respuesta con fuente, de vez en cuando, sin suscripción.
 
-**Solución y demo (80 s).** leyes-402 vende ley por consulta.
+**Solución y demo (80 s).** Iuris402 vende ley por consulta.
 1. `curl -i .../asesoria?q=...` → **402**: cuánto cuesta y a qué cuenta.
 2. El agente compara con su tope, firma, paga 0.02 USDC en Stellar y recibe artículos y argumentos.
 3. Abre el hash en stellar.expert: el pago es real y el agente lo verificó en la red.

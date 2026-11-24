@@ -20,6 +20,7 @@ export const archivoCrudo = (norma, url) =>
 
 // Vigencias: datos/vigencia/decisiones.json (sentencias y leyes) y un archivo por norma
 export function leerVigencia() {
+  if (!existsSync(DECISIONES)) return { fuentes: {}, afectaciones: [] };
   const leer = (f) => JSON.parse(readFileSync(VIGENCIA + f, "utf8"));
   const archivos = readdirSync(VIGENCIA).filter((f) => f !== "decisiones.json");
   return { fuentes: leer("decisiones.json"), afectaciones: archivos.flatMap(leer) };

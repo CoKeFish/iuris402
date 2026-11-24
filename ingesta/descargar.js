@@ -10,6 +10,8 @@ const raiz = fileURLToPath(new URL("../", import.meta.url));
 const pendientes = new Map();
 for (const norma of fuentes) for (const url of norma.urls) pendientes.set(archivoCrudo(norma, url), url);
 for (const f of Object.values(leerVigencia().fuentes)) if (f.archivo) pendientes.set(raiz + f.archivo, f.url.split("#")[0]);
+// desde aquí los demás pasos trabajan con datos/ y no con la muestra
+mkdirSync(`${raiz}datos/curado`, { recursive: true });
 
 let fallos = 0;
 for (const [destino, url] of pendientes) {

@@ -15,8 +15,8 @@ archivo crudo (HTML / PDF) → JSON curado, igual a la fuente → resumen con IA
 agente ── pregunta + pago x402 ──► API ── búsqueda híbrida ──► citas + argumentos ──► LLM asesor
 ```
 
-La carpeta `datos/` **no está en este repositorio**: es lo que vende la API. Aquí está el código con que se
-construye, se verifica y se cobra.
+La base completa (`datos/`) **no está en este repositorio**: es lo que vende la API. Aquí está el código con que
+se construye, se verifica y se cobra, y una **muestra de 10 artículos** (`muestra/`) para probarlo.
 
 1. **Crudo** (`datos/crudo/`): el HTML o PDF tal como lo publica la entidad; se baja con `npm run descargar`.
 2. **Curado** (`datos/curado/`): **dice lo mismo que la fuente**, ordenado por artículo, con sección y
@@ -66,9 +66,9 @@ Node 22.15 o más nuevo.
 ```bash
 npm install
 cp .env.example .env      # cuentas de testnet, con trustline de USDC
-npm run indexar           # crea datos/leyes.db desde los JSON de datos/ (la primera vez baja el modelo, ~135 MB)
+npm run indexar           # crea la base con la muestra (la primera vez baja el modelo, ~135 MB)
 npm run api               # terminal 1
-npm run agente -- "ya pagué la deuda, ¿cuánto tiempo sigo en datacrédito?"   # terminal 2
+npm run agente -- "compré por internet y me arrepentí, ¿lo puedo devolver?"   # terminal 2
 ```
 
 Para que un LLM redacte la asesoría, define el comando que lee el encargo por stdin, por
@@ -79,7 +79,7 @@ Agregar leyes: añade la norma a `ingesta/fuentes.json`, luego `npm run descarga
 
 ## Pruebas
 
-Todas necesitan `datos/`.
+`npm test` pasa con la muestra. Las demás necesitan la base completa.
 
 - `npm test`: 19 pruebas del cobro y la base con un facilitador simulado (402 correcto, sin doble cobro
   aunque la API se reinicie, sin cobro si no hay resultados, referencias consultables).

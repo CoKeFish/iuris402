@@ -118,12 +118,19 @@ export function abrirVentas(archivo = VENTAS_DB) {
       pagador TEXT, precio TEXT NOT NULL, recibo TEXT NOT NULL, pregunta TEXT, respuesta BLOB
     );
     CREATE INDEX IF NOT EXISTS pagos_creado ON pagos(creado);
+    -- respuestas listas cuyo pago no se confirmó: se entregan si la red dice que se cobró
+    CREATE TABLE IF NOT EXISTS pendientes (
+      clave TEXT PRIMARY KEY, creado INTEGER NOT NULL, transaccion TEXT, pregunta TEXT NOT NULL, respuesta BLOB NOT NULL
+    );
   `);
   const leer = db.prepare("SELECT recibo, respuesta FROM pagos WHERE clave = ? AND creado > ? AND respuesta IS NOT NULL");
   const escribir = db.prepare(
     "INSERT OR IGNORE INTO pagos (clave, creado, ruta, transaccion, pagador, precio, recibo, pregunta, respuesta) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
   );
   const olvidar = db.prepare("UPDATE pagos SET pregunta = NULL, respuesta = NULL WHERE creado <= ? AND respuesta IS NOT NULL");
+  const leerPendiente = db.prepare("SELECT transaccion, pregunta, respuesta FROM pendientes WHERE clave = ? AND creado > ?");
+  const anotar = db.prepare("INSERT OR REPLACE INTO pendientes (clave, creado, transaccion, pregunta, respuesta) VALUES (?, ?, ?, ?, ?)");
+  const quitar = db.prepare("DELETE FROM pendientes WHERE clave = ? OR creado <= ?");
   const limite = () => Date.now() - HORAS * 3_600_000;
   return {
     buscar: (clave) => leer.get(clave, limite()),
@@ -131,6 +138,9 @@ export function abrirVentas(archivo = VENTAS_DB) {
       olvidar.run(limite());
       escribir.run(p.clave, Date.now(), p.ruta, p.transaccion, p.pagador ?? null, p.precio, p.recibo, p.pregunta, p.respuesta);
     },
+    pendiente: (clave) => leerPendiente.get(clave, limite()),
+    anotarPendiente: (p) => anotar.run(p.clave, Date.now(), p.transaccion || null, p.pregunta, p.respuesta),
+    quitarPendiente: (clave) => quitar.run(clave, limite()),
     cerrar: () => db.close(),
     db,
   };

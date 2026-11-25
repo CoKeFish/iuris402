@@ -10,13 +10,14 @@ import { abrirVentas } from "./base.js";
 import { elegir } from "./elegir.js";
 import { reformular } from "./reformular.js";
 import { cargarIndice, consultar, embeber, responder, textosCitados } from "./buscador.js";
+import { datosPago, decodificar, estadoPago } from "./pago.js";
 import { API_URL, FACILITATOR_URL, PRECIO_ASESORIA, PRECIO_BUSCAR, RED, requerida } from "./comun.js";
 
 const AVISO =
   "La información suministrada es de carácter general, no constituye concepto jurídico ni sustituye la asesoría de un profesional del derecho. La vigencia debe constatarse en la fuente oficial.";
 const RUTAS = ["/buscar", "/asesoria"];
 
-export function crearApp({ payTo, facilitador, ventas = abrirVentas(), traducir = reformular, escoger = elegir }) {
+export function crearApp({ payTo, facilitador, ventas = abrirVentas(), traducir = reformular, escoger = elegir, rastrear = (pago) => estadoPago(datosPago(pago)) }) {
   const indice = cargarIndice();
   const { normas } = indice;
   const app = express();
@@ -63,15 +64,39 @@ export function crearApp({ payTo, facilitador, ventas = abrirVentas(), traducir 
 
   // Reintento sin doble cobro: si la respuesta se perdió, el mismo pago firmado para la misma URL
   // recupera lo ya pagado (24 horas, y aunque la API se reinicie). Un pago nuevo siempre se cobra.
-  app.use(RUTAS, (req, res, next) => {
+  const enCurso = new Map(); // dos envíos simultáneos del mismo pago: el segundo espera al primero
+  app.use(RUTAS, async (req, res, next) => {
     const firma = req.get("payment-signature") ?? req.get("x-payment");
     if (!firma) return next();
     const clave = createHash("sha256").update(`${req.method} ${req.originalUrl}\n${firma}`).digest("hex");
-    const previa = ventas.buscar(clave);
-    if (previa) {
-      return res.set("PAYMENT-RESPONSE", previa.recibo).set("X-Reintento", "sin-cobro").type("json").send(Buffer.from(previa.respuesta));
-    }
     const ruta = req.baseUrl; // al terminar la respuesta Express ya la restauró
+    const precio = ruta === "/asesoria" ? PRECIO_ASESORIA : PRECIO_BUSCAR;
+    while (enCurso.has(clave)) await enCurso.get(clave);
+    enCurso.set(clave, new Promise((r) => res.once("close", r)).then(() => enCurso.delete(clave)));
+    const repetir = (v) => res.set("PAYMENT-RESPONSE", v.recibo).set("X-Reintento", "sin-cobro").type("json").send(Buffer.from(v.respuesta));
+    const previa = ventas.buscar(clave);
+    if (previa) return repetir(previa);
+
+    // La liquidación quedó en duda (el facilitador o la red no contestaron): manda lo que diga la red
+    const duda = ventas.pendiente(clave);
+    if (duda) {
+      const red = await Promise.resolve()
+        .then(() => rastrear(decodificar(firma)))
+        .catch((e) => (console.error("No se pudo consultar el pago:", e.message), { estado: "pendiente" }));
+      if (red.estado === "cobrado") {
+        const recibo = Buffer.from(JSON.stringify({ success: true, transaction: red.hash, network: RED })).toString("base64");
+        ventas.guardar({ clave, ruta, transaccion: red.hash, precio, recibo, pregunta: duda.pregunta, respuesta: duda.respuesta });
+        ventas.quitarPendiente(clave);
+        return repetir({ recibo, respuesta: duda.respuesta });
+      }
+      if (red.estado === "vencido") ventas.quitarPendiente(clave);
+      else if (duda.transaccion) {
+        return res.status(503).set("Retry-After", "5").json({
+          error: "El pago fue enviado y la red aún no lo confirma. Puede reenviarse la misma firma: no se cobrará dos veces.",
+          transaccion: duda.transaccion,
+        });
+      }
+    }
     const end = res.end.bind(res);
     res.end = (cuerpo, ...resto) => {
       const recibo = res.getHeader("PAYMENT-RESPONSE");
@@ -84,13 +109,20 @@ export function crearApp({ payTo, facilitador, ventas = abrirVentas(), traducir 
             ruta,
             transaccion: transaction,
             pagador: payer,
-            precio: ruta === "/asesoria" ? PRECIO_ASESORIA : PRECIO_BUSCAR,
+            precio,
             recibo: String(recibo),
             pregunta: req.query.q,
             respuesta: Buffer.from(cuerpo),
           });
         } catch (e) {
           console.error("No se guardó la venta:", e.message);
+        }
+      } else if (res.locals.entrega && res.statusCode !== 200) {
+        // La respuesta estaba lista y la liquidación falló o quedó en duda: se guarda por si se cobró
+        try {
+          ventas.anotarPendiente({ clave, transaccion: decodificar(recibo && String(recibo))?.transaction, pregunta: req.query.q, respuesta: res.locals.entrega });
+        } catch (e) {
+          console.error("No se guardó la entrega en duda:", e.message);
         }
       }
       return end(cuerpo, ...resto);
@@ -114,6 +146,15 @@ export function crearApp({ payTo, facilitador, ventas = abrirVentas(), traducir 
       [{ network: RED, server: new ExactStellarScheme() }],
     ),
   );
+
+  app.use(RUTAS, (_req, res, next) => {
+    const json = res.json.bind(res);
+    res.json = (cuerpo) => {
+      if (res.statusCode === 200) res.locals.entrega = Buffer.from(JSON.stringify(cuerpo));
+      return json(cuerpo);
+    };
+    next();
+  });
 
   const cita = ({ articulo: a, similitud, relevancia }, n) => ({
     ref: `[${n + 1}]`,
@@ -209,8 +250,11 @@ export function crearApp({ payTo, facilitador, ventas = abrirVentas(), traducir 
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const payTo = requerida("COBRADOR_PUBLIC");
+  // Respaldo del demo: sin los LLM y en el puerto siguiente
+  const sinLlm = process.argv.includes("--sin-llm");
+  if (sinLlm) for (const v of ["REFORMULAR_CMD", "ELEGIR_CMD"]) delete process.env[v];
   await embeber(["calentar el modelo"], "query"); // la primera consulta no espera la carga
-  const puerto = Number(process.env.PORT || new URL(API_URL).port || 4021);
+  const puerto = Number(process.env.PORT || new URL(API_URL).port || 4021) + (sinLlm ? 1 : 0);
   crearApp({ payTo, facilitador: new HTTPFacilitatorClient({ url: FACILITATOR_URL }) }).listen(puerto, () =>
     console.log(`Iuris402 en http://localhost:${puerto} (${PRECIO_BUSCAR} /buscar, ${PRECIO_ASESORIA} /asesoria → ${payTo})`),
   );

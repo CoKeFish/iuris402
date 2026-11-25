@@ -1,6 +1,6 @@
 // Recorrido del Demo Day: muestra en vivo que la API cobra por x402, entrega lo pagado y no cobra
 // de más. Lo gastado no lo dice la API: son las transferencias que la red reporta desde que empezó.
-// Uso (con la API encendida): npm run demo -- "tu pregunta legal"      respaldo sin LLM: npm run demo -- --respaldo
+// Uso (con la API encendida): npm run demo -- "tu pregunta legal"      respaldo sin LLM: npm run demo:respaldo
 import { fileURLToPath } from "node:url";
 import { x402HTTPClient } from "@x402/fetch";
 import { createEd25519Signer } from "@x402/stellar";
@@ -9,6 +9,13 @@ import { crearCliente, datosPago, decodificar, entregarPago, estadoPago, ledgerA
 
 const AJENA = "receta de lasaña con queso y salsa boloñesa";
 const TOPE_BAJO = "$0.005";
+
+// El principio del primer artículo, para que se vea qué se compró
+function muestra({ cita, texto, vigencia, fuente }) {
+  const t = texto.replace(/[~_*]/g, "").replace(/\s+/g, " ").trim();
+  const estado = vigencia.length ? vigencia.map((v) => `${v.estado} (${v.decidido_por})`).join("; ") : "sin afectaciones registradas";
+  return `${cita}: «${t.length > 700 ? `${t.slice(0, 700)}…` : t}»\n  vigencia: ${estado} · ${fuente.url}`;
+}
 
 // firmar(requisitos) → { headers, estado } · firmarConTopeBajo(requisitos) → debe fallar
 // gastado() → USDC transferido en la red desde que empezó el recorrido, en unidades
@@ -28,7 +35,7 @@ export async function recorrido({ api, pregunta, firmar, firmarConTopeBajo, gast
     inicio = Date.now();
     return paso;
   };
-  const pagar = (q, f) => entregarPago({ pedir: () => pedir(q, f.headers), estado: f.estado, pausa, plazo, avisar: (m) => decir({ aviso: m }) });
+  const pagar = (q, f) => entregarPago({ pedir: () => pedir(q, f.headers), estado: f.estado, pausa, plazo, reintentos: 1, avisar: (m) => decir({ aviso: m }) });
   const error = async (e) => `${e.res ? (motivo(e.res) ?? (await e.res.json().catch(() => ({}))).error ?? "") : e.falla} ${veredicto(e)}`.trim();
 
   // 1. Sin pago
@@ -66,6 +73,7 @@ export async function recorrido({ api, pregunta, firmar, firmarConTopeBajo, gast
     verificado: pagada.red.estado === "cobrado",
     hash: pagada.red.hash ?? decodificar(pagada.res.headers.get("payment-response"))?.transaction,
     detalle: cuerpo.citas.map((c) => c.cita).join(" · "),
+    comprado: muestra(cuerpo.citas[0]),
   });
 
   // 4. El mismo pago otra vez: la misma respuesta, sin cobro
@@ -85,7 +93,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const respaldo = args.includes("--respaldo");
   const pregunta = args.filter((a) => !a.startsWith("--")).join(" ").trim() || "compré por internet y me arrepentí, ¿lo puedo devolver?";
   const url = new URL(API_URL);
-  if (respaldo) url.port = Number(url.port) + 1; // npm run api -- --sin-llm
+  if (respaldo) url.port = Number(url.port) + 1; // npm run api:respaldo
   const signer = createEd25519Signer(requerida("AGENTE_SECRET"), RED);
   const cliente = crearCliente(signer, process.env.TOPE || "$0.02");
   const tacano = crearCliente(signer, TOPE_BAJO);
@@ -113,7 +121,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
         console.log(
           p.aviso
             ? `  … ${p.aviso}`
-            : `▶ ${p.paso}: ${p.respuesta}${p.gastado === undefined ? "" : ` · gastado en la red ${p.gastado / UNIDADES} USDC`} · ${p.segundos} s\n  ${p.detalle ?? ""}` +
+            : `▶ ${p.paso}: ${p.respuesta}${p.gastado === undefined ? "" : ` · gastado en la red ${p.gastado / UNIDADES} USDC`} · ${p.segundos} s\n  ${p.detalle ?? ""}${p.comprado ? `\n  ${p.comprado}` : ""}` +
                 (p.hash ? `\n  ${p.verificado ? "✅ verificado en la red (USDC, cuentas, monto y nonce)" : "⚠ no pude verificarlo en la red"}\n  ${enlaceTx(p.hash)}` : "") +
                 "\n",
         ),

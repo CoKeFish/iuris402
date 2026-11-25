@@ -72,6 +72,15 @@ test("rechazo antes de liquidar: responde rápido, con el motivo, y la red confi
   assert.match(veredicto(e), /No hay cobro en la red/);
 });
 
+test("si sigue en 503 sin haber enviado el pago, no se queda esperando; si ya lo envió, sí lo busca", async () => {
+  const inicio = Date.now();
+  const e = await entregarPago({ pausa: 1, plazo: 5000, pedir: guion(() => respuesta(503)), estado: guion({ estado: "pendiente", segundos: 290 }) });
+  assert.ok(Date.now() - inicio < 1000);
+  assert.match(veredicto(e), /No hay cobro en la red/);
+  const d = await entregarPago({ ...rapido, pedir: guion(() => respuesta(503, { "x-transaccion": "h" })), estado: guion({ estado: "pendiente", segundos: 290 }) });
+  assert.match(veredicto(d), /EN DUDA/);
+});
+
 test("un 503 se reintenta con la misma firma", async () => {
   const pedir = guion(() => respuesta(503), () => respuesta(200));
   const e = await entregarPago({ ...rapido, pedir, estado: guion({ estado: "cobrado", hash: "h" }) });

@@ -33,7 +33,7 @@ export async function transferencias({ de, a, desde, servidor = servidorRpc }) {
   const { events, latestLedger } = await servidor.getEvents({
     startLedger: desde,
     filters: [{ type: "contract", contractIds: [USDC_CONTRATO], topics: [[...topics, "**"]] }],
-    limit: 100,
+    limit: 10_000,
   });
   const monto = (v) => BigInt(typeof v === "object" ? v.amount : v);
   return { lista: events.map((e) => ({ hash: e.txHash, ledger: e.ledger, monto: monto(scValToNative(e.value)) })), ledger: latestLedger };
@@ -73,8 +73,9 @@ export async function entregarPago({ pedir, estado, plazo = 120_000, pausa = 300
     ({ res, falla } = await probar());
   }
   let red = await mirar();
-  // La API respondió que no y no envió nada a la red: basta confirmarlo un momento
-  const rechazo = Boolean(res && !res.ok && res.status < 500 && !recibo(res)?.transaction);
+  // La API respondió que no (o 503, no disponible) y no envió nada a la red: basta confirmarlo un momento
+  const enviado = recibo(res)?.transaction || res?.headers.get("x-transaccion");
+  const rechazo = Boolean(res && !res.ok && !enviado && (res.status < 500 || res.status === 503));
   const fin = Date.now() + (rechazo ? pausa * 2 : res?.ok ? pausa * 5 : plazo);
   while (red.estado === "pendiente" && Date.now() < fin) {
     if (!rechazo && !res?.ok) avisar("No sé si el pago pasó: lo busco en la red…");

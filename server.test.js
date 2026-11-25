@@ -9,6 +9,7 @@ import { abrirLeyes, abrirVentas } from "./base.js";
 import { cargarIndice, nombrados } from "./buscador.js";
 import { PRECIO_ASESORIA, RED, USDC_CONTRATO } from "./comun.js";
 import { interpretarEleccion } from "./elegir.js";
+import { conRelevo } from "./llm.js";
 import { interpretar } from "./reformular.js";
 import { crearApp } from "./server.js";
 
@@ -18,21 +19,33 @@ let liquidados = 0;
 let valido = true;
 let traductor = null; // LLM simulado que reformula
 let selector = null; // LLM simulado que elige
+let enRed = { estado: "pendiente" }; // lo que la red simulada dice de un pago
+let liquidar = null; // respuesta de una liquidación que falla
+const usados = new Set(); // en Stellar una firma liquidada no sirve otra vez
+const marca = (pago) => pago.payload?.transaction;
 const facilitador = {
   getSupported: async () => ({
     kinds: [{ x402Version: 2, scheme: "exact", network: RED, extra: { areFeesSponsored: true } }],
     extensions: [],
     signers: {},
   }),
-  verify: async () => (valido ? { isValid: true, payer: PAGO_A } : { isValid: false, invalidReason: "insufficient_funds", payer: PAGO_A }),
-  settle: async () => ({ success: true, transaction: `hash-${++liquidados}`, network: RED, payer: PAGO_A }),
+  verify: async (pago) => {
+    if (!valido) return { isValid: false, invalidReason: "insufficient_funds", payer: PAGO_A };
+    if (usados.has(marca(pago))) return { isValid: false, invalidReason: "invalid_exact_stellar_payload_simulation_failed", payer: PAGO_A };
+    return { isValid: true, payer: PAGO_A };
+  },
+  settle: async (pago) => {
+    if (liquidar) return liquidar();
+    usados.add(marca(pago));
+    return { success: true, transaction: `hash-${++liquidados}`, network: RED, payer: PAGO_A };
+  },
 };
 
 const archivo = join(mkdtempSync(join(tmpdir(), "leyes-")), "ventas.db");
 let servidor, base, ventas;
 async function encender() {
   ventas = abrirVentas(archivo);
-  servidor = crearApp({ payTo: PAGO_A, facilitador, ventas, traducir: async (q) => traductor?.(q), escoger: async (...a) => selector?.(...a) }).listen(0);
+  servidor = crearApp({ payTo: PAGO_A, facilitador, ventas, traducir: async (q) => traductor?.(q), escoger: async (...a) => selector?.(...a), rastrear: async () => enRed }).listen(0);
   await new Promise((r) => servidor.once("listening", r));
   base = `http://localhost:${servidor.address().port}`;
 }
@@ -112,7 +125,68 @@ test("el mismo pago no sirve para leer otra pregunta gratis", async () => {
   const firma = await firmar("/buscar", PREGUNTA, "c");
   await pedir("/buscar", PREGUNTA, firma);
   const otra = await pedir("/buscar", "¿Puedo pedir que borren mis datos personales?", firma);
-  assert.notEqual(otra.headers.get("x-reintento"), "sin-cobro");
+  assert.equal(otra.status, 402);
+  assert.ok(!(await otra.text()).includes("datos personales"));
+});
+
+test("dos envíos simultáneos del mismo pago: un solo cobro y la misma respuesta", async () => {
+  const firma = await firmar("/buscar", PREGUNTA, "simultaneo");
+  const antes = liquidados;
+  const [uno, dos] = await Promise.all([pedir("/buscar", PREGUNTA, firma), pedir("/buscar", PREGUNTA, firma)]);
+  assert.deepEqual([uno.status, dos.status], [200, 200]);
+  assert.equal(await uno.text(), await dos.text());
+  assert.equal(liquidados, antes + 1);
+});
+
+test("un pago ilegible, por menos monto o para otra cuenta no llega a liquidarse ni entrega nada", async () => {
+  const antes = liquidados;
+  const pago = JSON.parse(Buffer.from(await firmar("/buscar", PREGUNTA, "alterado"), "base64"));
+  const con = (cambio) => Buffer.from(JSON.stringify({ ...pago, accepted: { ...pago.accepted, ...cambio } })).toString("base64");
+  for (const f of ["no-es-un-pago", con({ amount: "1" }), con({ payTo: "GDT5GFJYQW6LTJ7QGZIBURBV3DRLL37DOMT7TRLOSGO7KHFKD424DAU2" }), con({ network: "stellar:pubnet" })]) {
+    const r = await pedir("/buscar", PREGUNTA, f);
+    assert.equal(r.status, 402);
+    assert.ok(!(await r.text()).includes("garantía legal"));
+  }
+  assert.equal(liquidados, antes);
+});
+
+test("liquidación en duda: no entrega hasta que la red confirma, y entonces no cobra otra vez", async () => {
+  const firma = await firmar("/buscar", PREGUNTA, "duda");
+  const antes = liquidados;
+  liquidar = async () => ({ success: false, transaction: "hash-duda", network: RED, payer: PAGO_A, errorReason: "settle_exact_stellar_transaction_failed" });
+  const uno = await pedir("/buscar", PREGUNTA, firma);
+  assert.equal(uno.status, 402);
+  assert.ok(!(await uno.text()).includes("garantía legal"));
+  const dos = await pedir("/buscar", PREGUNTA, firma);
+  assert.equal(dos.status, 503);
+  assert.equal((await dos.json()).transaccion, "hash-duda");
+  await apagar(); // y aunque la API se reinicie
+  await encender();
+  enRed = { estado: "cobrado", hash: "hash-duda" };
+  liquidar = null;
+  const tres = await pedir("/buscar", PREGUNTA, firma);
+  enRed = { estado: "pendiente" };
+  assert.equal(tres.status, 200);
+  assert.equal(JSON.parse(Buffer.from(tres.headers.get("payment-response"), "base64")).transaction, "hash-duda");
+  assert.ok((await tres.json()).citas.length);
+  assert.equal((await pedir("/buscar", PREGUNTA, firma)).headers.get("x-reintento"), "sin-cobro");
+  assert.equal(liquidados, antes);
+});
+
+test("el facilitador se cae al liquidar: si el pago quedó en la red se entrega, y si venció se vuelve a pedir", async () => {
+  const antes = liquidados;
+  const [a, b] = [await firmar("/buscar", PREGUNTA, "caida-a"), await firmar("/buscar", PREGUNTA, "caida-b")];
+  liquidar = async () => { throw new Error("facilitador caído"); };
+  for (const f of [a, b]) assert.ok((await pedir("/buscar", PREGUNTA, f)).status >= 400);
+  enRed = { estado: "cobrado", hash: "hash-caida" };
+  assert.equal((await pedir("/buscar", PREGUNTA, a)).status, 200);
+  enRed = { estado: "vencido" };
+  usados.add("caida-b");
+  const r = await pedir("/buscar", PREGUNTA, b);
+  [liquidar, enRed] = [null, { estado: "pendiente" }];
+  assert.equal(r.status, 402);
+  assert.ok(r.headers.get("payment-required"));
+  assert.equal(liquidados, antes);
 });
 
 test("sin resultados relevantes responde 404 y no cobra", async () => {
@@ -243,6 +317,15 @@ test("si el LLM configurado falla no se responde ni se cobra, y HEAD tampoco cob
   const h = await fetch(`${base}/buscar?q=${encodeURIComponent(q)}`, { method: "HEAD", headers: { "PAYMENT-SIGNATURE": await firmar("/buscar", q, "p") } });
   assert.equal(h.status, 405);
   assert.equal(liquidados, antes);
+});
+
+test("si el LLM se queda pegado o falla, el relevo responde y el que sobra se corta", async () => {
+  const pegado = (senal) => new Promise((ok) => senal.addEventListener("abort", () => ok(null)));
+  let n = 0;
+  assert.equal(await conRelevo((s) => (n++ ? Promise.resolve("b") : pegado(s)), 5), "b");
+  n = 0;
+  assert.equal(await conRelevo(async () => (n++ ? "b" : null), 1000), "b");
+  assert.equal(await conRelevo(async () => null, 5), null);
 });
 
 test("el precio y la ruta de cada venta quedan registrados", async () => {

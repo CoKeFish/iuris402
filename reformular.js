@@ -30,4 +30,4 @@ export function interpretar(j, pregunta) {
 
 // undefined = no hay LLM configurado: se busca con la pregunta tal cual. null = el LLM falló.
 export const reformular = async (pregunta, cmd = process.env.REFORMULAR_CMD) =>
-  cmd ? conRelevo(async (senal) => interpretar(await pedirJson(cmd, encargo(pregunta), ESPERA, senal), pregunta), 8000) : undefined;
+  cmd ? conRelevo(async (senal) => interpretar(await pedirJson(cmd, encargo(pregunta), ESPERA, senal), pregunta), 5000) : undefined;

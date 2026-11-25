@@ -70,5 +70,5 @@ export function interpretarEleccion(j, candidatos) {
 export const elegir = async (pregunta, formas, candidatos, cmd = process.env.ELEGIR_CMD) => {
   if (!cmd) return undefined; // null = el LLM falló
   const encargo = encargoElegir(pregunta, formas, candidatos);
-  return conRelevo(async (senal) => interpretarEleccion(await pedirJson(cmd, encargo, ESPERA, senal), candidatos), 10_000);
+  return conRelevo(async (senal) => interpretarEleccion(await pedirJson(cmd, encargo, ESPERA, senal), candidatos), 8000);
 };

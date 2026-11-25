@@ -3,11 +3,10 @@
 // Uso: npm run agente -- "¿Me pueden cobrar por WhatsApp un domingo?"
 //      ASESOR_CMD='claude -p' npm run agente -- "..."   el LLM lee el encargo por stdin
 import { spawn } from "node:child_process";
-import { rpc } from "@stellar/stellar-sdk";
-import { x402Client, x402HTTPClient } from "@x402/fetch";
+import { x402HTTPClient } from "@x402/fetch";
 import { createEd25519Signer } from "@x402/stellar";
-import { ExactStellarScheme } from "@x402/stellar/exact/client";
-import { API_URL, RED, RPC_URL, UNIDADES, USDC_CONTRATO, enlaceTx, requerida, saldoUSDC } from "./comun.js";
+import { API_URL, RED, UNIDADES, enlaceTx, requerida, saldoUSDC } from "./comun.js";
+import { crearCliente, datosPago, entregarPago, esperar, estadoPago, motivo, veredicto } from "./pago.js";
 
 const TOPE = process.env.TOPE || "$0.02"; // lo máximo que paga por una consulta
 const INTENTOS = 3;
@@ -18,35 +17,26 @@ if (!pregunta) {
 }
 
 const signer = createEd25519Signer(requerida("AGENTE_SECRET"), RED);
-const client = x402Client.fromConfig({
-  schemes: [{ network: "stellar:*", client: new ExactStellarScheme(signer, { url: RPC_URL }) }],
-  spendControls: { maxAmountPerPayment: TOPE },
-});
+const client = crearCliente(signer, TOPE);
 const http = new x402HTTPClient(client);
 const url = new URL("/asesoria", API_URL);
 url.searchParams.set("q", pregunta);
-const esperar = (ms) => new Promise((r) => setTimeout(r, ms));
 const salir = (mensaje) => {
   console.log(mensaje);
   process.exit(1);
 };
 
-// Reintenta solo si no hubo respuesta. Con pago, reenvía SIEMPRE la misma firma: la API
-// reconoce el pago repetido y no lo cobra otra vez.
-async function pedir(opciones) {
-  for (let i = 1; ; i++) {
-    try {
-      return await fetch(url, { ...opciones, signal: AbortSignal.timeout(60_000) });
-    } catch (e) {
-      if (i === INTENTOS) throw new Error(`la API no responde después de ${INTENTOS} intentos (${e.message})`);
-      console.log(`Sin respuesta (intento ${i}/${INTENTOS}), reintento…`);
-      await esperar(i * 1000);
-    }
-  }
-}
+const pedir = (headers) => fetch(url, { headers, signal: AbortSignal.timeout(60_000) });
 
 // 1. Precio y saldo, sin firmar nada
-const primera = await pedir().catch((e) => salir(`❌ ${e.message}. No se pagó nada.`));
+let primera;
+for (let i = 1; !primera; i++) {
+  primera = await pedir().catch(async (e) => {
+    if (i === INTENTOS) salir(`❌ La API no responde (${e.message}). No se pagó nada.`);
+    console.log(`Sin respuesta (intento ${i}/${INTENTOS}), reintento…`);
+    await esperar(i * 1000);
+  });
+}
 if (primera.status !== 402) salir(`La API respondió ${primera.status}: ${await primera.text()}`);
 const requerido = http.getPaymentRequiredResponse((h) => primera.headers.get(h));
 const opcion = requerido.accepts[0];
@@ -55,9 +45,9 @@ const saldo = await saldoUSDC(signer.address);
 console.log(`🤖 ${signer.address}\n   precio ${precio / UNIDADES} USDC · saldo ${saldo / UNIDADES} · tope ${TOPE}`);
 if (saldo < precio) salir("⛔ Saldo insuficiente. No se firmó nada.");
 
-// 2. Firma una vez. Si la autorización expira antes de usarse, firma otra (la vencida ya no
-//    sirve para cobrar). Nunca firma de nuevo cuando no sabe si el pago pasó.
-let res;
+// 2. Firma una vez y entrega el pago. Solo firma de nuevo si la red muestra que la firma anterior
+//    venció sin cobrarse; nunca cuando no sabe si el pago pasó.
+let entrega;
 for (let firma = 1; firma <= 2; firma++) {
   let pago;
   try {
@@ -69,40 +59,22 @@ for (let firma = 1; firma <= 2; firma++) {
         : `❌ No se pudo firmar: ${e.message}`,
     );
   }
-  try {
-    res = await pedir({ headers: http.encodePaymentSignatureHeader(pago) });
-  } catch (e) {
-    const bajo = (await saldoUSDC(signer.address)) < saldo;
-    salir(`❌ ${e.message}. ${bajo ? "El saldo bajó: el pago pudo liquidarse, revisa la wallet antes de reintentar." : "El saldo no cambió: no se cobró."}`);
-  }
-  if (res.status !== 402) break;
-  const rechazo = http.getPaymentRequiredResponse((h) => res.headers.get(h));
-  if (!/expir/i.test(rechazo.error ?? "") || firma === 2) salir(`❌ Pago rechazado: ${rechazo.error ?? "sin motivo"}. No se cobró.`);
-  console.log("La autorización expiró sin cobrarse; firmo una nueva.");
+  const datos = datosPago(pago);
+  const firmado = http.encodePaymentSignatureHeader(pago);
+  entrega = await entregarPago({ pedir: () => pedir(firmado), estado: () => estadoPago(datos), avisar: (m) => console.log(m) });
+  if (entrega.res?.ok || entrega.red.estado !== "vencido") break;
+  if (firma === 1) console.log("La firma venció sin cobrarse; firmo una nueva.");
+}
+const { res, red } = entrega;
+if (!res?.ok) {
+  const error = res ? (motivo(res) ?? (await res.json().catch(() => ({}))).error ?? res.statusText) : entrega.falla;
+  salir(`❌ ${res?.status ?? "Sin respuesta"}: ${error}\n   ${veredicto(entrega)}`);
 }
 const cuerpo = await res.json();
-if (!res.ok) salir(`❌ ${res.status}: ${cuerpo.error ?? JSON.stringify(cuerpo)}`);
 
-// 3. No le cree a la API: busca en la red la transferencia exacta que pagó
-const { transaction: hash } = http.getPaymentSettleResponse((h) => res.headers.get(h));
-const server = new rpc.Server(RPC_URL);
-let tx = await server.getTransaction(hash);
-for (let i = 0; i < 10 && tx.status === "NOT_FOUND"; i++) {
-  await esperar(1500);
-  tx = await server.getTransaction(hash);
-}
-const eventos = tx.status === "SUCCESS" ? JSON.parse(JSON.stringify(tx.events.contractEventsXdr)).flat() : [];
-const correcto = eventos.some((e) => {
-  const t = e.body.v0.topics;
-  return (
-    e.contract_id === USDC_CONTRATO &&
-    t[0].symbol === "transfer" &&
-    t[1].address === signer.address &&
-    t[2].address === opcion.payTo &&
-    BigInt(e.body.v0.data.i128 ?? 0) === BigInt(precio)
-  );
-});
-console.log(`${correcto ? "✅ Pago verificado en la red" : "⚠ No pude verificar el pago en la red"}: ${enlaceTx(hash)}\n`);
+// 3. No le cree a la API: la transferencia exacta que firmó (USDC, cuentas, monto y nonce) está en la red
+const hash = red.hash ?? http.getPaymentSettleResponse((h) => res.headers.get(h)).transaction;
+console.log(`${red.estado === "cobrado" ? "✅ Pago verificado en la red" : "⚠ No pude verificar el pago en la red"}: ${enlaceTx(hash)}\n`);
 
 for (const c of cuerpo.citas) console.log(`${c.ref} ${c.cita}: ${c.titulo}\n    ${c.fuente.url}`);
 

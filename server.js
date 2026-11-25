@@ -64,15 +64,32 @@ export function crearApp({ payTo, facilitador, ventas = abrirVentas(), traducir 
 
   // Reintento sin doble cobro: si la respuesta se perdió, el mismo pago firmado para la misma URL
   // recupera lo ya pagado (24 horas, y aunque la API se reinicie). Un pago nuevo siempre se cobra.
-  const enCurso = new Map(); // dos envíos simultáneos del mismo pago: el segundo espera al primero
+  // Un pago es su cuenta y su nonce, no cómo se escriba el encabezado: los envíos simultáneos del mismo
+  // pago, aun con otra pregunta, esperan su turno
+  const enCurso = new Map();
+  const identidad = (firma) => {
+    try {
+      const pago = decodificar(firma);
+      try {
+        const { de, nonce } = datosPago(pago);
+        return `${de}:${nonce}`;
+      } catch {
+        return String(pago.payload.transaction);
+      }
+    } catch {
+      return firma;
+    }
+  };
   app.use(RUTAS, async (req, res, next) => {
     const firma = req.get("payment-signature") ?? req.get("x-payment");
     if (!firma) return next();
     const clave = createHash("sha256").update(`${req.method} ${req.originalUrl}\n${firma}`).digest("hex");
     const ruta = req.baseUrl; // al terminar la respuesta Express ya la restauró
     const precio = ruta === "/asesoria" ? PRECIO_ASESORIA : PRECIO_BUSCAR;
-    while (enCurso.has(clave)) await enCurso.get(clave);
-    enCurso.set(clave, new Promise((r) => res.once("close", r)).then(() => enCurso.delete(clave)));
+    const id = identidad(firma);
+    while (enCurso.has(id)) await enCurso.get(id);
+    if (res.destroyed) return;
+    enCurso.set(id, new Promise((r) => res.once("close", r)).then(() => enCurso.delete(id)));
     const repetir = (v) => res.set("PAYMENT-RESPONSE", v.recibo).set("X-Reintento", "sin-cobro").type("json").send(Buffer.from(v.respuesta));
     const previa = ventas.buscar(clave);
     if (previa) return repetir(previa);
@@ -83,6 +100,10 @@ export function crearApp({ payTo, facilitador, ventas = abrirVentas(), traducir 
       const red = await Promise.resolve()
         .then(() => rastrear(decodificar(firma)))
         .catch((e) => (console.error("No se pudo consultar el pago:", e.message), { estado: "pendiente" }));
+      if (red.estado === "cobrado" && ventas.usada(red.hash)) {
+        ventas.quitarPendiente(clave);
+        return res.status(409).json({ error: "Ese pago ya se utilizó para otra consulta.", transaccion: red.hash });
+      }
       if (red.estado === "cobrado") {
         const recibo = Buffer.from(JSON.stringify({ success: true, transaction: red.hash, network: RED })).toString("base64");
         ventas.guardar({ clave, ruta, transaccion: red.hash, precio, recibo, pregunta: duda.pregunta, respuesta: duda.respuesta });
@@ -91,12 +112,20 @@ export function crearApp({ payTo, facilitador, ventas = abrirVentas(), traducir 
       }
       if (red.estado === "vencido") ventas.quitarPendiente(clave);
       else if (duda.transaccion) {
-        return res.status(503).set("Retry-After", "5").json({
+        return res.status(503).set("Retry-After", "5").set("X-Transaccion", duda.transaccion).json({
           error: "El pago fue enviado y la red aún no lo confirma. Puede reenviarse la misma firma: no se cobrará dos veces.",
           transaccion: duda.transaccion,
         });
       }
     }
+    // Se guarda antes de liquidar: si la API se cae en ese momento, la respuesta no se pierde
+    res.locals.porEntregar = (respuesta, transaccion) => {
+      try {
+        ventas.anotarPendiente({ clave, transaccion, pregunta: req.query.q, respuesta });
+      } catch (e) {
+        console.error("No se guardó la entrega en duda:", e.message);
+      }
+    };
     const end = res.end.bind(res);
     res.end = (cuerpo, ...resto) => {
       const recibo = res.getHeader("PAYMENT-RESPONSE");
@@ -114,16 +143,13 @@ export function crearApp({ payTo, facilitador, ventas = abrirVentas(), traducir 
             pregunta: req.query.q,
             respuesta: Buffer.from(cuerpo),
           });
+          ventas.quitarPendiente(clave);
         } catch (e) {
           console.error("No se guardó la venta:", e.message);
         }
       } else if (res.locals.entrega && res.statusCode !== 200) {
-        // La respuesta estaba lista y la liquidación falló o quedó en duda: se guarda por si se cobró
-        try {
-          ventas.anotarPendiente({ clave, transaccion: decodificar(recibo && String(recibo))?.transaction, pregunta: req.query.q, respuesta: res.locals.entrega });
-        } catch (e) {
-          console.error("No se guardó la entrega en duda:", e.message);
-        }
+        // La liquidación falló o quedó en duda: sigue guardada, con el hash si lo hay
+        res.locals.porEntregar(res.locals.entrega, decodificar(recibo && String(recibo))?.transaction);
       }
       return end(cuerpo, ...resto);
     };
@@ -150,7 +176,7 @@ export function crearApp({ payTo, facilitador, ventas = abrirVentas(), traducir 
   app.use(RUTAS, (_req, res, next) => {
     const json = res.json.bind(res);
     res.json = (cuerpo) => {
-      if (res.statusCode === 200) res.locals.entrega = Buffer.from(JSON.stringify(cuerpo));
+      if (res.statusCode === 200) res.locals.porEntregar?.((res.locals.entrega = Buffer.from(JSON.stringify(cuerpo))));
       return json(cuerpo);
     };
     next();

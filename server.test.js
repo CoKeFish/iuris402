@@ -138,6 +138,50 @@ test("dos envíos simultáneos del mismo pago: un solo cobro y la misma respuest
   assert.equal(liquidados, antes + 1);
 });
 
+test("una firma enviada a la vez con dos preguntas paga una sola, aunque se reenvíen", async () => {
+  const otra = "¿Puedo pedir que borren mis datos personales?";
+  const firma = await firmar("/buscar", PREGUNTA, "dos-preguntas");
+  // otra escritura del mismo pago: cambia el encabezado, no la firma
+  const copia = Buffer.from(JSON.stringify(JSON.parse(Buffer.from(firma, "base64")), null, 1)).toString("base64");
+  const antes = liquidados;
+  const real = facilitador.verify;
+  facilitador.verify = async () => ({ isValid: true, payer: PAGO_A }); // el nonce aún no se ha gastado
+  liquidar = async () =>
+    liquidados > antes
+      ? { success: false, transaction: "", network: RED, payer: PAGO_A, errorReason: "nonce" }
+      : { success: true, transaction: `hash-${++liquidados}`, network: RED, payer: PAGO_A };
+  const r = await Promise.all([pedir("/buscar", PREGUNTA, firma), pedir("/buscar", otra, copia)]);
+  enRed = { estado: "cobrado", hash: `hash-${liquidados}` };
+  const reenvios = [await pedir("/buscar", PREGUNTA, firma), await pedir("/buscar", otra, copia)];
+  [liquidar, enRed, facilitador.verify] = [null, { estado: "pendiente" }, real];
+  assert.equal(r.filter((x) => x.status === 200).length, 1);
+  assert.deepEqual(reenvios.map((x) => x.status).sort(), [200, 409]);
+  assert.equal(liquidados, antes + 1);
+});
+
+test("si la API se cae mientras liquida, la respuesta ya quedó guardada y se entrega si se cobró", async () => {
+  const firma = await firmar("/buscar", PREGUNTA, "apagon");
+  let cortar;
+  const llego = new Promise((r) => {
+    liquidar = () => (r(), new Promise((ok) => (cortar = ok)));
+  });
+  const perdida = pedir("/buscar", PREGUNTA, firma).catch(() => null);
+  await llego;
+  await apagar();
+  await encender();
+  liquidar = null;
+  enRed = { estado: "cobrado", hash: "hash-apagon" };
+  const antes = liquidados;
+  const r = await pedir("/buscar", PREGUNTA, firma);
+  enRed = { estado: "pendiente" };
+  assert.equal(r.status, 200);
+  assert.equal(r.headers.get("x-reintento"), "sin-cobro");
+  assert.equal(liquidados, antes);
+  assert.ok((await r.json()).citas.length);
+  cortar({ success: false, transaction: "", network: RED, errorReason: "apagón" });
+  await perdida;
+});
+
 test("un pago ilegible, por menos monto o para otra cuenta no llega a liquidarse ni entrega nada", async () => {
   const antes = liquidados;
   const pago = JSON.parse(Buffer.from(await firmar("/buscar", PREGUNTA, "alterado"), "base64"));

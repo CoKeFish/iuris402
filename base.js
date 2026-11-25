@@ -128,6 +128,7 @@ export function abrirVentas(archivo = VENTAS_DB) {
     "INSERT OR IGNORE INTO pagos (clave, creado, ruta, transaccion, pagador, precio, recibo, pregunta, respuesta) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
   );
   const olvidar = db.prepare("UPDATE pagos SET pregunta = NULL, respuesta = NULL WHERE creado <= ? AND respuesta IS NOT NULL");
+  const porHash = db.prepare("SELECT 1 FROM pagos WHERE transaccion = ?");
   const leerPendiente = db.prepare("SELECT transaccion, pregunta, respuesta FROM pendientes WHERE clave = ? AND creado > ?");
   const anotar = db.prepare("INSERT OR REPLACE INTO pendientes (clave, creado, transaccion, pregunta, respuesta) VALUES (?, ?, ?, ?, ?)");
   const quitar = db.prepare("DELETE FROM pendientes WHERE clave = ? OR creado <= ?");
@@ -139,6 +140,7 @@ export function abrirVentas(archivo = VENTAS_DB) {
       escribir.run(p.clave, Date.now(), p.ruta, p.transaccion, p.pagador ?? null, p.precio, p.recibo, p.pregunta, p.respuesta);
     },
     pendiente: (clave) => leerPendiente.get(clave, limite()),
+    usada: (transaccion) => Boolean(porHash.get(transaccion)),
     anotarPendiente: (p) => anotar.run(p.clave, Date.now(), p.transaccion || null, p.pregunta, p.respuesta),
     quitarPendiente: (clave) => quitar.run(clave, limite()),
     cerrar: () => db.close(),

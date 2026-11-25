@@ -32,6 +32,7 @@ Tarda unos 30 segundos. Se lee cada paso a medida que sale:
 | `Preguntar algo que no es derecho: 404 · 0 USDC` | «Una receta de lasaña: 404, y la red confirma que no se cobró.» |
 
 Si al minuto no ha pagado (el LLM no responde: 503 y no cobra), Ctrl+C y: `npm run demo:respaldo -- "¿me pueden cobrar una deuda por WhatsApp un domingo?"`
+(sin LLM el artículo 3 puede salir de segundo: se dice «la Ley 2300» y no se menciona el LLM).
 
 ## 2:45 – 3:30 · La evidencia
 
@@ -39,7 +40,7 @@ Abrir en Stellar Expert el enlace que imprimió el demo: USDC de testnet, 0.02, 
 
 ## 3:30 – 4:15 · Qué pasa cuando algo falla
 
-> «Probamos contra el facilitador real una firma alterada, una por menos monto, una para otra cuenta y una ilegible: las rechazó todas y
+> «Probamos contra el facilitador real una firma alterada, una por menos monto, una para otra cuenta y una para otra red: ninguna pasó y
 > en la red no se movió nada. Y si la red se demora y nadie sabe si se pagó, la API guarda la respuesta y la entrega cuando
 > la red muestra el pago; el agente no firma dos veces.»
 

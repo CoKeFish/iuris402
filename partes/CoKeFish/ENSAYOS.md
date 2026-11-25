@@ -3,7 +3,152 @@
 En el PC del equipo, con la base completa, los dos LLM y el facilitador real de testnet. En todos: 402 sin pagar, tope
 excedido rechazado sin firmar, pago verificado en la red, reenvío con la misma respuesta y sin cobro, y pregunta ajena sin cobro.
 
-## Versión final: ocho corridas seguidas
+## Código final: el comando del pitch, tres veces
+
+```
+Corrida 1 · 2026-11-24 22:04:34 (Bogotá)
+❓ ¿me pueden cobrar una deuda por WhatsApp un domingo?
+   paga GB2RPFNLNBABHBLSQ6U6YLDKPN6AKRBPI3SUYAT2DJVAZX47SBV3ZPRM
+   USDC GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5, contrato CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA
+
+▶ Pedir sin pagar: 402 · 0 s
+  pide 0.02 USDC en stellar:testnet, para GDT5GFJYQW6LTJ7QGZIBURBV3DRLL37DOMT7TRLOSGO7KHFKD424DAU2
+
+▶ Tope excedido: rechazado · gastado en la red 0 USDC · 0.2 s
+  cuesta más que $0.005: no se firmó nada
+
+▶ Pagar y pedir: 200 · gastado en la red 0.02 USDC · 18.9 s
+  Ley 2300 de 2023, art. 3 · Ley 2300 de 2023, art. 2
+  Ley 2300 de 2023, art. 3: «Una vez establecido un contacto directo con el consumidor, este no podrá ser contactado por parte de gestores de cobranza mediante varios canales dentro de una misma semana ni en más de una ocasión durante el mismo día. Las prácticas de cobranza deberán realizarse de manera respetuosa y sin afectar la intimidad personal ni familiar del consumidor, dentro del horario de lunes a viernes y de 7:00 a. m. a 7:00 p. m., y sábados de 8:00 a. m. a 3:00 p. m., excluyendo cualquier tipo de contacto con el consumidor los domingos y días festivos. PARÁGRAFO. En caso de que el consumidor requiera ser contactado en horarios distintos a los establecidos en el presente artículo, deberá manifestarlo expresam…»
+  vigencia: sin afectaciones registradas · http://www.secretariasenado.gov.co/senado/basedoc/ley_2300_2023.html#3
+  ✅ verificado en la red (USDC, cuentas, monto y nonce)
+  https://stellar.expert/explorer/testnet/tx/ada5986f9a25bf33afcd58946d879d74927ce7bc6f6c71ba3adf98a58995e7e0
+
+▶ Reenviar el mismo pago: 200 · gastado en la red 0 USDC · 0.3 s
+  la misma respuesta, sin-cobro
+
+▶ Preguntar algo que no es derecho: 404 · gastado en la red 0 USDC · 12.8 s
+  La consulta no versa sobre una materia jurídica. No se generó cobro.
+
+Total: 32.2 s · 0.02 USDC
+
+Corrida 2 · 2026-11-24 22:05:08 (Bogotá)
+❓ ¿me pueden cobrar una deuda por WhatsApp un domingo?
+   paga GB2RPFNLNBABHBLSQ6U6YLDKPN6AKRBPI3SUYAT2DJVAZX47SBV3ZPRM
+   USDC GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5, contrato CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA
+
+▶ Pedir sin pagar: 402 · 0 s
+  pide 0.02 USDC en stellar:testnet, para GDT5GFJYQW6LTJ7QGZIBURBV3DRLL37DOMT7TRLOSGO7KHFKD424DAU2
+
+▶ Tope excedido: rechazado · gastado en la red 0 USDC · 0.1 s
+  cuesta más que $0.005: no se firmó nada
+
+▶ Pagar y pedir: 200 · gastado en la red 0.02 USDC · 14.8 s
+  Ley 2300 de 2023, art. 3 · Ley 2300 de 2023, art. 2 · Ley 2300 de 2023, art. 5
+  Ley 2300 de 2023, art. 3: «Una vez establecido un contacto directo con el consumidor, este no podrá ser contactado por parte de gestores de cobranza mediante varios canales dentro de una misma semana ni en más de una ocasión durante el mismo día. Las prácticas de cobranza deberán realizarse de manera respetuosa y sin afectar la intimidad personal ni familiar del consumidor, dentro del horario de lunes a viernes y de 7:00 a. m. a 7:00 p. m., y sábados de 8:00 a. m. a 3:00 p. m., excluyendo cualquier tipo de contacto con el consumidor los domingos y días festivos. PARÁGRAFO. En caso de que el consumidor requiera ser contactado en horarios distintos a los establecidos en el presente artículo, deberá manifestarlo expresam…»
+  vigencia: sin afectaciones registradas · http://www.secretariasenado.gov.co/senado/basedoc/ley_2300_2023.html#3
+  ✅ verificado en la red (USDC, cuentas, monto y nonce)
+  https://stellar.expert/explorer/testnet/tx/104248813b84b226695f0a04353a77f55da6a2e03d08838919dcff273a65e52e
+
+▶ Reenviar el mismo pago: 200 · gastado en la red 0 USDC · 0.3 s
+  la misma respuesta, sin-cobro
+
+▶ Preguntar algo que no es derecho: 404 · gastado en la red 0 USDC · 13.4 s
+  La consulta no versa sobre una materia jurídica. No se generó cobro.
+
+Total: 28.6 s · 0.02 USDC
+
+Corrida 3 · 2026-11-24 22:05:38 (Bogotá)
+❓ ¿me pueden cobrar una deuda por WhatsApp un domingo?
+   paga GB2RPFNLNBABHBLSQ6U6YLDKPN6AKRBPI3SUYAT2DJVAZX47SBV3ZPRM
+   USDC GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5, contrato CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA
+
+▶ Pedir sin pagar: 402 · 0 s
+  pide 0.02 USDC en stellar:testnet, para GDT5GFJYQW6LTJ7QGZIBURBV3DRLL37DOMT7TRLOSGO7KHFKD424DAU2
+
+▶ Tope excedido: rechazado · gastado en la red 0 USDC · 0.2 s
+  cuesta más que $0.005: no se firmó nada
+
+▶ Pagar y pedir: 200 · gastado en la red 0.02 USDC · 29.7 s
+  Ley 2300 de 2023, art. 2 · Ley 2300 de 2023, art. 3 · Ley 2300 de 2023, art. 1 · Ley 2300 de 2023, art. 9
+  Ley 2300 de 2023, art. 2: «Las entidades vigiladas por la Superintendencia Financiera y todas las personas naturales y jurídicas que ejerzan actividades de cobranza sólo podrán contactar a los consumidores mediante los canales que estos autoricen para tal efecto; los cuales deberán ser informados y socializados previamente por parte de las entidades de cobranza con el fin de que los consumidores elijan cuáles autoriza.»
+  vigencia: sin afectaciones registradas · http://www.secretariasenado.gov.co/senado/basedoc/ley_2300_2023.html#2
+  ✅ verificado en la red (USDC, cuentas, monto y nonce)
+  https://stellar.expert/explorer/testnet/tx/ea3a2fe74b93b7fa10d450176177831ede327385072c25974826ec1c77a66152
+
+▶ Reenviar el mismo pago: 200 · gastado en la red 0 USDC · 0.2 s
+  la misma respuesta, sin-cobro
+
+▶ Preguntar algo que no es derecho: 404 · gastado en la red 0 USDC · 12.4 s
+  La consulta no versa sobre una materia jurídica. No se generó cobro.
+
+Total: 42.5 s · 0.02 USDC
+```
+
+Los pagos que no deben servir, otra vez:
+
+```
+✅ rechazado · Encabezado ilegible: 402 Payment required
+✅ rechazado · Firma alterada: 402 invalid_exact_stellar_payload_simulation_failed
+✅ rechazado · Firma por menos monto: 402 invalid_exact_stellar_payload_wrong_amount
+✅ rechazado · Firma para otra cuenta: 402 invalid_exact_stellar_payload_wrong_recipient
+✅ rechazado · Dice otra red: 402 No matching payment requirements
+En la red desde que empezó: 0 transferencias · 0 USDC
+```
+
+`npm test` con el código final:
+
+```
+ok 1 - tope real de x402: por encima no se llama al firmante, por debajo sí
+ok 2 - liquidación en duda que luego se confirma: recupera lo pagado con la misma firma
+ok 3 - liquidación en duda que no se confirma: no se cae, no afirma que no se cobró y pide no firmar otra vez
+ok 4 - la firma venció sin aparecer en la red: ahí sí se sabe que no se cobró
+ok 5 - sin respuesta: reenvía la misma firma y, si se cobró, lo dice con el hash
+ok 6 - si la red tampoco responde no concluye nada
+ok 7 - rechazo antes de liquidar: responde rápido, con el motivo, y la red confirma que no hay cobro
+ok 8 - si sigue en 503 sin haber enviado el pago, no se queda esperando; si ya lo envió, sí lo busca
+ok 9 - un 503 se reintenta con la misma firma
+ok 10 - 402, tope excedido, pago de 0.02, entrega, reenvío sin cobro y pregunta ajena sin cobro
+ok 11 - si no se puede firmar, el recorrido se detiene sin pagar
+ok 12 - sin saldo el pago se rechaza con su motivo y el recorrido se detiene sin gastar
+ok 13 - el catálogo es gratis y dice el precio
+ok 14 - sin pago responde 402 con USDC por contrato, monto y destinatario
+ok 15 - una pregunta inválida responde 400, sin pedir pago
+ok 16 - con pago entrega citas con texto, argumentos y fuente, y nunca el resumen
+ok 17 - reenviar el mismo pago devuelve lo mismo sin cobrar otra vez
+ok 18 - el reintento sigue sin cobrar después de reiniciar la API
+ok 19 - a las 24 horas se borran pregunta y respuesta, y queda el recibo
+ok 20 - el mismo pago no sirve para leer otra pregunta gratis
+ok 21 - dos envíos simultáneos del mismo pago: un solo cobro y la misma respuesta
+ok 22 - una firma enviada a la vez con dos preguntas paga una sola, aunque se reenvíen
+ok 23 - cortar la conexión, o usar otra API con la misma base, tampoco da dos respuestas por un pago
+ok 24 - si la API se cae mientras liquida, la respuesta ya quedó guardada y se entrega si se cobró
+ok 25 - un pago ilegible, por menos monto o para otra cuenta no llega a liquidarse ni entrega nada
+ok 26 - liquidación en duda: no entrega hasta que la red confirma, y entonces no cobra otra vez
+ok 27 - el facilitador se cae al liquidar: si el pago quedó en la red se entrega, y si venció se vuelve a pedir
+ok 28 - sin resultados relevantes responde 404 y no cobra
+ok 29 - un pago rechazado por el facilitador no entrega nada
+ok 30 - el retracto se entrega con la condición de la Corte y su sentencia
+ok 31 - cada referencia se puede consultar gratis, y el destino dice quién lo cita
+ok 32 - toda referencia tiene destino: propio, texto oficial con SHA-256 o el motivo por el que no se puede abrir
+ok 33 - un artículo nombrado por su número sale primero
+ok 34 - si preguntan por algo que ya no rige, avisa con su sentencia y no cobra
+ok 35 - otro país o un tema que no es derecho: 404 y no cobra
+ok 36 - la reformulación del LLM se usa para buscar y se muestra
+ok 37 - lo que elige el LLM es lo que se entrega, y si nada resuelve no se cobra
+ok 38 - la elección del LLM solo acepta códigos de la lista y no vende lo que no rige
+ok 39 - si el LLM configurado falla no se responde ni se cobra, y HEAD tampoco cobra
+ok 40 - si el LLM se queda pegado o falla, el relevo responde y el que sobra se corta
+ok 41 - el precio y la ruta de cada venta quedan registrados
+ok 42 - la reformulación no toma «ninguno» por un país, ni deja números inventados
+ok 43 - los cambios de texto traen quién los hizo y por qué
+ok 44 - la base no vende lo derogado ni lo que está en duda, y no admite vigencias huérfanas
+# tests 44
+# pass 44
+# fail 0
+```
+
+## Antes de ligar cada firma a una consulta: ocho corridas seguidas
 
 | Hora | Pagar y pedir | Pregunta ajena | Total | Hash |
 |---|---|---|---|---|
@@ -146,7 +291,7 @@ precio 100 USDC · saldo 19.68 · tope $200
 Total: 15.6 s · 0.02 USDC
 ```
 
-## Salida completa de la versión final
+## Salida completa de esas ocho corridas
 
 ### Corrida 1 · 2026-11-24 21:55:05 (Bogotá)
 

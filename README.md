@@ -83,7 +83,7 @@ se construye, se verifica y se cobra, y una **muestra de 10 artículos** (`muest
 |---|---|---|
 | Saldo insuficiente | el agente no firma; si llega firmado, 402 y no se entrega | `demo.test.js`, `server.test.js`, [ensayo](partes/CoKeFish/ENSAYOS.md) |
 | Pago repetido (también simultáneo) | la misma respuesta, un solo cobro | `server.test.js`, ensayo |
-| Una firma con dos preguntas a la vez | se paga y se entrega una; la otra se rechaza | `server.test.js` |
+| Una firma con dos preguntas (a la vez, cortando la conexión o en dos API) | la firma queda ligada a una consulta antes de cobrar; la otra: 409 | `server.test.js` |
 | La API se cae mientras liquida | la respuesta ya estaba guardada: se entrega si la red muestra el pago | `server.test.js` |
 | Tope excedido | no se firma nada | `pago.test.js` con el tope real de x402, ensayo |
 | Pago inválido (ilegible, firma alterada, menos monto, otra cuenta, otra red) | 402, sin entrega ni cobro | `server.test.js`, `npm run pagos-malos` |
@@ -122,7 +122,7 @@ Agregar leyes: añade la norma a `ingesta/fuentes.json`, luego `npm run descarga
 
 `npm test` pasa con la muestra. Las demás necesitan la base completa.
 
-- `npm test`: 43 pruebas del cobro, el comprador y la base con un facilitador simulado (402 correcto, sin doble cobro aunque la API
+- `npm test`: 44 pruebas del cobro, el comprador y la base con un facilitador simulado (402 correcto, sin doble cobro aunque la API
   se reinicie o lleguen dos envíos a la vez, pago en duda, sin cobro si no hay resultados, referencias consultables).
 - `npm run verificar-curado`: compara el curado con el crudo, párrafo por párrafo (palabras en orden,
   sin puntuación). Lo que no está se lista: sentencias que agrega la casa editorial, títulos fuera del
@@ -136,8 +136,8 @@ Agregar leyes: añade la norma a `ingesta/fuentes.json`, luego `npm run descarga
   usar ([preguntas y resultados](evaluacion/reservadas.json)). Primero sale un artículo esencial en **26** y uno esencial o aceptable en 30;
   26 respuestas traen todos los esenciales, y 78 % de lo entregado sirve. De 15 preguntas que no debían cobrarse, se cobró 1.
   Muchas nombran la norma, y después hubo correcciones a la base que no se volvieron a medir.
-- [Ensayos del demo](partes/CoKeFish/ENSAYOS.md): pagar, recibir y comprobar en la red tomó de 12 a 18 s en las ocho corridas
-  finales; antes hubo de hasta 39.5 s, y ahí está por qué.
+- [Ensayos del demo](partes/CoKeFish/ENSAYOS.md): pagar, recibir y comprobar en la red tomó de 12 a 18 s en ocho corridas
+  seguidas; antes hubo de hasta 39.5 s, y ahí está por qué.
 
 ## Hashes de prueba (testnet)
 

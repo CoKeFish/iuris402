@@ -18,7 +18,7 @@ cumplimiento. Necesitan una respuesta con fuente, de vez en cuando, sin suscripc
 **Por qué funciona (25 s).** La pregunta de la calle pasa a lenguaje jurídico y se busca por significado;
 se entrega el texto de la ley igual a la fuente, con sus notas de vigencia y su procedencia.
 Y si una ley cita a otra, esa también se puede consultar.
-Con preguntas escritas por otro modelo, 39 de 44 traen el artículo correcto.
+En 30 preguntas reservadas, escritas por otro modelo, el artículo correcto salió de primero en las 30.
 
 **Siguiente paso (15 s).** Más normas hasta cubrir Colombia (códigos, decretos, jurisprudencia),
 transcribir más PDF escaneados y anunciarla en Bazaar para que los agentes la descubran solos.

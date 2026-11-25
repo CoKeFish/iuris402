@@ -3,7 +3,71 @@
 En el PC del equipo, con la base completa, los dos LLM y el facilitador real de testnet. En todos: 402 sin pagar, tope
 excedido rechazado sin firmar, pago verificado en la red, reenvío con la misma respuesta y sin cobro, y pregunta ajena sin cobro.
 
-## Versión final: cinco corridas seguidas
+## Versión final: ocho corridas seguidas
+
+| Hora | Pagar y pedir | Pregunta ajena | Total | Hash |
+|---|---|---|---|---|
+| 21:55:05 | 200 en 17.9 s | 404 | 28.7 s | [`946bb2e6…`](https://stellar.expert/explorer/testnet/tx/946bb2e621d8f44058138f9623c620b833fe31d92d0931096faaf5724dc7a3d7) |
+| 21:55:35 | 200 en 12.9 s | 404 | 24.5 s | [`3817cb2e…`](https://stellar.expert/explorer/testnet/tx/3817cb2e8fbac85fdaad1682ddf2c85cb6755c1aea7d81eb57c4c1885afc94b3) |
+| 21:56:01 | 200 en 16.4 s | 404 | 27.5 s | [`87ccb89c…`](https://stellar.expert/explorer/testnet/tx/87ccb89c36cc8f191581f0506b92e225a4206244e4fec5388e48b2ef2804f614) |
+| 21:56:30 | 200 en 12 s | 404 | 28.5 s | [`aa328fa4…`](https://stellar.expert/explorer/testnet/tx/aa328fa43a76c624a5db890d1148f51a724a29fd991e849092629602eed6d369) |
+| 21:57:00 | 200 en 12.3 s | 404 | 24.5 s | [`81bf08e3…`](https://stellar.expert/explorer/testnet/tx/81bf08e3f8f450916ee5d65cc488af6825aeba971539b5ccc303499001679519) |
+| 21:57:26 | 200 en 16.1 s | 404 | 28.1 s | [`ac2d9d2f…`](https://stellar.expert/explorer/testnet/tx/ac2d9d2f86eb2d408e09025d4ab714536dcdfef3f6c1ac9b88715b3d19965f69) |
+| 21:57:56 | 200 en 16.9 s | 404 | 29.2 s | [`cb5726fa…`](https://stellar.expert/explorer/testnet/tx/cb5726fa74f614ae85cf6ba4a5e24d8961d929e59f25983c7d21ceef54a151e6) |
+| 21:58:27 | 200 en 15.8 s | 404 | 28.9 s | [`4cc7b023…`](https://stellar.expert/explorer/testnet/tx/4cc7b0233f46f73fe3b1314ba83444538bb133f032838354e78f27006cc81eda) |
+
+Justo antes, con el relevo más lento, una corrida desde PowerShell (Node 22.22, npm 10.9) tuvo un pico: 29.3 s en pagar y pedir, 48.9 s en total.
+
+## Con el LLM roto (`ELEGIR_CMD` que siempre falla): no cobra y corta
+
+```
+❓ compré por internet y me arrepentí, ¿lo puedo devolver?
+   paga GB2RPFNLNBABHBLSQ6U6YLDKPN6AKRBPI3SUYAT2DJVAZX47SBV3ZPRM
+   USDC GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5, contrato CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA
+
+▶ Pedir sin pagar: 402 · 0 s
+  pide 0.02 USDC en stellar:testnet, para GDT5GFJYQW6LTJ7QGZIBURBV3DRLL37DOMT7TRLOSGO7KHFKD424DAU2
+
+▶ Tope excedido: rechazado · gastado en la red 0 USDC · 0.1 s
+  cuesta más que $0.005: no se firmó nada
+
+  … Respondió 503: reenvío la misma firma (1/1)
+▶ Pagar y pedir: 503 · gastado en la red 0 USDC · 11.5 s
+  El servicio de selección no está disponible. No se generó cobro; puede reintentarse. No hay cobro en la red; la firma vence en ~295 s.
+
+Total: 11.6 s · 0 USDC
+```
+
+## Clon limpio con la muestra y sin LLM (`npm run api:respaldo`, `npm run demo:respaldo`)
+
+```
+❓ compré por internet y me arrepentí, ¿lo puedo devolver?
+   paga GB2RPFNLNBABHBLSQ6U6YLDKPN6AKRBPI3SUYAT2DJVAZX47SBV3ZPRM
+   USDC GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5, contrato CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA
+
+▶ Pedir sin pagar: 402 · 0 s
+  pide 0.02 USDC en stellar:testnet, para GDT5GFJYQW6LTJ7QGZIBURBV3DRLL37DOMT7TRLOSGO7KHFKD424DAU2
+
+▶ Tope excedido: rechazado · gastado en la red 0 USDC · 0.3 s
+  cuesta más que $0.005: no se firmó nada
+
+▶ Pagar y pedir: 200 · gastado en la red 0.02 USDC · 4.3 s
+  Ley 1480 de 2011, art. 47 · Ley 1480 de 2011, art. 18 · Ley 1480 de 2011, art. 8 · Constitución Política, art. 86 · Código Sustantivo del Trabajo, art. 64 · Ley 820 de 2003, art. 20 · Decreto 2591 de 1991, art. 52 · Ley 1480 de 2011, art. 56 · Código Sustantivo del Trabajo, art. 161
+  Ley 1480 de 2011, art. 47: «En todos los contratos para la venta de bienes y prestación de servicios mediante sistemas de financiación otorgada por el productor o proveedor, venta de tiempos compartidos o ventas que utilizan métodos no tradicionales o a distancia, que por su naturaleza no deban consumirse o no hayan comenzado a ejecutarse antes de cinco (5) días, se entenderá pactado el derecho de retracto por parte del consumidor [Nota de la fuente: sic] En el evento en que se haga uso de la facultad de retracto, se resolverá el contrato y se deberá reintegrar el dinero que el consumidor hubiese pagado. El consumidor deberá devolver el producto al productor o proveedor por los mismos medios y en las mismas condiciones…»
+  vigencia: exequibilidad condicionada (Sentencia C-192 de 2026) · http://www.secretariasenado.gov.co/senado/basedoc/ley_1480_2011_pr001.html#47
+  ✅ verificado en la red (USDC, cuentas, monto y nonce)
+  https://stellar.expert/explorer/testnet/tx/e8a104687c6b1e6fa2c21b68dfb93f96b0b0346b24720e219578b3a038167dcd
+
+▶ Reenviar el mismo pago: 200 · gastado en la red 0 USDC · 0.3 s
+  la misma respuesta, sin-cobro
+
+▶ Preguntar algo que no es derecho: 404 · gastado en la red 0 USDC · 10.3 s
+  No se hallaron disposiciones aplicables en la base. No se generó cobro.
+
+Total: 15.2 s · 0.02 USDC
+```
+
+## Antes: cinco corridas seguidas con el relevo más lento
 
 | Hora | Pagar y pedir | Pregunta ajena | Total | Hash | Nota |
 |---|---|---|---|---|---|
@@ -55,7 +119,7 @@ precio 100 USDC · saldo 19.68 · tope $200
 ⛔ Saldo insuficiente. No se firmó nada.
 ```
 
-## Respaldo sin LLM (`npm run api -- --sin-llm` y `npm run demo -- --respaldo`)
+## Respaldo sin LLM (`npm run api:respaldo` y `npm run demo:respaldo`)
 
 ```
 ❓ ¿me pueden cobrar una deuda por WhatsApp un domingo?
@@ -84,7 +148,7 @@ Total: 15.6 s · 0.02 USDC
 
 ## Salida completa de la versión final
 
-### Corrida 1 · 2026-11-24 21:44:20 (Bogotá)
+### Corrida 1 · 2026-11-24 21:55:05 (Bogotá)
 
 ```
 ❓ ¿me pueden cobrar una deuda por WhatsApp un domingo?
@@ -97,21 +161,23 @@ Total: 15.6 s · 0.02 USDC
 ▶ Tope excedido: rechazado · gastado en la red 0 USDC · 0.1 s
   cuesta más que $0.005: no se firmó nada
 
-▶ Pagar y pedir: 200 · gastado en la red 0.02 USDC · 18.4 s
-  Ley 2300 de 2023, art. 3 · Ley 2300 de 2023, art. 2 · Ley 2300 de 2023, art. 1
+▶ Pagar y pedir: 200 · gastado en la red 0.02 USDC · 17.9 s
+  Ley 2300 de 2023, art. 3 · Ley 2300 de 2023, art. 5 · Ley 2300 de 2023, art. 2 · Ley 2300 de 2023, art. 9
+  Ley 2300 de 2023, art. 3: «Una vez establecido un contacto directo con el consumidor, este no podrá ser contactado por parte de gestores de cobranza mediante varios canales dentro de una misma semana ni en más de una ocasión durante el mismo día. Las prácticas de cobranza deberán realizarse de manera respetuosa y sin afectar la intimidad persona…»
+  vigencia: sin afectaciones registradas · http://www.secretariasenado.gov.co/senado/basedoc/ley_2300_2023.html#3
   ✅ verificado en la red (USDC, cuentas, monto y nonce)
-  https://stellar.expert/explorer/testnet/tx/d250ca94274588f3c8b01af0ded070661668e0d45d18a828708004658fd7ae2d
+  https://stellar.expert/explorer/testnet/tx/946bb2e621d8f44058138f9623c620b833fe31d92d0931096faaf5724dc7a3d7
 
-▶ Reenviar el mismo pago: 200 · gastado en la red 0 USDC · 0.3 s
+▶ Reenviar el mismo pago: 200 · gastado en la red 0 USDC · 0.2 s
   la misma respuesta, sin-cobro
 
-▶ Preguntar algo que no es derecho: 404 · gastado en la red 0 USDC · 9.6 s
+▶ Preguntar algo que no es derecho: 404 · gastado en la red 0 USDC · 10.5 s
   La consulta no versa sobre una materia jurídica. No se generó cobro.
 
-Total: 28.4 s · 0.02 USDC
+Total: 28.7 s · 0.02 USDC
 ```
 
-### Corrida 2 · 2026-11-24 21:44:50 (Bogotá)
+### Corrida 2 · 2026-11-24 21:55:35 (Bogotá)
 
 ```
 ❓ compré por internet y me arrepentí, ¿lo puedo devolver?
@@ -121,24 +187,26 @@ Total: 28.4 s · 0.02 USDC
 ▶ Pedir sin pagar: 402 · 0 s
   pide 0.02 USDC en stellar:testnet, para GDT5GFJYQW6LTJ7QGZIBURBV3DRLL37DOMT7TRLOSGO7KHFKD424DAU2
 
-▶ Tope excedido: rechazado · gastado en la red 0 USDC · 0.1 s
+▶ Tope excedido: rechazado · gastado en la red 0 USDC · 0.2 s
   cuesta más que $0.005: no se firmó nada
 
 ▶ Pagar y pedir: 200 · gastado en la red 0.02 USDC · 12.9 s
-  Ley 1480 de 2011, art. 47 · Ley 1480 de 2011, art. 46 · Ley 2439 de 2024, art. 5 · Ley 1480 de 2011, art. 50
+  Ley 1480 de 2011, art. 47 · Ley 1480 de 2011, art. 50 · Ley 2439 de 2024, art. 5 · Ley 1480 de 2011, art. 46
+  Ley 1480 de 2011, art. 47: «En todos los contratos para la venta de bienes y prestación de servicios mediante sistemas de financiación otorgada por el productor o proveedor, venta de tiempos compartidos o ventas que utilizan métodos no tradicionales o a distancia, que por su naturaleza no deban consumirse o no hayan comenzado a ejecutarse antes d…»
+  vigencia: exequibilidad condicionada (Sentencia C-192 de 2026) · http://www.secretariasenado.gov.co/senado/basedoc/ley_1480_2011_pr001.html#47
   ✅ verificado en la red (USDC, cuentas, monto y nonce)
-  https://stellar.expert/explorer/testnet/tx/b0e7028f63faafdef76faa0f11bd80473a1fcc991e6cc96bbf847678b8c2fd49
+  https://stellar.expert/explorer/testnet/tx/3817cb2e8fbac85fdaad1682ddf2c85cb6755c1aea7d81eb57c4c1885afc94b3
 
-▶ Reenviar el mismo pago: 200 · gastado en la red 0 USDC · 0.3 s
+▶ Reenviar el mismo pago: 200 · gastado en la red 0 USDC · 0.2 s
   la misma respuesta, sin-cobro
 
-▶ Preguntar algo que no es derecho: 404 · gastado en la red 0 USDC · 9.7 s
+▶ Preguntar algo que no es derecho: 404 · gastado en la red 0 USDC · 11.2 s
   La consulta no versa sobre una materia jurídica. No se generó cobro.
 
-Total: 23.0 s · 0.02 USDC
+Total: 24.5 s · 0.02 USDC
 ```
 
-### Corrida 3 · 2026-11-24 21:45:14 (Bogotá)
+### Corrida 3 · 2026-11-24 21:56:01 (Bogotá)
 
 ```
 ❓ quiero abrir una tienda, ¿tengo que registrarla en cámara de comercio y qué pasa si no?
@@ -151,21 +219,23 @@ Total: 23.0 s · 0.02 USDC
 ▶ Tope excedido: rechazado · gastado en la red 0 USDC · 0.1 s
   cuesta más que $0.005: no se firmó nada
 
-▶ Pagar y pedir: 200 · gastado en la red 0.02 USDC · 18.3 s
-  Código de Comercio, art. 28 · Código de Comercio, art. 19 · Código de Comercio, art. 31 · Código de Comercio, art. 37 · Código de Comercio, art. 13 · Código de Comercio, art. 29
+▶ Pagar y pedir: 200 · gastado en la red 0.02 USDC · 16.4 s
+  Código de Comercio, art. 28 · Código de Comercio, art. 37 · Código de Comercio, art. 31 · Ley 1801 de 2016, art. 87 · Código de Comercio, art. 13
+  Código de Comercio, art. 28: «Deberán inscribirse en el registro mercantil: 1) Las personas que ejerzan profesionalmente el comercio y sus auxiliares, tales como los comisionistas, corredores, agentes, representantes de firmas nacionales o extranjeras, quienes lo harán dentro del mes siguiente a la fecha en que inicien actividades; 2) Las capitulac…»
+  vigencia: sin afectaciones registradas · http://www.secretariasenado.gov.co/senado/basedoc/codigo_comercio.html#28
   ✅ verificado en la red (USDC, cuentas, monto y nonce)
-  https://stellar.expert/explorer/testnet/tx/a13b4a4e648b3d3124a1af0f762d811317edd531d7fcf38be953e74edcef5fcc
+  https://stellar.expert/explorer/testnet/tx/87ccb89c36cc8f191581f0506b92e225a4206244e4fec5388e48b2ef2804f614
 
 ▶ Reenviar el mismo pago: 200 · gastado en la red 0 USDC · 0.3 s
   la misma respuesta, sin-cobro
 
-▶ Preguntar algo que no es derecho: 404 · gastado en la red 0 USDC · 10.5 s
+▶ Preguntar algo que no es derecho: 404 · gastado en la red 0 USDC · 10.7 s
   La consulta no versa sobre una materia jurídica. No se generó cobro.
 
-Total: 29.2 s · 0.02 USDC
+Total: 27.5 s · 0.02 USDC
 ```
 
-### Corrida 4 · 2026-11-24 21:45:45 (Bogotá)
+### Corrida 4 · 2026-11-24 21:56:30 (Bogotá)
 
 ```
 ❓ me echaron sin justa causa, ¿qué indemnización me toca?
@@ -175,24 +245,26 @@ Total: 29.2 s · 0.02 USDC
 ▶ Pedir sin pagar: 402 · 0 s
   pide 0.02 USDC en stellar:testnet, para GDT5GFJYQW6LTJ7QGZIBURBV3DRLL37DOMT7TRLOSGO7KHFKD424DAU2
 
-▶ Tope excedido: rechazado · gastado en la red 0 USDC · 0.2 s
+▶ Tope excedido: rechazado · gastado en la red 0 USDC · 0.1 s
   cuesta más que $0.005: no se firmó nada
 
-▶ Pagar y pedir: 200 · gastado en la red 0.02 USDC · 12.5 s
-  Código Sustantivo del Trabajo, art. 64
+▶ Pagar y pedir: 200 · gastado en la red 0.02 USDC · 12 s
+  Código Sustantivo del Trabajo, art. 64 · Código Sustantivo del Trabajo, art. 62
+  Código Sustantivo del Trabajo, art. 64: «[Nota de la fuente: Artículo modificado por el artículo 28 de la Ley 789 de 2002. El nuevo texto es el siguiente:] En todo contrato de trabajo va envuelta la condición resolutoria por incumplimiento de lo pactado, con indemnización de perjuicios a cargo de la parte responsable. Esta indemnización comprende el lucro ces…»
+  vigencia: sin afectaciones registradas · http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo_pr001.html#64
   ✅ verificado en la red (USDC, cuentas, monto y nonce)
-  https://stellar.expert/explorer/testnet/tx/bc576389f528c53ac5dcf98f82552bf6bdafae3fd28a5089f9e7d72fe5081c5b
+  https://stellar.expert/explorer/testnet/tx/aa328fa43a76c624a5db890d1148f51a724a29fd991e849092629602eed6d369
 
 ▶ Reenviar el mismo pago: 200 · gastado en la red 0 USDC · 0.2 s
   la misma respuesta, sin-cobro
 
-▶ Preguntar algo que no es derecho: 404 · gastado en la red 0 USDC · 9.6 s
+▶ Preguntar algo que no es derecho: 404 · gastado en la red 0 USDC · 16.2 s
   La consulta no versa sobre una materia jurídica. No se generó cobro.
 
-Total: 22.5 s · 0.02 USDC
+Total: 28.5 s · 0.02 USDC
 ```
 
-### Corrida 5 · 2026-11-24 21:46:09 (Bogotá)
+### Corrida 5 · 2026-11-24 21:57:00 (Bogotá)
 
 ```
 ❓ mi arrendador me quiere subir el arriendo más que la inflación, ¿puede?
@@ -205,16 +277,105 @@ Total: 22.5 s · 0.02 USDC
 ▶ Tope excedido: rechazado · gastado en la red 0 USDC · 0.2 s
   cuesta más que $0.005: no se firmó nada
 
-▶ Pagar y pedir: 200 · gastado en la red 0.02 USDC · 12.9 s
+▶ Pagar y pedir: 200 · gastado en la red 0.02 USDC · 12.3 s
   Ley 820 de 2003, art. 20 · Ley 820 de 2003, art. 18 · Ley 820 de 2003, art. 33
+  Ley 820 de 2003, art. 20: «Cada doce (12) meses de ejecución del contrato bajo un mismo precio, el arrendador podrá incrementar el canon hasta en una proporción que no sea superior al ciento por ciento (100%) del incremento que haya tenido el índice de precios al consumidor en el año calendario inmediatamente anterior a aquél en que deba efectua…»
+  vigencia: sin afectaciones registradas · http://www.secretariasenado.gov.co/senado/basedoc/ley_0820_2003.html#20
   ✅ verificado en la red (USDC, cuentas, monto y nonce)
-  https://stellar.expert/explorer/testnet/tx/498ad2af5314e1681917c0b667dd1ed2e14165c015327a63c8e68535a71bc8d8
+  https://stellar.expert/explorer/testnet/tx/81bf08e3f8f450916ee5d65cc488af6825aeba971539b5ccc303499001679519
+
+▶ Reenviar el mismo pago: 200 · gastado en la red 0 USDC · 0.2 s
+  la misma respuesta, sin-cobro
+
+▶ Preguntar algo que no es derecho: 404 · gastado en la red 0 USDC · 11.8 s
+  La consulta no versa sobre una materia jurídica. No se generó cobro.
+
+Total: 24.5 s · 0.02 USDC
+```
+
+### Corrida 6 · 2026-11-24 21:57:26 (Bogotá)
+
+```
+❓ ¿me pueden cobrar una deuda por WhatsApp un domingo?
+   paga GB2RPFNLNBABHBLSQ6U6YLDKPN6AKRBPI3SUYAT2DJVAZX47SBV3ZPRM
+   USDC GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5, contrato CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA
+
+▶ Pedir sin pagar: 402 · 0 s
+  pide 0.02 USDC en stellar:testnet, para GDT5GFJYQW6LTJ7QGZIBURBV3DRLL37DOMT7TRLOSGO7KHFKD424DAU2
+
+▶ Tope excedido: rechazado · gastado en la red 0 USDC · 0.1 s
+  cuesta más que $0.005: no se firmó nada
+
+▶ Pagar y pedir: 200 · gastado en la red 0.02 USDC · 16.1 s
+  Ley 2300 de 2023, art. 3 · Ley 2300 de 2023, art. 2 · Ley 2300 de 2023, art. 9 · Ley 2300 de 2023, art. 1
+  Ley 2300 de 2023, art. 3: «Una vez establecido un contacto directo con el consumidor, este no podrá ser contactado por parte de gestores de cobranza mediante varios canales dentro de una misma semana ni en más de una ocasión durante el mismo día. Las prácticas de cobranza deberán realizarse de manera respetuosa y sin afectar la intimidad persona…»
+  vigencia: sin afectaciones registradas · http://www.secretariasenado.gov.co/senado/basedoc/ley_2300_2023.html#3
+  ✅ verificado en la red (USDC, cuentas, monto y nonce)
+  https://stellar.expert/explorer/testnet/tx/ac2d9d2f86eb2d408e09025d4ab714536dcdfef3f6c1ac9b88715b3d19965f69
+
+▶ Reenviar el mismo pago: 200 · gastado en la red 0 USDC · 0.2 s
+  la misma respuesta, sin-cobro
+
+▶ Preguntar algo que no es derecho: 404 · gastado en la red 0 USDC · 11.7 s
+  La consulta no versa sobre una materia jurídica. No se generó cobro.
+
+Total: 28.1 s · 0.02 USDC
+```
+
+### Corrida 7 · 2026-11-24 21:57:56 (Bogotá)
+
+```
+❓ ¿me pueden cobrar una deuda por WhatsApp un domingo?
+   paga GB2RPFNLNBABHBLSQ6U6YLDKPN6AKRBPI3SUYAT2DJVAZX47SBV3ZPRM
+   USDC GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5, contrato CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA
+
+▶ Pedir sin pagar: 402 · 0 s
+  pide 0.02 USDC en stellar:testnet, para GDT5GFJYQW6LTJ7QGZIBURBV3DRLL37DOMT7TRLOSGO7KHFKD424DAU2
+
+▶ Tope excedido: rechazado · gastado en la red 0 USDC · 0.1 s
+  cuesta más que $0.005: no se firmó nada
+
+▶ Pagar y pedir: 200 · gastado en la red 0.02 USDC · 16.9 s
+  Ley 2300 de 2023, art. 3 · Ley 2300 de 2023, art. 2 · Ley 2300 de 2023, art. 1 · Ley 2300 de 2023, art. 9
+  Ley 2300 de 2023, art. 3: «Una vez establecido un contacto directo con el consumidor, este no podrá ser contactado por parte de gestores de cobranza mediante varios canales dentro de una misma semana ni en más de una ocasión durante el mismo día. Las prácticas de cobranza deberán realizarse de manera respetuosa y sin afectar la intimidad persona…»
+  vigencia: sin afectaciones registradas · http://www.secretariasenado.gov.co/senado/basedoc/ley_2300_2023.html#3
+  ✅ verificado en la red (USDC, cuentas, monto y nonce)
+  https://stellar.expert/explorer/testnet/tx/cb5726fa74f614ae85cf6ba4a5e24d8961d929e59f25983c7d21ceef54a151e6
 
 ▶ Reenviar el mismo pago: 200 · gastado en la red 0 USDC · 0.3 s
   la misma respuesta, sin-cobro
 
-▶ Preguntar algo que no es derecho: 404 · gastado en la red 0 USDC · 10.6 s
+▶ Preguntar algo que no es derecho: 404 · gastado en la red 0 USDC · 11.9 s
   La consulta no versa sobre una materia jurídica. No se generó cobro.
 
-Total: 24.0 s · 0.02 USDC
+Total: 29.2 s · 0.02 USDC
+```
+
+### Corrida 8 · 2026-11-24 21:58:27 (Bogotá)
+
+```
+❓ ¿me pueden cobrar una deuda por WhatsApp un domingo?
+   paga GB2RPFNLNBABHBLSQ6U6YLDKPN6AKRBPI3SUYAT2DJVAZX47SBV3ZPRM
+   USDC GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5, contrato CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA
+
+▶ Pedir sin pagar: 402 · 0 s
+  pide 0.02 USDC en stellar:testnet, para GDT5GFJYQW6LTJ7QGZIBURBV3DRLL37DOMT7TRLOSGO7KHFKD424DAU2
+
+▶ Tope excedido: rechazado · gastado en la red 0 USDC · 0.2 s
+  cuesta más que $0.005: no se firmó nada
+
+▶ Pagar y pedir: 200 · gastado en la red 0.02 USDC · 15.8 s
+  Ley 2300 de 2023, art. 3 · Ley 2300 de 2023, art. 2 · Ley 2300 de 2023, art. 1
+  Ley 2300 de 2023, art. 3: «Una vez establecido un contacto directo con el consumidor, este no podrá ser contactado por parte de gestores de cobranza mediante varios canales dentro de una misma semana ni en más de una ocasión durante el mismo día. Las prácticas de cobranza deberán realizarse de manera respetuosa y sin afectar la intimidad persona…»
+  vigencia: sin afectaciones registradas · http://www.secretariasenado.gov.co/senado/basedoc/ley_2300_2023.html#3
+  ✅ verificado en la red (USDC, cuentas, monto y nonce)
+  https://stellar.expert/explorer/testnet/tx/4cc7b0233f46f73fe3b1314ba83444538bb133f032838354e78f27006cc81eda
+
+▶ Reenviar el mismo pago: 200 · gastado en la red 0 USDC · 0.3 s
+  la misma respuesta, sin-cobro
+
+▶ Preguntar algo que no es derecho: 404 · gastado en la red 0 USDC · 12.6 s
+  La consulta no versa sobre una materia jurídica. No se generó cobro.
+
+Total: 28.9 s · 0.02 USDC
 ```

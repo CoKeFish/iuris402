@@ -11,7 +11,7 @@ testnet: dinero de prueba.
 ## Para quién y por qué se paga por consulta
 
 **Para quien construye agentes** que tocan derechos de la gente: atención al cliente, cobranza, arriendos, recursos humanos,
-cumplimiento. Por ejemplo, un agente de cobranza debe saber si puede escribirle a alguien un domingo. Si se lo pregunta a un LLM,
+cumplimiento. Por ejemplo, a alguien le cobran una deuda un domingo y le pregunta a su asistente si eso se puede. Un LLM solo
 puede citar una ley que no existe o un artículo derogado.
 
 - **Leer la ley es gratis** (`/articulo`): es pública y toda cita debe poder verificarse.
@@ -83,6 +83,8 @@ se construye, se verifica y se cobra, y una **muestra de 10 artículos** (`muest
 |---|---|---|
 | Saldo insuficiente | el agente no firma; si llega firmado, 402 y no se entrega | `demo.test.js`, `server.test.js`, [ensayo](partes/CoKeFish/ENSAYOS.md) |
 | Pago repetido (también simultáneo) | la misma respuesta, un solo cobro | `server.test.js`, ensayo |
+| Una firma con dos preguntas a la vez | se paga y se entrega una; la otra se rechaza | `server.test.js` |
+| La API se cae mientras liquida | la respuesta ya estaba guardada: se entrega si la red muestra el pago | `server.test.js` |
 | Tope excedido | no se firma nada | `pago.test.js` con el tope real de x402, ensayo |
 | Pago inválido (ilegible, firma alterada, menos monto, otra cuenta, otra red) | 402, sin entrega ni cobro | `server.test.js`, `npm run pagos-malos` |
 | No se sabe si se cobró | se busca el nonce en la red; no se firma otra vez | `pago.test.js`, `server.test.js` |
@@ -92,6 +94,8 @@ se construye, se verifica y se cobra, y una **muestra de 10 artículos** (`muest
 Node 22.15 o más nuevo. Los mismos comandos sirven en bash y PowerShell.
 
 ```bash
+git clone https://github.com/CoKeFish/iuris402.git
+cd iuris402
 npm install
 npm run cuentas           # crea .env y las dos cuentas de testnet, con XLM de Friendbot y trustline de USDC
 ```
@@ -107,7 +111,8 @@ npm run agente -- "compré por internet y me arrepentí, ¿lo puedo devolver?"
 ```
 
 La muestra trae 10 artículos: esa pregunta sale con ella; las demás del pitch necesitan la base completa. Sin los LLM funciona, con peor
-puntería; para encenderlos, quita el `#` de `REFORMULAR_CMD`, `ELEGIR_CMD` y `MAX_THINKING_TOKENS` en `.env`. Para que otro LLM redacte la
+puntería; para encenderlos, quita el `#` de `REFORMULAR_CMD`, `ELEGIR_CMD` y `MAX_THINKING_TOKENS` en `.env` (los del
+ejemplo necesitan Claude Code instalado y con la sesión iniciada). Para que otro LLM redacte la
 asesoría define `ASESOR_CMD` (lee el encargo por stdin), por ejemplo `ASESOR_CMD='claude -p'`. El tope del agente es `TOPE` en `.env`.
 
 Agregar leyes: añade la norma a `ingesta/fuentes.json`, luego `npm run descargar`,
@@ -117,7 +122,7 @@ Agregar leyes: añade la norma a `ingesta/fuentes.json`, luego `npm run descarga
 
 `npm test` pasa con la muestra. Las demás necesitan la base completa.
 
-- `npm test`: 40 pruebas del cobro, el comprador y la base con un facilitador simulado (402 correcto, sin doble cobro aunque la API
+- `npm test`: 43 pruebas del cobro, el comprador y la base con un facilitador simulado (402 correcto, sin doble cobro aunque la API
   se reinicie o lleguen dos envíos a la vez, pago en duda, sin cobro si no hay resultados, referencias consultables).
 - `npm run verificar-curado`: compara el curado con el crudo, párrafo por párrafo (palabras en orden,
   sin puntuación). Lo que no está se lista: sentencias que agrega la casa editorial, títulos fuera del
@@ -130,17 +135,22 @@ Agregar leyes: añade la norma a `ingesta/fuentes.json`, luego `npm run descarga
 - `npm run resumen`: **prueba limpia**, 30 preguntas que escribió otro modelo (Gemini 4 Neon) leyendo la base y que se reservaron sin
   usar ([preguntas y resultados](evaluacion/reservadas.json)). Primero sale un artículo esencial en **26** y uno esencial o aceptable en 30;
   26 respuestas traen todos los esenciales, y 78 % de lo entregado sirve. De 15 preguntas que no debían cobrarse, se cobró 1.
-- [Ensayos del demo](partes/CoKeFish/ENSAYOS.md): pagar, recibir y comprobar en la red toma de 12 a 19 s con los dos LLM.
+  Muchas nombran la norma, y después hubo correcciones a la base que no se volvieron a medir.
+- [Ensayos del demo](partes/CoKeFish/ENSAYOS.md): pagar, recibir y comprobar en la red tomó de 12 a 18 s en las ocho corridas
+  finales; antes hubo de hasta 39.5 s, y ahí está por qué.
 
 ## Hashes de prueba (testnet)
 
 Pagos de 0.02 USDC del agente a la API por `/asesoria`, comprobados por RPC en el mismo recorrido:
 
-- [`d250ca94274588f3c8b01af0ded070661668e0d45d18a828708004658fd7ae2d`](https://stellar.expert/explorer/testnet/tx/d250ca94274588f3c8b01af0ded070661668e0d45d18a828708004658fd7ae2d)
-- [`b0e7028f63faafdef76faa0f11bd80473a1fcc991e6cc96bbf847678b8c2fd49`](https://stellar.expert/explorer/testnet/tx/b0e7028f63faafdef76faa0f11bd80473a1fcc991e6cc96bbf847678b8c2fd49)
-- [`a13b4a4e648b3d3124a1af0f762d811317edd531d7fcf38be953e74edcef5fcc`](https://stellar.expert/explorer/testnet/tx/a13b4a4e648b3d3124a1af0f762d811317edd531d7fcf38be953e74edcef5fcc)
-- [`bc576389f528c53ac5dcf98f82552bf6bdafae3fd28a5089f9e7d72fe5081c5b`](https://stellar.expert/explorer/testnet/tx/bc576389f528c53ac5dcf98f82552bf6bdafae3fd28a5089f9e7d72fe5081c5b)
-- [`498ad2af5314e1681917c0b667dd1ed2e14165c015327a63c8e68535a71bc8d8`](https://stellar.expert/explorer/testnet/tx/498ad2af5314e1681917c0b667dd1ed2e14165c015327a63c8e68535a71bc8d8)
+- [`946bb2e621d8f44058138f9623c620b833fe31d92d0931096faaf5724dc7a3d7`](https://stellar.expert/explorer/testnet/tx/946bb2e621d8f44058138f9623c620b833fe31d92d0931096faaf5724dc7a3d7)
+- [`3817cb2e8fbac85fdaad1682ddf2c85cb6755c1aea7d81eb57c4c1885afc94b3`](https://stellar.expert/explorer/testnet/tx/3817cb2e8fbac85fdaad1682ddf2c85cb6755c1aea7d81eb57c4c1885afc94b3)
+- [`87ccb89c36cc8f191581f0506b92e225a4206244e4fec5388e48b2ef2804f614`](https://stellar.expert/explorer/testnet/tx/87ccb89c36cc8f191581f0506b92e225a4206244e4fec5388e48b2ef2804f614)
+- [`aa328fa43a76c624a5db890d1148f51a724a29fd991e849092629602eed6d369`](https://stellar.expert/explorer/testnet/tx/aa328fa43a76c624a5db890d1148f51a724a29fd991e849092629602eed6d369)
+- [`81bf08e3f8f450916ee5d65cc488af6825aeba971539b5ccc303499001679519`](https://stellar.expert/explorer/testnet/tx/81bf08e3f8f450916ee5d65cc488af6825aeba971539b5ccc303499001679519)
+- [`ac2d9d2f86eb2d408e09025d4ab714536dcdfef3f6c1ac9b88715b3d19965f69`](https://stellar.expert/explorer/testnet/tx/ac2d9d2f86eb2d408e09025d4ab714536dcdfef3f6c1ac9b88715b3d19965f69)
+- [`cb5726fa74f614ae85cf6ba4a5e24d8961d929e59f25983c7d21ceef54a151e6`](https://stellar.expert/explorer/testnet/tx/cb5726fa74f614ae85cf6ba4a5e24d8961d929e59f25983c7d21ceef54a151e6)
+- [`4cc7b0233f46f73fe3b1314ba83444538bb133f032838354e78f27006cc81eda`](https://stellar.expert/explorer/testnet/tx/4cc7b0233f46f73fe3b1314ba83444538bb133f032838354e78f27006cc81eda)
 
 Los demás, con hora y duración, en [ENSAYOS.md](partes/CoKeFish/ENSAYOS.md). Los primeros fueron
 [`55c53632…`](https://stellar.expert/explorer/testnet/tx/55c53632c2434d1b218052432d01c5f1a7be665800d11e3c39adee2ba1a99d9b) y [`fd6cace6…`](https://stellar.expert/explorer/testnet/tx/fd6cace64c8174be4470fea540f635d493464310563e4440a73f2def4958fc67).

@@ -1,11 +1,11 @@
 # Pitch (5 minutos)
 
 Preparado antes de empezar: terminal 1 con `npm run api` encendida, terminal 2 con el comando del demo escrito sin dar Enter,
-terminal 3 con `npm run api -- --sin-llm` y Stellar Expert abierto en el navegador. Media hora antes, correr el demo una vez.
+terminal 3 con `npm run api:respaldo` y Stellar Expert abierto en el navegador. Media hora antes, correr el demo una vez.
 
 ## 0:00 – 0:45 · El problema
 
-> «Un agente de cobranza le pregunta a una IA si puede escribirle a un deudor un domingo. La IA responde segura, y a veces cita
+> «A alguien le escriben un domingo para cobrarle una deuda y le pregunta a su asistente de IA si eso se puede. La IA responde segura, y a veces cita
 > una ley que no existe o un artículo derogado. La ley es pública, pero está en páginas y PDF escaneados que un agente no lee
 > bien. Y las bases jurídicas se venden por suscripción a personas: un agente no llena formularios ni firma contratos.»
 
@@ -26,12 +26,12 @@ Tarda unos 30 segundos. Se lee cada paso a medida que sale:
 |---|---|
 | `Pedir sin pagar: 402` | «Sin pago no hay respuesta: dice cuánto, en qué red y a qué cuenta.» |
 | `Tope excedido: rechazado` | «Un agente con tope de medio centavo ni siquiera firma.» |
-| `Pagar y pedir: 200` (unos 15 s) | «Firma, paga 0.02 USDC y recibe la Ley 2300 de 2023, artículo 3: el domingo no. Mientras, dos LLM buscan y eligen.» |
+| `Pagar y pedir: 200` (unos 15 s) | «Firma, paga 0.02 USDC y recibe la Ley 2300 de 2023, artículo 3, con su texto, su vigencia y su fuente: el domingo no. Un LLM entiende la pregunta y otro elige entre lo que encontró la búsqueda.» |
 | `✅ verificado en la red` | «No le creemos a la API: buscamos en Stellar esa transferencia, por su nonce.» |
 | `Reenviar el mismo pago: 200 · 0 USDC` | «Si se cae la conexión, la misma firma devuelve lo mismo, sin cobrar otra vez.» |
 | `Preguntar algo que no es derecho: 404 · 0 USDC` | «Una receta de lasaña: 404, y la red confirma que no se cobró.» |
 
-Si el LLM no responde, la API contesta 503 y no cobra; entonces: `npm run demo -- --respaldo "¿me pueden cobrar una deuda por WhatsApp un domingo?"`
+Si al minuto no ha pagado (el LLM no responde: 503 y no cobra), Ctrl+C y: `npm run demo:respaldo -- "¿me pueden cobrar una deuda por WhatsApp un domingo?"`
 
 ## 2:45 – 3:30 · La evidencia
 

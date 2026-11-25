@@ -12,7 +12,7 @@ const DIMENSIONES = 384;
 export const UMBRAL = Number(process.env.UMBRAL || 0.85);
 
 const MARGEN_AVISO = 0.02;
-const PESO_PALABRAS = Number(process.env.PESO_PALABRAS || 0.05);
+const PESO_PALABRAS = Number(process.env.PESO_PALABRAS || 0.15);
 
 let extractor;
 // E5 pide anteponer "query: " a la pregunta y "passage: " a lo indexado
@@ -123,15 +123,18 @@ export function consultar(db, id) {
 const citadoPor = (db, destino) =>
   db.prepare("SELECT a.id, a.cita, r.tipo, r.contexto FROM referencias r JOIN articulos a ON a.id = r.articulo_id WHERE r.destino_id = ? ORDER BY a.id").all(destino);
 
-// El texto de las normas a las que remiten estos artículos ("cita", no las notas de vigencia)
-export function textosCitados(db, articulos, maximo = 6) {
-  const ya = new Set(articulos.map((a) => a.id));
+// El texto de las normas a las que remiten los artículos directos ("cita", no las notas de vigencia).
+// Las nuestras que venían al caso ya salieron elegidas: aquí van sobre todo las de afuera.
+export function textosCitados(db, resultados, maximo = 4) {
+  const ya = new Set(resultados.map((x) => x.articulo.id));
   const salida = [];
-  for (const a of articulos) {
+  const elegidos = resultados.some((x) => x.relevancia);
+  for (const { articulo: a } of resultados.filter((x) => !elegidos || x.relevancia === "directa").slice(0, 3)) {
     for (const r of a.referencias) {
-      if (r.tipo !== "cita" || !r.id || ya.has(r.id) || salida.length >= maximo) continue;
+      if (r.tipo !== "cita" || !r.id || ya.has(r.id) || salida.length >= maximo || (elegidos && !r.id.startsWith("ext:"))) continue;
       ya.add(r.id);
       const t = consultar(db, r.id);
+      if (!t?.texto) continue;
       salida.push({ ref: `[R${salida.length + 1}]`, cita: t.cita, titulo: t.titulo, citado_en: a.cita, texto: t.texto.length > 4000 ? `${t.texto.slice(0, 4000)}…` : t.texto, recortado: t.texto.length > 4000, derogado: t.derogado, vigencia: t.vigencia, fuente: t.fuente, nota: t.nota });
     }
   }
@@ -156,31 +159,81 @@ export function cargarIndice() {
         (SELECT url FROM archivos_crudos WHERE norma_id = n.id ORDER BY id LIMIT 1) AS fuente
       FROM normas n LEFT JOIN articulos a ON a.norma_id = n.id AND a.en_venta = 1 GROUP BY n.id ORDER BY n.rowid`)
     .all();
+  // espejo → artículos que modificó y ya traen su texto; vecinos → los que se citan entre sí
+  const grupos = (sql) => {
+    const m = new Map();
+    for (const { a, b } of db.prepare(sql).all()) if (a !== b) m.set(a, [...new Set([...(m.get(a) ?? []), b])]);
+    return m;
+  };
+  const espejos = grupos("SELECT DISTINCT a.id AS a, c.articulo_id AS b FROM cambios c JOIN articulos a ON a.cita = c.por JOIN articulos d ON d.id = c.articulo_id WHERE d.en_venta = 1");
+  const citas = "SELECT r.articulo_id AS a, d.articulo_id AS b FROM referencias r JOIN destinos d ON d.id = r.destino_id WHERE d.articulo_id IS NOT NULL";
+  const vecinos = grupos(`${citas} UNION SELECT b, a FROM (${citas})`);
   const fts = db.prepare("SELECT articulo_id FROM articulos_fts WHERE articulos_fts MATCH ? ORDER BY bm25(articulos_fts)");
-  return { db, docs, normas, fts };
+  return { db, docs, normas, fts, espejos, vecinos };
 }
 
-// Artículos que la pregunta nombra por su número: "artículo 37 de la Ley 820 de 2003", "art. 64 del CST"
-const CODIGOS = [[/constituci[oó]n/i, "cp-1991"], [/\bcst\b|c[oó]digo sustantivo/i, "cst"], [/c[oó]digo penal/i, "penal-269"], [/\bcpaca\b/i, "ley-1437-2011"]];
+// Artículos que la pregunta nombra por su número, antes o después de la norma: "artículo 37 de la
+// Ley 820 de 2003", "la Ley 675, en su art. 37", "arts. 14 y 15 de la Ley 1581", "art. 64 del CST"
+const CODIGOS = [
+  [/constituci[oó]n/i, "cp-1991"], [/\bcst\b|c[oó]digo sustantivo/i, "cst"], [/c[oó]digo penal/i, "penal-269"], [/\bcpaca\b/i, "ley-1437-2011"],
+  [/c[oó]digo de comercio|\bcco\b|\bc\. ?co\b/i, "cco"], [/estatuto tributario|\be\.?t\b/i, "et"], [/\bs\.?a\.?s\b/i, "ley-1258-2008"], [/c[oó]digo sanitario/i, "ley-9-1979"], [/c[oó]digo (?:nacional )?de (?:polic[ií]a|seguridad y convivencia)/i, "ley-1801-2016"],
+  [/estatuto del consumidor/i, "ley-1480-2011"], [/ley de propiedad horizontal/i, "ley-675-2001"], [/circular[^.]{0,20}\b0*02\b|circular[^.]{0,30}\bsic\b/i, "sic-ce-002-2024"],
+];
+const NORMA = /\b(ley|decreto)(?:\s+ley)?\s+(?:\D{0,12})?(\d[\d.]*)(?:\s+de\s+(\d{4}))?/gi;
+// Las normas que menciona un texto, con su posición
+function normasEn(texto) {
+  const l = [...texto.matchAll(NORMA)].map((m) => [m.index, new RegExp(`^${m[1].toLowerCase() === "ley" ? "ley" : "dec"}-${m[2].replace(/\D/g, "")}-${m[3] ?? "[0-9]{4}"}$`), m.index + m[0].length]);
+  for (const [r, id] of CODIGOS) for (const m of texto.matchAll(new RegExp(r.source, "gi"))) l.push([m.index, new RegExp(`^${id}$`), m.index + m[0].length]);
+  return l.sort((a, b) => a[0] - b[0]);
+}
+const NUM = "(?:\\d+(?:-\\d+|[A-Z])?|[IVX]+)(?:[oº°]\\.?)?";
+const PARTES = new RegExp(`\\b(?:art(?:[ií]culos?|s?\\.)?|instrucci[oó]n(?:es)?)\\s*(${NUM}(?:\\s*(?:,|y|e|a|al)\\s*${NUM})*)(?![\\w])`, "gi");
 export function nombrados(docs, pregunta) {
   const ids = new Set();
-  for (const m of pregunta.matchAll(/\bart(?:[ií]culo|\.)?\s*(\d+(?:\s*-?[A-Z])?)\b(.{0,60})/gi)) {
-    const ley = m[2].match(/\b(ley|decreto)\D{0,12}(\d[\d.]*)(?:\s+de\s+(\d{4}))?/i);
-    const norma = ley
-      ? (id) => new RegExp(`^${ley[1].toLowerCase() === "ley" ? "ley" : "dec"}-${ley[2].replace(/\D/g, "")}-${ley[3] ?? "[0-9]{4}"}$`).test(id)
-      : (id) => CODIGOS.some(([r, c]) => c === id && r.test(m[2]));
-    const numero = m[1].replace(/[\s-]/g, "").toUpperCase();
+  for (const m of pregunta.matchAll(PARTES)) {
+    const fin = m.index + m[0].length;
+    // la norma más cercana: la primera que sigue («art. 64 del CST») o la última que precede («la Ley 675, art. 37»)
+    const despues = normasEn(pregunta.slice(fin, fin + 60).split(/\bart(?:[ií]culos?|s?\.)\s*\d/i)[0])[0];
+    const antes = normasEn(pregunta.slice(Math.max(0, m.index - 60), m.index)).at(-1);
+    const conecta = despues && /^\s*(?:,\s*)?(?:de|del|de la|de el|\()?\s*$/i.test(pregunta.slice(fin, fin + despues[0]).replace(/\b(?:la|el|los|las)\b/gi, ""));
+    const norma = conecta ? despues : antes ?? despues;
+    if (!norma) continue;
+    const numeros = new Set();
+    const limpio = (x) => x.replace(/[oº°.]+$/i, "").toUpperCase();
+    for (const tramo of m[1].split(/\s*(?:,|\by\b|\be\b)\s*/i)) {
+      const r = tramo.match(/^(\d+)\S*\s+al?\s+(\d+)/i);
+      if (r && Number(r[2]) - Number(r[1]) < 40) for (let n = Number(r[1]); n <= Number(r[2]); n++) numeros.add(String(n));
+      else numeros.add(limpio(tramo));
+    }
     for (const d of docs) {
       const [n, a] = d.id.split(":");
-      if (a === numero && norma(n)) ids.add(d.id);
+      if (numeros.has(a.toUpperCase()) && norma[1].test(n)) ids.add(d.id);
     }
   }
   return ids;
 }
 
-// Devuelve los k artículos más relevantes, o [] si la pregunta no es del corpus.
-// formas: la misma pregunta en lenguaje jurídico (reformular.js). De cada artículo cuenta la mejor.
-export async function buscar(indice, pregunta, k = 5, umbral = UMBRAL, formas = []) {
+// Reformular y elegir en fila tardan el doble: se elige desde ya con la pregunta tal cual y, si al
+// reformularla resulta tener un solo problema y ya se eligió algo, esa es la respuesta. Solo si tiene
+// varios problemas, o si no salió nada, se repite con los problemas separados.
+export async function responder(indice, pregunta, k, traducir, elegir) {
+  const primera = buscar(indice, pregunta, k, undefined, [], elegir).catch(() => null);
+  const forma = await traducir(pregunta);
+  const vacio = (x) => Object.assign([], { avisos: [], soloAviso: false, ...x });
+  if (forma === null) return { forma, r: vacio({ fallo: true }) };
+  if (forma && !forma.aplica) return { forma, r: vacio() };
+  const formas = forma?.formas ?? [];
+  if (!forma || formas.length <= 1) {
+    const r = await primera;
+    if (r && ((r.elegido && (r.length || r.soloAviso)) || !forma)) return { forma, r };
+  }
+  return { forma, r: await buscar(indice, pregunta, k, undefined, formas, elegir) };
+}
+
+// Devuelve hasta k artículos, o [] si la pregunta no es del corpus o ninguno la resuelve.
+// formas: los problemas jurídicos de la pregunta (reformular.js). elegir: quién escoge entre los
+// candidatos (elegir.js); sin él, o si falla, vale el orden de la búsqueda.
+export async function buscar(indice, pregunta, k = 5, umbral = UMBRAL, formas = [], elegir = null) {
   const vectores = await embeber([pregunta, ...formas], "query");
   const variantes = vectores.map((q) => {
     const punto = (v) => v.reduce((s, x, i) => s + x * q[i], 0);
@@ -188,10 +241,12 @@ export async function buscar(indice, pregunta, k = 5, umbral = UMBRAL, formas = 
   });
   const similitud = (d) => Math.max(...variantes.map((v) => Math.max(v.get(d.id).sentido, v.get(d.id).parecido)));
   const mejor = Math.max(...variantes.flatMap((v) => [...v.values()].map((x) => x.parecido)));
-  const pedidos = nombrados(indice.docs, pregunta);
+  const pedidos = nombrados(indice.docs, [pregunta, ...formas].join(" \n "));
   if (mejor < umbral && !pedidos.size) return Object.assign([], { mejor, avisos: [], soloAviso: false });
   const consulta = consultaFts([pregunta, ...formas].join(" "));
   const palabras = consulta ? indice.fts.all(consulta).map((f) => f.articulo_id) : [];
+  // Quien modificó un artículo repite lo que el artículo ya dice: solo sale si lo nombran
+  const sinEspejos = (docs) => docs.filter((d) => pedidos.has(d.id) || !indice.espejos.get(d.id)?.some((x) => docs.some((o) => o.id === x)));
   const ordenar = (docs) => {
     const puestos = (clave) => variantes.map((v) => new Map([...docs].sort((a, b) => v.get(b.id)[clave] - v.get(a.id)[clave]).map((d, n) => [d.id, n + 1])));
     const [sentido, parecido] = [puestos("sentido"), puestos("parecido")];
@@ -200,13 +255,53 @@ export async function buscar(indice, pregunta, k = 5, umbral = UMBRAL, formas = 
     const puntos = (d) => Math.max(...variantes.map((_, i) => 1 / (60 + sentido[i].get(d.id)) + 1 / (60 + parecido[i].get(d.id)))) + PESO_PALABRAS / (60 + (porPalabras.get(d.id) ?? Infinity));
     return docs.map((d) => [puntos(d) + pedidos.has(d.id), d]).sort((a, b) => b[0] - a[0]).map(([, d]) => d);
   };
-  const dar = (d) => ({ articulo: d, similitud: Number(similitud(d).toFixed(3)) });
-  // lo que no rige no compite con lo que se vende: si sale arriba, va aparte como aviso
-  const vendibles = ordenar(indice.docs.filter((d) => !d.aviso));
-  const avisos = ordenar(indice.docs).slice(0, k).filter((d) => d.aviso);
+  const dar = (d, relevancia) => ({ articulo: d, similitud: Number(similitud(d).toFixed(3)), relevancia });
+  const enVenta = sinEspejos(indice.docs.filter((d) => !d.aviso));
+  const sinVigencia = indice.docs.filter((d) => d.aviso);
+  // lo que no rige no compite con lo que se vende: va aparte, como aviso
+  const vendibles = ordenar(enVenta);
+  const mejorVenta = Math.max(0, ...vendibles.map(similitud));
+
+  const eleccion = elegir ? await elegir(pregunta, formas, candidatos()) : undefined;
+  // el LLM está configurado y no respondió: mejor no responder que cobrar cualquier cosa
+  if (eleccion === null) return Object.assign([], { mejor, avisos: [], soloAviso: false, fallo: true });
+  if (eleccion) {
+    const { directos, complementarios } = eleccion;
+    const avisos = [...sinVigencia.filter((d) => pedidos.has(d.id)), ...eleccion.sinVigencia.filter((d) => !pedidos.has(d.id))];
+    // Solo el aviso si nombran la norma caída, o si nada vigente resuelve lo preguntado
+    const nombroVigente = enVenta.some((d) => pedidos.has(d.id));
+    const soloAviso = avisos.length > 0 && (!directos.length || (!nombroVigente && avisos.some((d) => pedidos.has(d.id))));
+    const lista = directos.length ? [...directos.map((d) => dar(d, "directa")), ...complementarios.map((d) => dar(d, "complementaria"))].slice(0, k) : [];
+    return Object.assign(soloAviso && !lista.length ? vendibles.slice(0, 3).map((d) => dar(d)) : lista, { mejor, avisos: avisos.map((d) => dar(d)), soloAviso, elegido: true });
+  }
+
+  const todos = ordenar(sinEspejos(indice.docs));
+  const avisos = todos.filter((d, n) => d.aviso && (pedidos.has(d.id) || (n < 5 && similitud(d) >= mejorVenta - 0.005)));
   // Solo el aviso, sin responder, si lo caído es claramente lo preguntado y nada lo reemplazó.
   // En la duda se responde: es peor callar una norma vigente que repetir un aviso.
-  const mejorVenta = Math.max(...vendibles.map(similitud));
   const soloAviso = avisos.some((d) => pedidos.has(d.id) || (similitud(d) - mejorVenta >= MARGEN_AVISO && !d.vigencia.some((v) => v.reemplazo)));
-  return Object.assign(vendibles.slice(0, k).map(dar), { mejor, avisos: avisos.map(dar), soloAviso });
+  return Object.assign(vendibles.slice(0, k).map((d) => dar(d)), { mejor, avisos: avisos.map((d) => dar(d)), soloAviso });
+
+  // Lo que leerá el LLM: lo más parecido en conjunto, lo mejor de cada problema, lo mejor por palabras,
+  // lo que citan los primeros, sus artículos contiguos y lo que ya no rige pero se parece
+  function candidatos() {
+    const nota = (v, d) => v.get(d.id).sentido + 2 * v.get(d.id).parecido;
+    const top = (docs, f, n) => [...docs].sort((a, b) => f(b) - f(a)).slice(0, n);
+    const conjunto = (d) => variantes.reduce((s, v) => s + nota(v, d), 0);
+    const elegidos = new Set([...enVenta.filter((d) => pedidos.has(d.id)), ...top(enVenta, conjunto, 16)]);
+    for (const v of variantes) for (const d of top(enVenta, (x) => nota(v, x), 6)) elegidos.add(d);
+    const porId = new Map(enVenta.map((d) => [d.id, d]));
+    for (const id of palabras.filter((p) => porId.has(p)).slice(0, 3)) elegidos.add(porId.get(id));
+    // si lo citado es un artículo modificatorio, vale el que ya trae su texto
+    const vigente = (id) => (porId.has(id) ? [id] : (indice.espejos.get(id) ?? []));
+    const enlazados = new Set([...top(enVenta, conjunto, 4), ...[...elegidos].filter((d) => pedidos.has(d.id))].flatMap((d) => [...(indice.vecinos.get(d.id) ?? [])].flatMap(vigente)));
+    for (const d of top([...enlazados].map((id) => porId.get(id)).filter((d) => d && !elegidos.has(d)), conjunto, 5)) elegidos.add(d);
+    // una institución suele repartirse en artículos seguidos
+    for (const d of top(enVenta, conjunto, 4)) {
+      const i = enVenta.indexOf(d);
+      for (const v of [enVenta[i - 1], enVenta[i + 1]]) if (v && v.id.split(":")[0] === d.id.split(":")[0]) elegidos.add(v);
+    }
+    const caidos = [...new Set([...sinVigencia.filter((d) => pedidos.has(d.id)), ...top(sinVigencia, similitud, 3).filter((d) => similitud(d) >= mejorVenta - 0.03)])];
+    return [...[...elegidos].slice(0, 40 - caidos.length), ...caidos];
+  }
 }

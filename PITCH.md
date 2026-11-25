@@ -1,24 +1,53 @@
-# Pitch (3 minutos)
+# Pitch (5 minutos)
 
-**Problema (40 s).** Pregúntale a un agente de IA si te pueden cobrar una deuda un domingo. Te
-responde seguro, y a veces cita una ley que no existe o un artículo derogado. La ley es pública,
-pero está en páginas y PDF escaneados que ningún agente lee bien. Y una base jurídica
-se vende por suscripción a personas: un agente no llena formularios ni firma contratos.
+Preparado antes de empezar: terminal 1 con `npm run api` encendida, terminal 2 con el comando del demo escrito sin dar Enter,
+terminal 3 con `npm run api -- --sin-llm` y Stellar Expert abierto en el navegador. Media hora antes, correr el demo una vez.
 
-**Usuario (20 s).** Quien construye agentes: de atención al cliente, de cobranza, de arriendos, de
-cumplimiento. Necesitan una respuesta con fuente, de vez en cuando, sin suscripción.
+## 0:00 – 0:45 · El problema
 
-**Solución y demo (80 s).** Iuris402 vende ley por consulta.
-1. `curl -i .../asesoria?q=...` → **402**: cuánto cuesta y a qué cuenta.
-2. El agente compara con su tope, firma, paga 0.02 USDC en Stellar y recibe artículos y argumentos.
-3. Abre el hash en stellar.expert: el pago es real y el agente lo verificó en la red.
-4. El LLM redacta con esas citas, cada una con enlace a la fuente oficial.
-5. Pregunta por una receta de lasaña: 404 y **no cobra**. Reenvía el mismo pago: **no cobra dos veces**.
+> «Un agente de cobranza le pregunta a una IA si puede escribirle a un deudor un domingo. La IA responde segura, y a veces cita
+> una ley que no existe o un artículo derogado. La ley es pública, pero está en páginas y PDF escaneados que un agente no lee
+> bien. Y las bases jurídicas se venden por suscripción a personas: un agente no llena formularios ni firma contratos.»
 
-**Por qué funciona (25 s).** La pregunta de la calle pasa a lenguaje jurídico y se busca por significado;
-se entrega el texto de la ley igual a la fuente, con sus notas de vigencia y su procedencia.
-Y si una ley cita a otra, esa también se puede consultar.
-En 30 preguntas reservadas, escritas por otro modelo, el artículo correcto salió de primero en las 30.
+## 0:45 – 1:15 · Para quién y por qué pagar por uso
 
-**Siguiente paso (15 s).** Más normas hasta cubrir Colombia (códigos, decretos, jurisprudencia),
-transcribir más PDF escaneados y anunciarla en Bazaar para que los agentes la descubran solos.
+> «Iuris402 es para quien construye agentes que tocan derechos de la gente. Leer la ley es gratis; se paga por encontrar cuál
+> aplica, con su vigencia y su fuente oficial. Dos centavos por consulta, con x402 en Stellar. Si no hay respuesta, no cobra.»
+
+## 1:15 – 2:45 · Demo en vivo
+
+```
+npm run demo -- "¿me pueden cobrar una deuda por WhatsApp un domingo?"
+```
+
+Tarda unos 30 segundos. Se lee cada paso a medida que sale:
+
+| Sale en pantalla | Se dice |
+|---|---|
+| `Pedir sin pagar: 402` | «Sin pago no hay respuesta: dice cuánto, en qué red y a qué cuenta.» |
+| `Tope excedido: rechazado` | «Un agente con tope de medio centavo ni siquiera firma.» |
+| `Pagar y pedir: 200` (unos 15 s) | «Firma, paga 0.02 USDC y recibe la Ley 2300 de 2023, artículo 3: el domingo no. Mientras, dos LLM buscan y eligen.» |
+| `✅ verificado en la red` | «No le creemos a la API: buscamos en Stellar esa transferencia, por su nonce.» |
+| `Reenviar el mismo pago: 200 · 0 USDC` | «Si se cae la conexión, la misma firma devuelve lo mismo, sin cobrar otra vez.» |
+| `Preguntar algo que no es derecho: 404 · 0 USDC` | «Una receta de lasaña: 404, y la red confirma que no se cobró.» |
+
+Si el LLM no responde, la API contesta 503 y no cobra; entonces: `npm run demo -- --respaldo "¿me pueden cobrar una deuda por WhatsApp un domingo?"`
+
+## 2:45 – 3:30 · La evidencia
+
+Abrir en Stellar Expert el enlace que imprimió el demo: USDC de testnet, 0.02, de la cuenta del agente a la de la API. El facilitador paga la comisión.
+
+## 3:30 – 4:15 · Qué pasa cuando algo falla
+
+> «Probamos contra el facilitador real una firma alterada, una por menos monto, una para otra cuenta y una ilegible: las rechazó todas y
+> en la red no se movió nada. Y si la red se demora y nadie sabe si se pagó, la API guarda la respuesta y la entrega cuando
+> la red muestra el pago; el agente no firma dos veces.»
+
+## 4:15 – 4:45 · Qué tan bien responde
+
+> «Otro modelo escribió treinta preguntas que reservamos. En veintiséis salió de primero un artículo esencial y la respuesta traía
+> todo lo necesario. De quince que no debíamos cobrar, cobramos una. Las preguntas y los resultados están en el repositorio.»
+
+## 4:45 – 5:00 · Qué sigue
+
+> «Más normas, jurisprudencia, y anunciarla para que los agentes la descubran solos. Eso es Iuris402.»

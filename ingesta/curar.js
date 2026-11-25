@@ -66,7 +66,7 @@ for (const norma of fuentes) {
   }
   const { preambulo, partes, cierre } = pdf
     ? seccionesDeOcr(norma)
-    : partirHtml(norma.urls.map((url) => ({ url, bytes: readFileSync(archivoCrudo(norma, url)) })), norma.hasta, norma.solo);
+    : partirHtml(norma.urls.map((url) => ({ url, bytes: readFileSync(archivoCrudo(norma, url)) })), norma.hasta, norma.solo, norma.mas);
   const unicas = [...new Map(partes.map((p) => [p.articulo, p])).values()];
   if (unicas.length !== partes.length) throw new Error(`${norma.id}: hay artículos repetidos`);
   const curado = {
@@ -76,7 +76,7 @@ for (const norma of fuentes) {
     // de dónde viene cada archivo crudo y cómo comprobar que es el mismo
     fuente: {
       entidad: norma.entidad,
-      metodo: pdf ? "transcripción de la imagen de cada página, hecha por Claude" : "extracción del HTML",
+      metodo: pdf ? "transcripción de la imagen de cada página, hecha por Claude" : norma.imagenes ? "extracción del HTML; tablas y fórmulas en imagen, transcritas por Claude" : "extracción del HTML",
       archivos: norma.urls.map((url) => {
         const ruta = archivoCrudo(norma, url);
         return {

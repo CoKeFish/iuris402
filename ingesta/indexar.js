@@ -13,6 +13,8 @@ import { CAMBIOS, CITADOS, CURADO, DATOS, fuentes, idsDe as ids, leerVigencia, R
 const leer = (r) => JSON.parse(readFileSync(r, "utf8"));
 const json = (x) => JSON.stringify(x ?? []);
 const base = leerVigencia();
+const condiciones = new Map();
+for (const v of base.afectaciones) if (v.condicion) for (const id of ids(v.articulo)) condiciones.set(id, new Set([...(condiciones.get(id) ?? []), v.condicion]));
 const excluidos = new Set(base.afectaciones.filter((v) => v.excluir).flatMap((v) => ids(v.articulo)));
 
 // Se arma aparte y se cambia al final: si algo falla, la base anterior sigue intacta
@@ -48,7 +50,9 @@ for (const norma of fuentes) {
     ]),
   );
   let enVenta = 0;
-  curado.articulos.forEach((a, orden) => {
+  curado.articulos.forEach((crudo, orden) => {
+    // el epígrafe que pone la casa editorial viene entre ángulos; aquí va sin la marca de nota
+    const a = { ...crudo, titulo: crudo.titulo.replace(/^\[Nota de la fuente: ([^\]]*)\]$/, "$1") };
     const r = resumenes[a.id];
     const vende = !a.derogado && !excluidos.has(a.id) && Boolean(r?.resumen);
     const avisa = !vende && Boolean(r?.resumen);
@@ -71,6 +75,8 @@ for (const norma of fuentes) {
     paraEmbeber.push([a.id, 0, "passage", `${norma.corto}. ${a.titulo}. ${a.derogado ? a.encabezado : r.resumen} ${(r.preguntas ?? []).join(" ")}`]);
     if (avisa) paraEmbeber.push([a.id, 99, "query", `¿Qué dispone el artículo ${a.articulo} de ${norma.corto}${a.titulo ? ` en materia de ${a.titulo.toLowerCase()}` : ""}?`]);
     (r.preguntas ?? []).forEach((p, n) => paraEmbeber.push([a.id, n + 1, "query", p]));
+    // la condición que fijó la Corte también responde preguntas
+    [...(condiciones.get(a.id) ?? [])].forEach((c, n) => paraEmbeber.push([a.id, 50 + n, "query", `${norma.corto}. ${a.titulo}: ${c}`]));
   });
   console.log(`${norma.id}: ${enVenta} de ${curado.articulos.length} en venta`);
 }

@@ -28,5 +28,6 @@ export function leerVigencia() {
 // "ley:59-67" es un rango de artículos
 export const idsDe = (ref) => {
   const r = ref.match(/^(.*):(\d+)-(\d+)$/);
-  return r ? Array.from({ length: r[3] - r[2] + 1 }, (_, i) => `${r[1]}:${Number(r[2]) + i}`) : [ref];
+  // "et-rut:555-2" no es un rango: es el artículo 555-2
+  return r && Number(r[3]) > Number(r[2]) ? Array.from({ length: r[3] - r[2] + 1 }, (_, i) => `${r[1]}:${Number(r[2]) + i}`) : [ref];
 };

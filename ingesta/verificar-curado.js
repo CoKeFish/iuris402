@@ -25,7 +25,7 @@ for (const norma of fuentes) {
 
   // de un código grande solo se toman unos artículos: se compara cada uno con su bloque del crudo
   if (norma.solo) {
-    const crudo = norma.urls.map((u) => palabras(decodificar(limpiarHtml(readFileSync(archivoCrudo(norma, u))))).join(" ")).join(" ");
+    const crudo = norma.urls.map((u) => palabras(decodificar(limpiarHtml(readFileSync(archivoCrudo(norma, u))).replaceAll("⟪centrado⟫", " "))).join(" ")).join(" ");
     const bien = curado.articulos.filter((a) => crudo.includes(palabras(sinNota(`${a.encabezado} ${a.titulo} ${a.texto}`)).join(" ")));
     console.log(`${norma.id}: ${bien.length} de ${curado.articulos.length} párrafos idénticos`);
     for (const a of curado.articulos) if (!bien.includes(a)) console.log(`   distinto: ${a.id}`);
@@ -43,6 +43,7 @@ for (const norma of fuentes) {
     const faltan = [];
     for (const url of norma.urls) {
       const h = limpiarHtml(readFileSync(archivoCrudo(norma, url)));
+      if (norma.mas && Number(h.match(/<a\b[^>]*\bname="(\d+)"/i)?.[1]) > norma.hasta) continue;
       // se compara desde el encabezado de la norma hasta su último artículo o sus firmas
       const inicio = Math.max(0, h.search(/⟪centrado⟫|<a\b[^>]*\bname="\d+[A-Z]?"/i) - 40);
       const fin = norma.hasta ? h.search(new RegExp(`<a\\b[^>]*\\bname="${norma.hasta + 1}"`, "i")) : h.search(/\*\s*\*\s*\*/);
@@ -51,6 +52,14 @@ for (const norma of fuentes) {
         if (w.length < 3) continue;
         revisados++;
         if (!todo.includes(` ${w.join(" ")} `)) faltan.push(w.slice(0, 14).join(" "));
+      }
+    }
+    // los artículos que se toman después de «hasta» se comparan con su bloque del crudo
+    if (norma.mas) {
+      const crudo = norma.urls.map((u) => palabras(decodificar(limpiarHtml(readFileSync(archivoCrudo(norma, u))).replaceAll("⟪centrado⟫", " "))).join(" ")).join(" ");
+      for (const a of curado.articulos.filter((x) => new RegExp(norma.mas).test(x.articulo) && parseInt(x.articulo) > norma.hasta)) {
+        revisados++;
+        if (!crudo.includes(palabras(sinNota(`${a.encabezado} ${a.titulo} ${a.texto}`)).join(" "))) faltan.push(a.id);
       }
     }
     console.log(`${norma.id}: ${revisados - faltan.length} de ${revisados} párrafos idénticos`);

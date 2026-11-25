@@ -1,9 +1,11 @@
 // Mide la búsqueda: ¿el artículo correcto sale entre los 5 primeros? ¿se rechaza lo ajeno?
 // Las preguntas están como las escribe la gente; la base, solo en lenguaje jurídico. Por eso se mide
 // con sus formas reformuladas, guardadas en preguntas-formales.json para que el resultado se repita.
-// Uso: npm run evaluar   (--crudo: sin reformular; --reformular: vuelve a pedirlas a REFORMULAR_CMD)
+// Uso: npm run evaluar   (--crudo: sin reformular; --reformular: vuelve a pedirlas a REFORMULAR_CMD;
+//      --elegir: con el LLM de ELEGIR_CMD que escoge entre los candidatos, unos 8 s por pregunta)
 import { readFileSync, writeFileSync } from "node:fs";
 import { buscar, cargarIndice, UMBRAL } from "../buscador.js";
+import { elegir } from "../elegir.js";
 import { reformular } from "../reformular.js";
 
 // pregunta → artículos válidos (basta con que salga uno)
@@ -89,6 +91,7 @@ const AJENAS = [
 const ARCHIVO = new URL("./preguntas-formales.json", import.meta.url);
 const formales = JSON.parse(readFileSync(ARCHIVO, "utf8"));
 const crudo = process.argv.includes("--crudo");
+const escoger = process.argv.includes("--elegir") ? elegir : null;
 if (process.argv.includes("--reformular")) {
   for (const q of [...CASOS, ...CASOS_2].map(([q]) => q).concat(AJENAS)) {
     const f = await reformular(q);
@@ -111,7 +114,7 @@ async function medir(nombre, casos) {
   for (const [q, validos] of casos) {
     const { aplica, formas } = formasDe(q);
     if (!aplica) console.log(`✗ rechazada por el reformulador: ${q}`);
-    const r = await buscar(indice, q, 5, 0, formas);
+    const r = await buscar(indice, q, 5, 0, formas, escoger);
     const ids = r.map((x) => x.articulo.id);
     const n = aplica ? ids.findIndex((id) => validos.split(" ").includes(id)) : -1;
     if (n === 0) a1++;

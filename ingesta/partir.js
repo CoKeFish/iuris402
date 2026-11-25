@@ -2,10 +2,10 @@
 import { decodificar, limpiarHtml } from "./html.js";
 
 // "ARTÍCULO 8o.", "ARTICULO 97-A.", "ARTICULO <185-A>." y "ARTÍCULO. EPÍGRAFE. <167A>"
-const ARTICULO = /^ART[IÍ]CULO\s*⟦?\s*(?:\d+\s*[oº°]?)?\s*-?\s*[A-Z]?\s*⟧?\s*\.\s*/i;
-export const ANCLA = /^\d+(?:-?[A-Z])?$/; // "23 PROYECTO" es un artículo que nunca llegó a ser ley
+const ARTICULO = /^ART[IÍ]CULO\s*⟦?\s*(?:\d+\s*[oº°]?)?\s*-?\s*(?:[A-Z]|\d{1,2})?\s*⟧?\s*\.\s*/i;
+export const ANCLA = /^\d+(?:-?[A-Z]|-\d{1,2})?$/; // "23 PROYECTO" es un artículo que nunca llegó a ser ley
 const SECCION = /^(?:LIBRO|T[IÍ]TULO|CAP[IÍ]TULO|SECCI[OÓ]N|(?:PRIMERA|SEGUNDA|TERCERA)?\s*PARTE)\b/i;
-const conNotas = (t) => t.replace(/⟦([^⟧]*)⟧/g, (_, n) => `[Nota de la fuente: ${n.trim()}]`);
+const conNotas = (t) => t.replace(/⟦([^⟦⟧]*)⟧/g, (_, n) => `[Nota de la fuente: ${n.trim()}]`).replace(/⟦/g, "<").replace(/⟧/g, ">");
 const ordenar = (t) => t.replace(/[ \t]{2,}/g, " ").replace(/^ +| +$/gm, "").replace(/\n{2,}/g, "\n").trim();
 // Referencias a otras normas: los enlaces de la propia fuente, más las menciones escritas sin enlace.
 //   tipo "vigencia": va dentro de una nota (quién modificó o derogó). tipo "cita": la ley remite a otra.
@@ -43,13 +43,19 @@ const lineas = (h) => ordenar(conNotas(decodificar(h.replaceAll("⟪centrado⟫"
 
 // paginas: [{ url, bytes }] de un mismo documento, en orden
 // hasta: último artículo; solo: expresión con los artículos que se toman de un código grande
-export function partirHtml(paginas, hasta, solo) {
+// mas: otros artículos que se toman después de «hasta»
+export function partirHtml(paginas, hasta, solo, mas) {
   const partes = [];
   let preambulo = "";
   let cierre = "";
+  let ultimoNumero = 0;
   let seccion = []; // títulos y capítulos vigentes para los artículos que siguen
   for (const { url, bytes } of paginas) {
     const h = limpiarHtml(bytes);
+    // si la página no sigue a la anterior, sus títulos tampoco
+    const numeros = [...h.matchAll(/<a\b[^>]*\bname="(\d+)/gi)].map((x) => Number(x[1]));
+    if (numeros.length && Math.min(...numeros) > ultimoNumero + 2) seccion = [];
+    ultimoNumero = Math.max(0, ...numeros.filter((x) => x < 5000));
     const anclas = [...h.matchAll(/<a\b[^>]*\bname="([^"]+)"[^>]*>/gi)];
     const primera = anclas.find((a) => ANCLA.test(a[1]));
     // encabezado, considerandos y fórmula de expedición, antes del artículo 1
@@ -66,7 +72,7 @@ export function partirHtml(paginas, hasta, solo) {
         }
       }
       const esArticulo = ANCLA.test(m[1]);
-      const numero = m[1].replace("-", "");
+      const numero = m[1].replace(/-(?=[A-Z])/, "") /* "185-A" es 185A; "555-2" se queda así */;
       const plano = decodificar(cuerpoHtml);
       const encabezado = plano.match(ARTICULO);
       if (!esArticulo || !encabezado) {
@@ -78,7 +84,7 @@ export function partirHtml(paginas, hasta, solo) {
         }
         return;
       }
-      if (hasta && parseInt(numero) > hasta) return;
+      if (hasta && parseInt(numero) > hasta && !(mas && new RegExp(mas).test(numero))) return;
       if (solo && !new RegExp(solo).test(numero)) return;
       const titulo = decodificar(bloque.slice(0, bloque.search(/<\/a>/i)))
         .slice(encabezado[0].trimEnd().length)
@@ -87,10 +93,10 @@ export function partirHtml(paginas, hasta, solo) {
       if (titulo && cuerpo.startsWith(titulo)) cuerpo = cuerpo.slice(titulo.length).replace(/^[.\s]+/, "");
       // a veces sigue un listado de sentencias: es de la casa editorial, no de la norma
       cuerpo = cuerpo.split(/\nSentencias de (?:control|tutela)/i)[0];
-      const notas = [...cuerpo.matchAll(/⟦([^⟧]*)⟧/g)].map((n) => n[1].replace(/\s+/g, " ").trim());
+      const notas = [...cuerpo.matchAll(/⟦([^⟦⟧]*)⟧/g)].map((n) => n[1].replace(/\s+/g, " ").trim());
       // lo centrado tras el último artículo son las firmas y la promulgación
       if (!hasta && !solo) cierre = lineas(centrados.join("\n").split(/\*\s*\*\s*\*/)[0]).split(/\nCorte Constitucional\n/)[0];
-      const propio = ordenar(cuerpo.replace(/⟦[^⟧]*⟧/g, ""));
+      const propio = ordenar(cuerpo.replace(/⟦[^⟦⟧]*⟧/g, ""));
       partes.push({
         articulo: numero,
         encabezado: encabezado[0].trim(),
@@ -107,6 +113,16 @@ export function partirHtml(paginas, hasta, solo) {
       const subtitulo = lineas(centrados.join("\n")).replace(/\n/g, " ");
       if (subtitulo) seccion = [...seccion, subtitulo];
     });
+  }
+  // "<1>" remite a una nota al pie del documento: en las notas se pone lo que dice
+  const pies = {};
+  for (const { bytes } of paginas) {
+    const t = new TextDecoder("windows-1252").decode(bytes);
+    for (const m of t.matchAll(/name="np\d+">(\d+)\.<\/a>([\s\S]*?)(?=name="np\d+"|<!--Fin documento-->)/gi)) pies[m[1]] = decodificar(m[2].split(/<a href="[^"]*#top"/i)[0]).replace(/[⟦⟧]/g, "").replace(/\s+/g, " ").trim();
+  }
+  for (const p of partes) {
+    const resueltas = p.notas.map((n) => (/^\d+$/.test(n) && pies[n] ? `${n}: ${pies[n].slice(0, 700)}` : n));
+    p.notas = resueltas.filter((n, i) => !/^\d+: /.test(n) || resueltas.indexOf(n) === i); // el mismo pie, una vez
   }
   return { preambulo, partes, cierre };
 }

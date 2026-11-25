@@ -34,7 +34,7 @@ for (const [id, f] of Object.entries(base.fuentes)) {
   } catch {
     html = new TextDecoder("windows-1252").decode(bytes);
   }
-  html = html.replace(/<(script|style)[\s\S]*?<\/>/gi, " ");
+  html = html.replace(/<(script|style)[\s\S]*?<\/\1>/gi, " ");
   crudos[id] = ` ${palabras(decodificar(html))} `;
 }
 

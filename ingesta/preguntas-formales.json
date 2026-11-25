@@ -2,10 +2,9 @@
  "pagué con tarjeta en una página que nunca entregó, quiero que me reversen la plata": {
   "aplica": true,
   "otroPais": null,
-  "trata": "reversión de pago con tarjeta",
+  "trata": "reversión de pago con tarjeta por servicio no entregado",
   "formas": [
-   "¿Qué mecanismos jurídicos colombianos permiten la reversión de un pago realizado con tarjeta de crédito o débito por un bien o servicio que no fue entregado?",
-   "Un consumidor pagó con tarjeta de crédito o débito en un sitio web que no entregó el producto o servicio contratado y solicita la devolución del dinero."
+   "¿Procede la reversión, por parte de la entidad emisora de la tarjeta de crédito o débito, del cargo efectuado en un sitio web que no entregó el bien o servicio pagado?"
   ]
  },
  "el contrato del gimnasio tiene una cláusula injusta": {
@@ -13,35 +12,32 @@
   "otroPais": null,
   "trata": "cláusula injusta en contrato de gimnasio",
   "formas": [
-   "¿Es nula o ineficaz una cláusula abusiva en un contrato de prestación de servicios de gimnasio conforme al régimen colombiano de protección al consumidor?",
-   "Existe una estipulación contractual considerada injusta en un contrato de prestación de servicios suscrito con un gimnasio."
+   "¿Es nula o ineficaz, en el derecho colombiano, una cláusula abusiva incluida en un contrato de prestación de servicios de gimnasio celebrado con un consumidor?"
   ]
  },
  "el celular nuevo se dañó a los 8 meses y la tienda no responde": {
   "aplica": true,
   "otroPais": null,
-  "trata": "garantía de celular dañado",
+  "trata": "garantía de celular dañado y tienda sin respuesta",
   "formas": [
-   "¿Qué mecanismos prevé el régimen de garantías legales en Colombia para la reparación o reposición de un teléfono celular nuevo que presenta fallas a los 8 meses de adquirido, cuando el establecimiento comercial no da respuesta?",
-   "Un teléfono celular nuevo presenta un daño a los 8 meses de su compra y el establecimiento vendedor no responde a los requerimientos sobre su reparación o cambio."
+   "¿Debe el productor o el proveedor responder por la garantía legal de un teléfono celular nuevo que presenta daños a los ocho meses de su adquisición?",
+   "¿Qué mecanismos tiene el consumidor cuando el establecimiento de comercio no responde a la reclamación por los daños de un teléfono celular nuevo adquirido hace ocho meses?"
   ]
  },
  "el anuncio decía una cosa y el producto es otra": {
   "aplica": true,
   "otroPais": null,
-  "trata": "incumplimiento de oferta publicitaria por producto",
+  "trata": "Diferencia entre publicidad y producto entregado",
   "formas": [
-   "¿Qué mecanismos prevé el ordenamiento jurídico colombiano cuando el producto entregado no corresponde a lo ofrecido en la publicidad?",
-   "Un bien adquirido presenta características distintas a las anunciadas en la publicidad que motivó la compra."
+   "¿Qué consecuencias jurídicas tiene que el producto adquirido no corresponda a lo indicado en el anuncio publicitario?"
   ]
  },
  "compré unos zapatos por internet y me arrepentí, ¿los puedo devolver?": {
   "aplica": true,
   "otroPais": null,
-  "trata": "devolución de calzado comprado por internet",
+  "trata": "devolución de zapatos comprados por internet",
   "formas": [
-   "¿Procede el derecho de retracto para la devolución de calzado adquirido mediante compraventa a distancia por canal electrónico?",
-   "Compraventa a distancia de calzado celebrada por canal electrónico, con posterior manifestación del comprador de su voluntad de devolver el bien."
+   "¿Puede el consumidor que adquirió por internet unos zapatos devolverlos por arrepentimiento dentro del plazo legal, sin justificar la causa de la devolución?"
   ]
  },
  "¿por qué canales me puede escribir una empresa de cobranza?": {
@@ -49,35 +45,31 @@
   "otroPais": null,
   "trata": "canales de contacto de empresas de cobranza",
   "formas": [
-   "¿Qué canales de comunicación puede utilizar una empresa de cobranza para contactar a un deudor en Colombia conforme a la normativa vigente?",
-   "Una empresa de cobranza contacta a un deudor por medios de comunicación para exigir el pago de una obligación."
+   "¿Por qué medios de contacto puede una empresa de cobranza comunicarse con el deudor?"
   ]
  },
  "en la caja me cobraron más de lo que decía la etiqueta": {
   "aplica": true,
   "otroPais": null,
-  "trata": "cobro en caja superior al precio rotulado",
+  "trata": "cobro superior al precio rotulado en caja",
   "formas": [
-   "¿Qué responsabilidad asume el proveedor cuando el precio cobrado en caja supera el precio rotulado en el producto, conforme al régimen de protección al consumidor?",
-   "Establecimiento de comercio que, al momento del pago en caja, cobra un valor superior al precio rotulado en el producto."
+   "¿Qué consecuencias jurídicas tiene que un establecimiento de comercio cobre un valor superior al precio exhibido en la etiqueta del producto, conforme al Estatuto del Consumidor, Ley 1480 de 2011?"
   ]
  },
  "ya pagué la deuda, ¿cuánto tiempo sigo en datacrédito?": {
   "aplica": true,
   "otroPais": null,
-  "trata": "cancelación de deuda en Datacrédito",
+  "trata": "permanencia del reporte negativo en Datacrédito tras pago",
   "formas": [
-   "¿Cuál es el término de permanencia en el reporte de Datacrédito de una obligación financiera que ya fue pagada, conforme a la Ley 1266 de 2008?",
-   "Obligación financiera cancelada por el titular que permanece reportada en la central de información financiera Datacrédito por un tiempo determinado."
+   "¿Cuál es el término de permanencia en las centrales de información financiera del reporte negativo por obligación en mora que fue pagada íntegramente, conforme a la Ley 1266 de 2008?"
   ]
  },
  "me llaman a cobrar un domingo por la noche": {
   "aplica": true,
   "otroPais": null,
-  "trata": "Llamadas de cobro en domingo nocturno",
+  "trata": "llamadas de cobro dominicales nocturnas",
   "formas": [
-   "¿Es admisible que un acreedor o su agente efectúe llamadas de cobro de una obligación dineraria un domingo por la noche?",
-   "Cobro telefónico de una obligación dineraria realizado por un acreedor o su agente un domingo por la noche."
+   "¿Es lícito realizar llamadas de cobro extrajudicial de una obligación dineraria un domingo por la noche?"
   ]
  },
  "me reportaron en centrales de riesgo sin avisarme": {
@@ -85,8 +77,7 @@
   "otroPais": null,
   "trata": "reporte en centrales de riesgo sin aviso",
   "formas": [
-   "¿Qué procedimiento y garantías aplican cuando una fuente de información financiera reporta a una persona ante centrales de riesgo sin previa comunicación, conforme a la Ley 1266 de 2008?",
-   "Reporte de una persona ante centrales de riesgo crediticio sin que se le haya comunicado previamente el reporte negativo."
+   "¿Es procedente el reporte de información negativa del titular ante centrales de riesgo sin comunicación previa?"
   ]
  },
  "quiero que una empresa borre mis datos personales": {
@@ -94,8 +85,7 @@
   "otroPais": null,
   "trata": "supresión de datos personales por empresa",
   "formas": [
-   "¿Qué mecanismo prevé el ordenamiento colombiano para exigir a una empresa la supresión de datos personales de un titular?",
-   "Titular de datos personales solicita a una empresa la supresión o eliminación de sus datos personales."
+   "¿Qué procedimiento debe seguir un titular de datos personales para exigir a una empresa la supresión de sus datos conforme a la Ley 1581 de 2012?"
   ]
  },
  "el banco llamó a mi jefe y a mi mamá por mi deuda": {
@@ -103,116 +93,103 @@
   "otroPais": null,
   "trata": "cobro de deuda bancaria a terceros",
   "formas": [
-   "¿Puede una entidad bancaria comunicarse con el empleador y con familiares de un deudor para efectos de cobro de una obligación crediticia?",
-   "Una entidad bancaria llamó telefónicamente al jefe y a la madre de un deudor para efectos de cobro de una obligación crediticia pendiente."
+   "¿Puede una entidad financiera comunicar la existencia de una obligación crediticia del deudor a su empleador y a su madre para efectos de cobranza, sin autorización de aquel y conforme a la Ley 1266 de 2008 y la Ley 2300 de 2023?"
   ]
  },
  "¿cuánto tiempo tienen para contestar un reclamo sobre mis datos?": {
   "aplica": true,
   "otroPais": null,
-  "trata": "plazo de respuesta a reclamo sobre datos personales",
+  "trata": "Plazo de respuesta a reclamo sobre datos personales",
   "formas": [
-   "¿Cuál es el término legal para que el responsable del tratamiento de datos personales responda un reclamo presentado por el titular en Colombia?",
-   "Titular de datos personales presenta reclamo ante el responsable del tratamiento y se consulta el plazo para su respuesta."
+   "¿Cuál es el plazo que tiene el responsable o encargado del tratamiento para responder un reclamo presentado por el titular sobre sus datos personales?"
   ]
  },
  "alguien sacó un crédito a mi nombre, me suplantaron": {
   "aplica": true,
   "otroPais": null,
-  "trata": "suplantación de identidad para obtener crédito",
+  "trata": "suplantación para obtener un crédito",
   "formas": [
-   "¿Qué régimen jurídico aplica cuando se suplanta la identidad de una persona y un tercero obtiene un crédito a su nombre?",
-   "Se suplantó la identidad de una persona y un tercero obtuvo un crédito a su nombre sin su consentimiento."
+   "¿Qué efectos jurídicos tiene para el titular de la identidad un crédito obtenido a su nombre mediante suplantación, y qué mecanismos proceden para desconocer la obligación?"
   ]
  },
  "¿de cuánto es la multa por tratar mal datos personales?": {
   "aplica": true,
   "otroPais": null,
-  "trata": "multa por mal tratamiento de datos personales",
+  "trata": "Multa por tratamiento indebido de datos personales",
   "formas": [
-   "¿Cuál es el monto de la sanción pecuniaria aplicable por el tratamiento indebido de datos personales conforme a la Ley 1581 de 2012?",
-   "Se impone una sanción pecuniaria por el tratamiento indebido de datos personales por parte de un responsable o encargado del tratamiento."
+   "¿Cuál es el monto de la sanción pecuniaria aplicable por el tratamiento indebido de datos personales?"
   ]
  },
  "¿una app puede usar los datos de mi hijo de 10 años?": {
   "aplica": true,
   "otroPais": null,
-  "trata": "uso de datos personales de un menor",
+  "trata": "Tratamiento de datos personales de menor por aplicaciones",
   "formas": [
-   "¿Puede una aplicación usar los datos personales de un menor de diez años?",
-   "Una aplicación utiliza datos personales de un menor de diez años, hijo del titular de la consulta."
+   "¿Puede una aplicación usar los datos personales de un hijo menor de diez años de edad?"
   ]
  },
  "mi startup quiere enviar datos de usuarios a servidores en otro país": {
   "aplica": true,
   "otroPais": null,
-  "trata": "transferencia internacional de datos de usuarios",
+  "trata": "envío de datos de usuarios a servidores extranjeros",
   "formas": [
-   "¿Qué régimen jurídico colombiano regula la transferencia internacional de datos personales de usuarios por parte de una startup a servidores ubicados en otro país?",
-   "Una sociedad startup pretende transmitir datos personales de sus usuarios a servidores ubicados en un país distinto a Colombia."
+   "¿Es permitido que una startup transfiera datos de sus usuarios a servidores ubicados en otro país?"
   ]
  },
  "¿necesitan mi permiso para guardar mi huella y datos de salud?": {
   "aplica": true,
   "otroPais": null,
-  "trata": "Autorización para tratar huella y datos de salud",
+  "trata": "Consentimiento para tratar huella y datos de salud",
   "formas": [
-   "¿Se requiere autorización del titular para el tratamiento de datos biométricos y datos sensibles relativos a la salud?",
-   "Recolección de la huella dactilar y de datos relativos a la salud de un titular por parte de un responsable del tratamiento."
+   "¿Se requiere autorización previa del titular para la recolección y tratamiento de datos biométricos (huella dactilar) y de datos de salud por parte del responsable del tratamiento?"
   ]
  },
  "quiero irme del apartamento antes de que termine el contrato": {
   "aplica": true,
   "otroPais": null,
-  "trata": "terminación anticipada del contrato de arriendo",
+  "trata": "terminación anticipada del contrato de arrendamiento",
   "formas": [
-   "¿Qué mecanismos jurídicos permite el ordenamiento colombiano para la terminación anticipada del contrato de arrendamiento de vivienda urbana por voluntad del arrendatario antes del vencimiento del plazo pactado?",
-   "Arrendatario que pretende desocupar el inmueble arrendado antes del vencimiento del plazo contractual pactado en el contrato de arrendamiento de vivienda urbana."
+   "¿Puede el arrendatario de un apartamento terminar anticipadamente el contrato de arrendamiento antes de su fecha de vencimiento, y qué consecuencias jurídicas conlleva esa terminación?"
   ]
  },
  "¿una firma digital tiene la misma fuerza que una firma en papel?": {
   "aplica": true,
   "otroPais": null,
-  "trata": "validez de firma digital frente a firma manuscrita",
+  "trata": "Equivalencia de firma digital y manuscrita",
   "formas": [
-   "¿Qué fuerza probatoria y equivalencia jurídica tiene la firma digital frente a la firma manuscrita en Colombia?",
-   "Se describe un documento suscrito mediante firma digital y se cuestiona si produce los mismos efectos jurídicos que un documento firmado en papel."
+   "¿Produce la firma digital los mismos efectos jurídicos y la misma fuerza probatoria que la firma manuscrita en documento en papel?"
   ]
  },
  "¿cuánto me puede subir el arriendo cada año?": {
   "aplica": true,
   "otroPais": null,
-  "trata": "aumento anual del canon de arrendamiento",
+  "trata": "incremento anual del canon de arriendo",
   "formas": [
-   "¿Qué límite legal opera sobre el incremento anual del canon de arrendamiento de un inmueble?",
-   "Incremento anual del canon de arrendamiento de un inmueble durante la vigencia del contrato de arrendamiento."
+   "¿Cuál es el límite legal del incremento anual del canon de arrendamiento de un inmueble destinado a vivienda?"
   ]
  },
  "¿qué debo evaluar antes de entrenar una IA con datos personales?": {
   "aplica": true,
   "otroPais": null,
-  "trata": "Requisitos para entrenar IA con datos personales",
+  "trata": "Evaluación jurídica de entrenar IA con datos personales",
   "formas": [
-   "¿Qué requisitos debe cumplir el tratamiento de datos personales para el entrenamiento de sistemas de inteligencia artificial?",
-   "Se pretende utilizar datos personales para entrenar un sistema de inteligencia artificial."
+   "¿Qué requisitos jurídicos deben evaluarse antes del entrenamiento de un sistema de inteligencia artificial con datos personales?"
   ]
  },
  "el dueño me pide depósito para arrendarme el apartamento": {
   "aplica": true,
   "otroPais": null,
-  "trata": "cobro de depósito por arrendamiento de vivienda",
+  "trata": "depósito exigido por el dueño para arrendamiento",
   "formas": [
-   "¿Puede el arrendador exigir un depósito como condición para celebrar un contrato de arrendamiento de inmueble?",
-   "El propietario solicita el pago de un depósito como requisito para celebrar el contrato de arrendamiento de un apartamento."
+   "¿Puede el arrendador exigir al arrendatario el pago de un depósito como requisito para la celebración del contrato de arrendamiento de inmueble urbano y cuál es el límite legal de su cuantía?"
   ]
  },
  "¿vale un contrato firmado por correo electrónico?": {
   "aplica": true,
   "otroPais": null,
-  "trata": "validez del contrato firmado por correo electrónico",
+  "trata": "validez de contrato firmado por correo electrónico",
   "formas": [
-   "¿Qué validez jurídica tiene un contrato firmado mediante correo electrónico?",
-   "Contrato firmado por las partes y enviado por correo electrónico."
+   "¿Es válido y produce efectos jurídicos un contrato firmado mediante correo electrónico?"
   ]
  },
  "me discriminan por mi religión": {
@@ -220,62 +197,55 @@
   "otroPais": null,
   "trata": "discriminación por motivos religiosos",
   "formas": [
-   "¿Qué mecanismos jurídicos ofrece el ordenamiento colombiano frente a la discriminación por motivos religiosos, de acuerdo con la Constitución Política y la Ley 1482 de 2011?",
-   "Trato discriminatorio hacia una persona por razón de su religión, sin distinción de justificación objetiva en el ámbito de su relación con un tercero."
+   "¿Qué mecanismos jurídicos existen frente a un trato discriminatorio fundado en la religión?"
   ]
  },
  "¿sirven los chats como prueba ante un juez?": {
   "aplica": true,
   "otroPais": null,
-  "trata": "admisibilidad de chats como prueba judicial",
+  "trata": "validez probatoria de conversaciones de chat",
   "formas": [
-   "¿Son admisibles como medio de prueba en un proceso judicial los mensajes de chat?",
-   "Mensajes de chat aportados como medio de prueba en un proceso judicial."
+   "¿Es admisible como medio de prueba en un proceso judicial la información contenida en conversaciones de chat?"
   ]
  },
  "la policía quiere entrar a mi casa sin orden": {
   "aplica": true,
   "otroPais": null,
-  "trata": "ingreso policial a vivienda sin orden",
+  "trata": "ingreso policial a vivienda sin orden judicial",
   "formas": [
-   "¿Puede la Policía Nacional ingresar a una vivienda particular sin orden judicial escrita de autoridad competente, y en qué casos la Constitución Política lo permite?",
-   "Se describe el ingreso de la Policía Nacional a una vivienda particular sin orden judicial previa ni consentimiento del morador."
+   "¿Puede la Policía ingresar a una vivienda sin orden escrita de autoridad judicial competente?"
   ]
  },
  "mandé una petición a la alcaldía y no contestan": {
   "aplica": true,
   "otroPais": null,
-  "trata": "falta de respuesta a petición ante alcaldía",
+  "trata": "silencio de alcaldía ante petición",
   "formas": [
-   "¿Qué consecuencias jurídicas tiene la falta de respuesta de una alcaldía municipal a una petición presentada en ejercicio del derecho de petición?",
-   "Una petición presentada ante una alcaldía municipal no ha sido contestada por la entidad."
+   "¿Qué efectos jurídicos y mecanismos existen cuando una alcaldía no responde una petición presentada por un particular?"
   ]
  },
  "la EPS no me atiende y mi vida corre peligro, ¿qué puedo hacer ya?": {
   "aplica": true,
   "otroPais": null,
-  "trata": "Negativa de atención de EPS con riesgo vital",
+  "trata": "atención urgente negada por EPS",
   "formas": [
-   "¿Qué mecanismos jurídicos son aplicables ante la negativa de una Entidad Promotora de Salud a prestar atención médica cuando existe riesgo inminente para la vida?",
-   "Una Entidad Promotora de Salud no presta la atención médica requerida por el afiliado, cuya vida se encuentra en riesgo."
+   "¿Qué mecanismos jurídicos procede para obtener atención médica urgente negada por una EPS ante riesgo inminente para la vida del afiliado?"
   ]
  },
  "¿cuántos días de vacaciones tengo por año?": {
   "aplica": true,
   "otroPais": null,
-  "trata": "días de vacaciones anuales",
+  "trata": "días de vacaciones remuneradas anuales",
   "formas": [
-   "¿Cuántos días hábiles de vacaciones remuneradas corresponden al trabajador por cada año de servicio conforme al Código Sustantivo del Trabajo?",
-   "Un trabajador que presta sus servicios durante un año completo a un empleador y solicita el disfrute de su periodo de vacaciones anuales remuneradas."
+   "¿Cuántos días de vacaciones remuneradas anuales corresponden a un trabajador por cada año de servicio?"
   ]
  },
  "¿cómo me pagan las horas extra?": {
   "aplica": true,
   "otroPais": null,
-  "trata": "pago de horas extras",
+  "trata": "Liquidación y pago de horas extras",
   "formas": [
-   "¿Cómo debe el empleador remunerar las horas extras de trabajo conforme al Código Sustantivo del Trabajo colombiano?",
-   "Trabajador que labora jornada adicional a la ordinaria y reclama el pago de las horas extras laboradas."
+   "¿Cuál es la forma de liquidación y pago de las horas extras laborales?"
   ]
  },
  "¿puedo organizar una marcha pacífica?": {
@@ -283,8 +253,7 @@
   "otroPais": null,
   "trata": "organización de marcha pacífica",
   "formas": [
-   "¿Es lícita la organización de una marcha pacífica en el marco del derecho de reunión y manifestación pública?",
-   "Organización de una marcha pacífica con carácter de manifestación pública."
+   "¿Es jurídicamente permitida la organización de una marcha pacífica?"
   ]
  },
  "¿cuánto dura la licencia de maternidad?": {
@@ -292,62 +261,55 @@
   "otroPais": null,
   "trata": "duración de la licencia de maternidad",
   "formas": [
-   "¿Cuál es la duración de la licencia de maternidad?",
-   "Determinación del tiempo de duración de la licencia de maternidad."
+   "¿Cuál es la duración legal de la licencia de maternidad?"
   ]
  },
  "me despidieron sin justa causa, ¿cuánto me deben pagar?": {
   "aplica": true,
   "otroPais": null,
-  "trata": "despido sin justa causa y monto a pagar",
+  "trata": "indemnización por despido sin justa causa",
   "formas": [
-   "¿Qué indemnización corresponde al trabajador por la terminación unilateral del contrato de trabajo por parte del empleador sin justa causa?",
-   "Terminación unilateral del contrato de trabajo por decisión del empleador sin justa causa, respecto de la cuantía que debe pagarse al trabajador."
+   "¿Qué montos corresponden por concepto de indemnización cuando el empleador termina unilateralmente un contrato de trabajo sin justa causa?"
   ]
  },
  "el jefe me descontó plata del sueldo sin permiso": {
   "aplica": true,
   "otroPais": null,
-  "trata": "descuento no autorizado del salario",
+  "trata": "descuento no autorizado del salario por empleador",
   "formas": [
-   "¿Qué mecanismos prevé el ordenamiento jurídico colombiano frente al descuento de sumas del salario de un trabajador efectuado por el empleador sin autorización previa?",
-   "Descuento efectuado por el empleador de sumas del salario de un trabajador, sin autorización de este."
+   "¿Es lícito que el empleador efectúe descuentos del salario del trabajador sin su autorización previa y expresa?"
   ]
  },
  "trabajé un domingo, ¿cuánto me pagan?": {
   "aplica": true,
   "otroPais": null,
-  "trata": "pago por trabajo dominical",
+  "trata": "remuneración por trabajo en domingo",
   "formas": [
-   "¿Qué remuneración corresponde por trabajo prestado en día domingo conforme a la legislación laboral colombiana?",
-   "Una persona prestó servicios laborales en un día domingo y se pregunta por el valor de la remuneración que le corresponde por dicha jornada."
+   "¿Cuál es la remuneración que corresponde por la prestación de un trabajo realizado en día domingo?"
   ]
  },
  "trabajo sin contrato escrito, ¿tengo contrato?": {
   "aplica": true,
   "otroPais": null,
-  "trata": "ausencia de contrato escrito en trabajo",
+  "trata": "existencia de contrato de trabajo verbal",
   "formas": [
-   "¿Se configura contrato de trabajo cuando una persona presta servicios personales sin que exista contrato escrito?",
-   "Una persona ejecuta labor personal para otra sin que medie contrato de trabajo suscrito por escrito."
+   "¿Existe contrato de trabajo cuando la prestación personal de servicios se ejecuta sin constancia escrita del acuerdo entre trabajador y empleador en Colombia?"
   ]
  },
  "¿cuánto puede durar el periodo de prueba?": {
   "aplica": true,
   "otroPais": null,
-  "trata": "duración máxima del periodo de prueba laboral",
+  "trata": "duración del periodo de prueba",
   "formas": [
-   "¿Cuál es la duración máxima del periodo de prueba en el contrato de trabajo según el Código Sustantivo del Trabajo?",
-   "Término de duración del periodo de prueba pactado en un contrato de trabajo regulado por el Código Sustantivo del Trabajo."
+   "¿Cuál es la duración máxima permitida para el periodo de prueba?"
   ]
  },
  "mi jefe me grita y me humilla en el trabajo": {
   "aplica": true,
   "otroPais": null,
-  "trata": "maltrato laboral verbal por superior",
+  "trata": "acoso laboral por gritos y humillaciones",
   "formas": [
-   "¿Qué mecanismos y acciones proceden frente al maltrato verbal, los gritos y las humillaciones de un superior jerárquico en el lugar de trabajo, conforme al Código Sustantivo del Trabajo y a la normativa sobre acoso laboral vigente en Colombia?",
-   "Un trabajador es objeto de gritos y humillaciones reiteradas por parte de su jefe en el lugar de trabajo."
+   "¿Constituyen los gritos y humillaciones reiterados por parte del jefe hacia el trabajador un acoso laboral en los términos de la Ley 1010 de 2006?"
   ]
  },
  "gané la tutela y no la cumplen": {
@@ -355,26 +317,23 @@
   "otroPais": null,
   "trata": "incumplimiento de fallo de tutela",
   "formas": [
-   "¿Qué mecanismos procede contra el incumplimiento de una sentencia de tutela favorable al accionante?",
-   "Se profirió sentencia de tutela a favor del accionante y la entidad obligada no la ha cumplido."
+   "¿Qué mecanismos procesales tiene el beneficiario de una sentencia de tutela favorable cuando la autoridad o particular obligado no cumple la orden judicial dentro del plazo fijado?"
   ]
  },
  "¿necesito abogado para poner una tutela?": {
   "aplica": true,
   "otroPais": null,
-  "trata": "necesidad de abogado para tutela",
+  "trata": "Necesidad de abogado para interponer tutela",
   "formas": [
-   "¿Es obligatoria la intervención de abogado para interponer una acción de tutela ante la jurisdicción constitucional colombiana?",
-   "Se pregunta si la presentación de una acción de tutela exige la asistencia de un profesional del derecho, conforme al Decreto 2591 de 1991."
+   "¿Es obligatoria la intervención de abogado para la interposición de la acción de tutela?"
   ]
  },
  "¿en cuántos días tiene que fallar el juez una tutela?": {
   "aplica": true,
   "otroPais": null,
-  "trata": "plazo para fallo de tutela",
+  "trata": "Plazo para fallo de acción de tutela",
   "formas": [
-   "¿Cuál es el término con que cuenta el juez para proferir fallo en la acción de tutela?",
-   "Término para que el juez de tutela profiera la sentencia de primera instancia en la acción de tutela."
+   "¿Cuál es el término en días que tiene el juez para proferir fallo en la acción de tutela?"
   ]
  },
  "¿cuántos días tienen para responder un derecho de petición?": {
@@ -382,8 +341,7 @@
   "otroPais": null,
   "trata": "plazo para responder derecho de petición",
   "formas": [
-   "¿Cuál es el término legal con que la autoridad o entidad debe responder un derecho de petición según la normativa colombiana?",
-   "Se presenta una petición ante una entidad pública o privada y se requiere determinar el plazo para su respuesta."
+   "¿Cuál es el término legal con que cuenta una autoridad o particular para responder una petición presentada en ejercicio del derecho de petición consagrado en el artículo 23 de la Constitución Política de Colombia?"
   ]
  },
  "perdí la tutela, ¿la puedo apelar?": {
@@ -391,8 +349,7 @@
   "otroPais": null,
   "trata": "impugnación de fallo de tutela desfavorable",
   "formas": [
-   "¿Procede la impugnación de un fallo de tutela desfavorable ante el juez competente?",
-   "Fallo de tutela desfavorable a la parte accionante, respecto del cual se consulta la procedencia de su impugnación."
+   "¿Procede la impugnación contra el fallo de primera instancia de una acción de tutela desfavorable a las pretensiones del accionante?"
   ]
  },
  "en el conjunto me multaron por hacer ruido": {
@@ -400,35 +357,31 @@
   "otroPais": null,
   "trata": "multa por ruido en conjunto residencial",
   "formas": [
-   "¿Qué procedimiento sancionatorio aplica la autoridad competente en Colombia para imponer multa por perturbación de la tranquilidad por ruido en un conjunto residencial, y qué recursos proceden contra ella según el Código Nacional de Seguridad y Convivencia Ciudadana (Ley 1801 de 2016)?",
-   "Una persona fue multada por producir ruido dentro de un conjunto residencial, en el marco de una actuación administrativa de policía por comportamiento contrario a la convivencia."
+   "¿Es procedente la multa impuesta a un residente de un conjunto residencial por generar ruido?"
   ]
  },
  "en urgencias me pidieron autorización y no me atendieron": {
   "aplica": true,
   "otroPais": null,
-  "trata": "negativa de atención en urgencias sin autorización",
+  "trata": "atención urgente negada sin autorización previa",
   "formas": [
-   "¿Qué consecuencia jurídica tiene en el servicio de urgencias del Sistema General de Seguridad Social en Salud condicionar la atención a una autorización previa?",
-   "Se exigió autorización previa para la atención en el servicio de urgencias y no se prestó la atención médica requerida."
+   "¿Puede un prestador de servicios de salud en urgencias condicionar la atención inicial de un paciente a la autorización previa de la EPS o entidad administradora, y qué consecuencias jurídicas tiene la negativa a atender?"
   ]
  },
  "un hacker entró a mi correo": {
   "aplica": true,
   "otroPais": null,
-  "trata": "acceso no autorizado a correo electrónico",
+  "trata": "acceso no autorizado a correo electrónico personal",
   "formas": [
-   "¿Qué mecanismos jurídicos existen en Colombia frente al acceso no autorizado a una cuenta de correo electrónico por parte de un tercero?",
-   "Un tercero accedió sin autorización a una cuenta de correo electrónico de una persona."
+   "¿Qué acciones jurídicas proceden frente al acceso no autorizado de un tercero a una cuenta personal de correo electrónico?"
   ]
  },
  "me vaciaron la cuenta por la app del banco": {
   "aplica": true,
   "otroPais": null,
-  "trata": "vaciamiento de cuenta bancaria por app",
+  "trata": "Vaciamiento de cuenta bancaria mediante aplicación",
   "formas": [
-   "¿Qué responsabilidad tiene la entidad bancaria por la sustracción de recursos de una cuenta de ahorros o corriente mediante la aplicación móvil del banco, y qué mecanismos de reclamación prevé el ordenamiento colombiano?",
-   "Una cuenta bancaria fue vaciada mediante la aplicación móvil de la entidad financiera sin autorización del titular."
+   "¿Qué responsabilidad tiene una entidad financiera por transacciones electrónicas no autorizadas, realizadas a través de su aplicación móvil, que vacían una cuenta bancaria?"
   ]
  },
  "debo varias cuotas de administración, ¿me cobran intereses?": {
@@ -436,53 +389,49 @@
   "otroPais": null,
   "trata": "Intereses por mora en cuotas de administración",
   "formas": [
-   "¿Causa intereses de mora el impago de varias cuotas de administración en el régimen de propiedad horizontal?",
-   "Propietario de bien sometido a propiedad horizontal que adeuda varias cuotas de administración pendientes de pago a la copropiedad."
+   "¿Procede el cobro de intereses por mora en varias cuotas de administración adeudadas?"
   ]
  },
  "¿quién nombra al administrador del edificio?": {
   "aplica": true,
   "otroPais": null,
-  "trata": "Designación del administrador de un edificio",
+  "trata": "designación del administrador de edificio",
   "formas": [
-   "¿Qué órgano es competente para designar al administrador de un edificio sometido al régimen de propiedad horizontal?",
-   "Designación del administrador de un edificio sometido al régimen de propiedad horizontal por los órganos de la copropiedad."
+   "¿Quién está facultado para nombrar al administrador del edificio?"
   ]
  },
  "quiero pedirle al gobierno copia de un contrato público": {
   "aplica": true,
   "otroPais": null,
-  "trata": "copia de contrato público",
+  "trata": "solicitud de copia de contrato público",
   "formas": [
-   "¿Cuál es el procedimiento para obtener copia de un contrato estatal ante una entidad pública colombiana?",
-   "Una persona solicita a una entidad pública una copia de un contrato celebrado por el Estado."
+   "¿Cómo puede una persona solicitar a una entidad pública la expedición de copia de un contrato estatal?"
   ]
  },
  "mi ex se acerca aunque hay orden de alejamiento": {
   "aplica": true,
   "otroPais": null,
-  "trata": "acercamiento del ex pese a orden de alejamiento",
+  "trata": "incumplimiento de orden de alejamiento",
   "formas": [
-   "¿Qué consecuencias jurídicas tiene el acercamiento de la persona agresora a la víctima pese a una orden de alejamiento vigente, conforme a la legislación colombiana de violencia intrafamiliar?",
-   "Acercamiento de la persona denunciada a la víctima, pese a orden de alejamiento vigente impuesta en proceso de violencia intrafamiliar."
+   "¿Qué consecuencias jurídicas genera para la persona a quien se impuso una orden de alejamiento el acercamiento a su expareja pese a dicha medida?",
+   "¿Qué mecanismos procesales asisten a la persona protegida por una orden de alejamiento cuando su expareja se acerca pese a la medida?"
   ]
  },
  "me mandaron un enlace falso del banco y puse mi clave": {
   "aplica": true,
   "otroPais": null,
-  "trata": "suplantación bancaria por enlace fraudulento",
+  "trata": "Fraude bancario por enlace falso y clave",
   "formas": [
-   "¿Qué responsabilidad asume una entidad financiera vigilada por la Superintendencia Financiera cuando un consumidor financiero digitó su clave tras recibir un enlace fraudulento que suplantaba la página de dicha entidad?",
-   "Consumidor financiero recibió un enlace fraudulento que suplantaba la página de una entidad bancaria y digitó en dicho sitio su clave de acceso."
+   "¿Qué responsabilidad tiene la entidad bancaria por las operaciones realizadas con la clave de acceso que el consumidor digitó en un enlace fraudulento que simulaba ser del banco?",
+   "¿Qué mecanismos de denuncia y de notificación al banco están disponibles para el consumidor que entregó su clave en un enlace fraudulento que suplantaba a la entidad financiera?"
   ]
  },
  "mi esposo me pega, ¿a dónde acudo?": {
   "aplica": true,
   "otroPais": null,
-  "trata": "violencia física del esposo hacia la esposa",
+  "trata": "violencia intrafamiliar por esposo y acudir a autoridades",
   "formas": [
-   "¿Qué autoridad es competente para recibir la denuncia por violencia intrafamiliar física ejercida por el cónyuge y qué medidas de protección proceden?",
-   "Agresiones físicas reiteradas por parte del cónyuge contra la mujer integrante del núcleo familiar, dentro del hogar conyugal."
+   "¿Qué autoridades o mecanismos judiciales y administrativos existen en Colombia para una mujer víctima de violencia física por parte de su cónyuge, conforme a la Ley 1257 de 2008 y la Ley 294 de 1996?"
   ]
  },
  "¿me pueden notificar una demanda por correo electrónico?": {
@@ -490,8 +439,7 @@
   "otroPais": null,
   "trata": "notificación de demanda por correo electrónico",
   "formas": [
-   "¿Es válida en Colombia la notificación personal de una demanda judicial efectuada mediante correo electrónico, conforme al Código General del Proceso?",
-   "Notificación de una demanda judicial remitida a la dirección de correo electrónico del demandado, sin notificación personal previa."
+   "¿Es válida la notificación de una demanda realizada mediante correo electrónico?"
   ]
  },
  "receta de lasaña con queso y salsa boloñesa": {
@@ -503,10 +451,9 @@
  "¿la audiencia puede ser virtual?": {
   "aplica": true,
   "otroPais": null,
-  "trata": "Celebración virtual de audiencias",
+  "trata": "Posibilidad de audiencias virtuales",
   "formas": [
-   "¿Es procedente que la audiencia se celebre de forma virtual en lugar de presencial?",
-   "Audiencia que se pretende celebrar por medios virtuales en lugar de forma presencial."
+   "¿Procede la celebración de la audiencia por medios virtuales conforme al ordenamiento jurídico colombiano?"
   ]
  },
  "mejor estrategia para ganar en ajedrez": {

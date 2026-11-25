@@ -30,6 +30,10 @@
     "evaluar": "node --disable-warning=ExperimentalWarning ingesta/evaluar.js",
     "api": "node --disable-warning=ExperimentalWarning server.js",
     "agente": "node agente.js",
+    "demo": "node --disable-warning=ExperimentalWarning partes/CoKeFish/demo.js",
+    "pagos-malos": "node partes/CoKeFish/pagos-malos.js",
+    "resumen": "node evaluacion/resumen.js",
+    "cuentas": "node cuentas.js",
     "test": "node --disable-warning=ExperimentalWarning --test"
   }
 }

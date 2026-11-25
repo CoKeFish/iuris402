@@ -3,7 +3,7 @@
 // No redacta nada: solo devuelve códigos de la lista. Es intercambiable (ELEGIR_CMD, ver llm.js).
 // Sin ELEGIR_CMD se entrega el orden de la búsqueda. Si está y falla, no se responde ni se cobra.
 import { raices } from "./buscador.js";
-import { pedirJson } from "./llm.js";
+import { conRelevo, pedirJson } from "./llm.js";
 
 // Reformular y elegir juntos no pueden pasar del minuto que espera el comprador ni del pago firmado
 const ESPERA = Number(process.env.ELEGIR_MS || 25_000);
@@ -70,7 +70,5 @@ export function interpretarEleccion(j, candidatos) {
 export const elegir = async (pregunta, formas, candidatos, cmd = process.env.ELEGIR_CMD) => {
   if (!cmd) return undefined; // null = el LLM falló
   const encargo = encargoElegir(pregunta, formas, candidatos);
-  const pedir = async () => interpretarEleccion(await pedirJson(cmd, encargo, ESPERA), candidatos);
-  const inicio = Date.now();
-  return (await pedir()) ?? (Date.now() - inicio < ESPERA / 2 ? await pedir() : null);
+  return conRelevo(async (senal) => interpretarEleccion(await pedirJson(cmd, encargo, ESPERA, senal), candidatos), 10_000);
 };

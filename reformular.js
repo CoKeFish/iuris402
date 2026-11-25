@@ -2,7 +2,7 @@
 // "terminación unilateral del contrato sin justa causa"), la separa en sus problemas y dice de qué
 // país es. Es intercambiable: REFORMULAR_CMD recibe el encargo por stdin y responde un JSON (llm.js).
 // Sin REFORMULAR_CMD se busca con la pregunta tal cual. Si está y falla, no se responde ni se cobra.
-import { pedirJson } from "./llm.js";
+import { conRelevo, pedirJson } from "./llm.js";
 
 const ESPERA = Number(process.env.REFORMULAR_MS || 20_000);
 export const encargo = (pregunta) => `Eres un jurista colombiano que reformula consultas para una base normativa. No respondas la consulta ni emitas concepto.
@@ -30,4 +30,4 @@ export function interpretar(j, pregunta) {
 
 // undefined = no hay LLM configurado: se busca con la pregunta tal cual. null = el LLM falló.
 export const reformular = async (pregunta, cmd = process.env.REFORMULAR_CMD) =>
-  cmd ? interpretar(await pedirJson(cmd, encargo(pregunta), ESPERA), pregunta) : undefined;
+  cmd ? conRelevo(async (senal) => interpretar(await pedirJson(cmd, encargo(pregunta), ESPERA, senal), pregunta), 8000) : undefined;

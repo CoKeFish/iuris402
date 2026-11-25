@@ -31,7 +31,7 @@ function cerrar(p) {
   else p.kill();
 }
 
-export function pedirJson(cmd, encargo, espera = 25_000) {
+export function pedirJson(cmd, encargo, espera = 25_000, senal) {
   return new Promise((ok) => {
     const p = spawn(cmd, { shell: true, stdio: ["pipe", "pipe", "ignore"] });
     let salida = "";
@@ -39,6 +39,11 @@ export function pedirJson(cmd, encargo, espera = 25_000) {
       ok(null);
       cerrar(p);
     }, espera);
+    senal?.addEventListener("abort", () => {
+      clearTimeout(reloj);
+      ok(null);
+      cerrar(p);
+    });
     p.stdout.setEncoding("utf8").on("data", (d) => (salida = (salida + d).slice(-20_000)));
     p.on("error", () => {
       clearTimeout(reloj);
@@ -50,5 +55,33 @@ export function pedirJson(cmd, encargo, espera = 25_000) {
     });
     p.stdin.on("error", () => {});
     p.stdin.end(encargo);
+  });
+}
+
+// Si el primero falla o tarda más de «relevo», se lanza otro en paralelo: vale la primera respuesta
+// útil y el que sobra se cierra. pedir(senal) → respuesta, o null si no sirve.
+export function conRelevo(pedir, relevo) {
+  return new Promise((ok) => {
+    const corta = new AbortController();
+    let lanzados = 0, vivos = 0;
+    const lanzar = () => {
+      if (lanzados === 2) return;
+      lanzados++;
+      vivos++;
+      pedir(corta.signal)
+        .catch(() => null)
+        .then((r) => {
+          vivos--;
+          if (corta.signal.aborted) return;
+          if (r) {
+            clearTimeout(reloj);
+            corta.abort();
+            ok(r);
+          } else if (lanzados < 2) lanzar();
+          else if (!vivos) ok(null);
+        });
+    };
+    const reloj = setTimeout(lanzar, relevo);
+    lanzar();
   });
 }

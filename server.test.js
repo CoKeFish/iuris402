@@ -7,14 +7,17 @@ import { join } from "node:path";
 import { after, before, test } from "node:test";
 import { abrirLeyes, abrirVentas } from "./base.js";
 import { cargarIndice, nombrados } from "./buscador.js";
-import { RED, USDC_CONTRATO } from "./comun.js";
+import { PRECIO_ASESORIA, RED, USDC_CONTRATO } from "./comun.js";
+import { interpretarEleccion } from "./elegir.js";
+import { interpretar } from "./reformular.js";
 import { crearApp } from "./server.js";
 
 const PAGO_A = "GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5";
 const PREGUNTA = "¿Cuánto dura la garantía de un producto nuevo si no dicen nada?";
 let liquidados = 0;
 let valido = true;
-let traductor = null; // LLM simulado
+let traductor = null; // LLM simulado que reformula
+let selector = null; // LLM simulado que elige
 const facilitador = {
   getSupported: async () => ({
     kinds: [{ x402Version: 2, scheme: "exact", network: RED, extra: { areFeesSponsored: true } }],
@@ -29,7 +32,7 @@ const archivo = join(mkdtempSync(join(tmpdir(), "leyes-")), "ventas.db");
 let servidor, base, ventas;
 async function encender() {
   ventas = abrirVentas(archivo);
-  servidor = crearApp({ payTo: PAGO_A, facilitador, ventas, traducir: async (q) => traductor?.(q) ?? null }).listen(0);
+  servidor = crearApp({ payTo: PAGO_A, facilitador, ventas, traducir: async (q) => traductor?.(q), escoger: async (...a) => selector?.(...a) }).listen(0);
   await new Promise((r) => servidor.once("listening", r));
   base = `http://localhost:${servidor.address().port}`;
 }
@@ -164,6 +167,11 @@ test("un artículo nombrado por su número sale primero", () => {
   assert.deepEqual(de("según el art. 64 del CST"), ["cst:64"]);
   assert.deepEqual(de("artículo 86 de la Constitución Política"), ["cp-1991:86"]);
   assert.deepEqual(de("artículo 52 del Decreto 2591"), ["dec-2591-1991:52"]);
+  assert.deepEqual(de("la Ley 820 de 2003, en su artículo 20"), ["ley-820-2003:20"]);
+  assert.deepEqual(de("los artículos 8 y 47 del Estatuto del Consumidor"), ["ley-1480-2011:8", "ley-1480-2011:47"].filter((x) => docs.some((d) => d.id === x)));
+  assert.deepEqual(de("el art. 52 del Decreto 2591 y el artículo 20 de la Ley 820"), ["dec-2591-1991:52", "ley-820-2003:20"]);
+  assert.deepEqual(de("Según la Ley 820 de 2003 en su art. 20 y el Decreto 2591 de 1991 art. 52"), ["ley-820-2003:20", "dec-2591-1991:52"]);
+  assert.deepEqual(de("artículos 18 a 20 de la Ley 820 de 2003").at(-1), "ley-820-2003:20");
   assert.deepEqual(de("la Ley 820 y 20 días"), []);
 });
 
@@ -199,6 +207,56 @@ test("la reformulación del LLM se usa para buscar y se muestra", async () => {
   const c = await r.json();
   assert.ok(c.citas.some((x) => x.cita.endsWith("art. 64")));
   assert.equal(c.entendido_como.length, 1);
+});
+
+test("lo que elige el LLM es lo que se entrega, y si nada resuelve no se cobra", async () => {
+  const q = "¿En cuánto me devuelven la plata si me arrepiento de una compra por internet?";
+  const antes = liquidados;
+  selector = (_, __, c) => ({ directos: c.filter((d) => d.id === "ley-1480-2011:47"), complementarios: c.filter((d) => d.id === "ley-1480-2011:56").slice(0, 1), sinVigencia: [] });
+  const c = await (await pedir("/asesoria", q, await firmar("/asesoria", q, "l"))).json();
+  assert.deepEqual([c.citas[0].cita, c.citas[0].relevancia], ["Ley 1480 de 2011, art. 47", "directa"]);
+  assert.equal(liquidados, antes + 1);
+  selector = () => ({ directos: [], complementarios: [], sinVigencia: [] });
+  const r = await pedir("/asesoria", `${q} `, await firmar("/asesoria", `${q} `, "m"));
+  selector = null;
+  assert.equal(r.status, 404);
+  assert.equal(liquidados, antes + 1);
+});
+
+test("la elección del LLM solo acepta códigos de la lista y no vende lo que no rige", () => {
+  const l = [{ id: "a", aviso: false }, { id: "b", aviso: true }];
+  const ids = (e) => [e.directos, e.complementarios, e.sinVigencia].map((x) => x.map((d) => d.id).join());
+  assert.deepEqual(ids(interpretarEleccion({ directos: ["K1", "K2", "K9"], complementarios: ["K1"] }, l)), ["a", "", "b"]);
+  assert.equal(interpretarEleccion({ directos: ["20", "K7"] }, l), null);
+  assert.equal(interpretarEleccion(null, l), null);
+});
+
+test("si el LLM configurado falla no se responde ni se cobra, y HEAD tampoco cobra", async () => {
+  const q = "¿Cuánto dura la garantía de un producto nuevo usado?";
+  const antes = liquidados;
+  selector = () => null;
+  assert.equal((await pedir("/asesoria", q, await firmar("/asesoria", q, "n"))).status, 503);
+  selector = null;
+  traductor = () => null;
+  assert.equal((await pedir("/buscar", q, await firmar("/buscar", q, "o"))).status, 503);
+  traductor = null;
+  const h = await fetch(`${base}/buscar?q=${encodeURIComponent(q)}`, { method: "HEAD", headers: { "PAYMENT-SIGNATURE": await firmar("/buscar", q, "p") } });
+  assert.equal(h.status, 405);
+  assert.equal(liquidados, antes);
+});
+
+test("el precio y la ruta de cada venta quedan registrados", async () => {
+  const q = "¿Cuánto dura la garantía legal de un producto?";
+  await pedir("/asesoria", q, await firmar("/asesoria", q, "r"));
+  const v = ventas.db.prepare("SELECT ruta, precio FROM pagos ORDER BY creado DESC LIMIT 1").get();
+  assert.deepEqual([v.ruta, v.precio], ["/asesoria", PRECIO_ASESORIA]);
+});
+
+test("la reformulación no toma «ninguno» por un país, ni deja números inventados", () => {
+  const j = (pais, forma = "¿Procede la reclamación del consumidor?") => interpretar({ pais_nombrado: pais, tiene_que_ver_con_derechos_deberes_tramites_o_conflictos: true, formas: [forma] }, "quiero reclamar");
+  for (const p of ["ninguna", "no aplica", "null", "Colombia", null]) assert.equal(j(p).aplica, true, String(p));
+  assert.equal(j("España").aplica, false);
+  assert.doesNotMatch(j(null, "¿En qué casos el artículo 2 de la Ley 80 de 1993 permite contratar?").formas[0], /80|artículo 2/);
 });
 
 test("los cambios de texto traen quién los hizo y por qué", async () => {

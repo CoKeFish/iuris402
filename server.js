@@ -7,19 +7,22 @@ import { paymentMiddlewareFromConfig } from "@x402/express";
 import { HTTPFacilitatorClient } from "@x402/core/server";
 import { ExactStellarScheme } from "@x402/stellar/exact/server";
 import { abrirVentas } from "./base.js";
+import { elegir } from "./elegir.js";
 import { reformular } from "./reformular.js";
-import { buscar, cargarIndice, consultar, embeber, textosCitados } from "./buscador.js";
+import { cargarIndice, consultar, embeber, responder, textosCitados } from "./buscador.js";
 import { API_URL, FACILITATOR_URL, PRECIO_ASESORIA, PRECIO_BUSCAR, RED, requerida } from "./comun.js";
 
 const AVISO =
   "La información suministrada es de carácter general, no constituye concepto jurídico ni sustituye la asesoría de un profesional del derecho. La vigencia debe constatarse en la fuente oficial.";
 const RUTAS = ["/buscar", "/asesoria"];
 
-export function crearApp({ payTo, facilitador, ventas = abrirVentas(), traducir = reformular }) {
+export function crearApp({ payTo, facilitador, ventas = abrirVentas(), traducir = reformular, escoger = elegir }) {
   const indice = cargarIndice();
   const { normas } = indice;
   const app = express();
   app.disable("x-powered-by");
+  app.disable("etag"); // un 304 llegaría vacío y x402 lo cobraría
+  app.use((_, res, next) => (res.set("Cache-Control", "no-store"), next()));
 
   // Gratis: qué se vende, a cuánto y con qué cobertura. El agente decide antes de pagar.
   app.get("/", (_, res) =>
@@ -49,6 +52,8 @@ export function crearApp({ payTo, facilitador, ventas = abrirVentas(), traducir 
 
   // La pregunta se valida ANTES del cobro: una petición mal hecha nunca se paga.
   app.use(RUTAS, (req, res, next) => {
+    // HEAD pagaría por una respuesta sin cuerpo; "/buscar/" no es la ruta que se cobra
+    if (req.method !== "GET") return res.status(405).set("Allow", "GET").json({ error: "Método no permitido. No se generó cobro." });
     const q = req.query.q;
     if (typeof q !== "string" || q.trim().length < 8 || q.length > 500) {
       return res.status(400).json({ error: "Parámetro q requerido: consulta de 8 a 500 caracteres. No se generó cobro." });
@@ -66,6 +71,7 @@ export function crearApp({ payTo, facilitador, ventas = abrirVentas(), traducir 
     if (previa) {
       return res.set("PAYMENT-RESPONSE", previa.recibo).set("X-Reintento", "sin-cobro").type("json").send(Buffer.from(previa.respuesta));
     }
+    const ruta = req.baseUrl; // al terminar la respuesta Express ya la restauró
     const end = res.end.bind(res);
     res.end = (cuerpo, ...resto) => {
       const recibo = res.getHeader("PAYMENT-RESPONSE");
@@ -75,10 +81,10 @@ export function crearApp({ payTo, facilitador, ventas = abrirVentas(), traducir 
           const { transaction, payer } = JSON.parse(Buffer.from(String(recibo), "base64"));
           ventas.guardar({
             clave,
-            ruta: req.baseUrl + req.path.replace(/\/$/, ""),
+            ruta,
             transaccion: transaction,
             pagador: payer,
-            precio: req.baseUrl === "/asesoria" ? PRECIO_ASESORIA : PRECIO_BUSCAR,
+            precio: ruta === "/asesoria" ? PRECIO_ASESORIA : PRECIO_BUSCAR,
             recibo: String(recibo),
             pregunta: req.query.q,
             respuesta: Buffer.from(cuerpo),
@@ -109,8 +115,9 @@ export function crearApp({ payTo, facilitador, ventas = abrirVentas(), traducir 
     ),
   );
 
-  const cita = ({ articulo: a, similitud }, n) => ({
+  const cita = ({ articulo: a, similitud, relevancia }, n) => ({
     ref: `[${n + 1}]`,
+    relevancia,
     cita: a.cita,
     titulo: a.titulo,
     seccion: a.seccion,
@@ -133,12 +140,20 @@ export function crearApp({ payTo, facilitador, ventas = abrirVentas(), traducir 
   });
   const resultados = async (req, res, k) => {
     const q = req.query.q.trim();
-    const forma = await traducir(q);
+    const { forma, r } = await responder(indice, q, k, traducir, escoger);
+    // si el comprador ya se fue, no se cobra lo que no va a recibir
+    if (req.destroyed && !req.complete || res.destroyed) {
+      res.status(499).end();
+      return [];
+    }
+    if (r.fallo) {
+      res.status(503).set("Retry-After", "10").json({ error: "El servicio de selección no está disponible. No se generó cobro; puede reintentarse." });
+      return [];
+    }
     if (forma && !forma.aplica) {
       res.status(404).json({ error: forma.otroPais ? `La consulta versa sobre el ordenamiento de ${forma.otroPais}; la base comprende únicamente el colombiano. No se generó cobro.` : "La consulta no versa sobre una materia jurídica. No se generó cobro." });
       return [];
     }
-    const r = await buscar(indice, q, k, undefined, forma?.formas);
     r.entendido = forma?.formas ?? [];
     // Preguntan justo por algo que ya no rige o está en duda: se avisa y no se cobra (x402 no liquida un 4xx)
     if (r.soloAviso) {
@@ -160,19 +175,19 @@ export function crearApp({ payTo, facilitador, ventas = abrirVentas(), traducir 
   });
 
   app.get("/asesoria", async (req, res) => {
-    const r = await resultados(req, res, 6);
+    const r = await resultados(req, res, 10);
     if (!r.length) return;
     res.json({
       pregunta: req.query.q,
       entendido_como: r.entendido,
       citas: r.map(cita),
       no_rigen: r.avisos.map(aviso),
-      citadas: textosCitados(indice.db, r.map((x) => x.articulo)),
+      citadas: textosCitados(indice.db, r),
       argumentos: r.flatMap(({ articulo: a }, n) => (a.argumento ? [{ ref: `[${n + 1}]`, argumento: a.argumento }] : [])),
       instrucciones:
         "Elabore un concepto jurídico en lenguaje formal y técnico, con fundamento EXCLUSIVO en las disposiciones suministradas. Toda afirmación jurídica debe llevar su referencia [n]. " +
         "Los argumentos son tesis orientadoras; en caso de discrepancia prevalece el texto literal de la disposición. " +
-        "Descarte las citas impertinentes e indique los aspectos sin sustento normativo. " +
+        "«relevancia» distingue la disposición que resuelve la consulta (directa) de la que sirve para aplicarla (complementaria). Descarte las citas impertinentes e indique los aspectos sin sustento normativo. " +
         "Vigencia: la «exequibilidad condicionada» obliga a aplicar la disposición únicamente conforme al condicionamiento, que debe citarse. " +
         "Lo «inexequible», «derogado», «subrogado» o de «vigencia temporal agotada» no constituye fundamento; señale el régimen vigente si la nota lo indica. " +
         "«Modificado» conserva vigencia con la variación indicada. «Vigente» resuelve una duda previa. «Yerro corregido» solo enmienda la numeración. " +

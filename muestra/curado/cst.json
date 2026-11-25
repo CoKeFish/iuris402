@@ -1,7 +1,7 @@
 {
  "id": "cst",
  "tipo": "Código",
- "nombre": "Código Sustantivo del Trabajo (arts. 1 a 237)",
+ "nombre": "Código Sustantivo del Trabajo (arts. 1 a 237, 249 a 258 y 306 a 308)",
  "fuente": {
   "entidad": "Secretaría del Senado",
   "metodo": "extracción del HTML",
@@ -61,6 +61,20 @@
     "formato": "html",
     "sha256": "df4ef8143fc30d4f33fb4cca3b8ede262d6bf5039b9dc5b47f9d74552dca3bac",
     "descargado": "2026-11-23"
+   },
+   {
+    "url": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo_pr008.html",
+    "archivo": "datos/crudo/cst.9.html",
+    "formato": "html",
+    "sha256": "9601b308ae283585239b45e94e27584aa7f652785cb7fa9fbb5d87a336f906ad",
+    "descargado": "2026-11-24"
+   },
+   {
+    "url": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo_pr010.html",
+    "archivo": "datos/crudo/cst.10.html",
+    "formato": "html",
+    "sha256": "a2740c560502dc88bbffc8f316e9377858f836997dee7287371d05d041e6120f",
+    "descargado": "2026-11-24"
    }
   ]
  },

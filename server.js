@@ -118,6 +118,7 @@ export function crearApp({ payTo, facilitador, ventas = abrirVentas(), traducir 
         });
       }
     }
+    res.locals.ligar = () => ventas.ligar(id, clave);
     // Se guarda antes de liquidar: si la API se cae en ese momento, la respuesta no se pierde
     res.locals.porEntregar = (respuesta, transaccion) => {
       try {
@@ -176,6 +177,10 @@ export function crearApp({ payTo, facilitador, ventas = abrirVentas(), traducir 
   app.use(RUTAS, (_req, res, next) => {
     const json = res.json.bind(res);
     res.json = (cuerpo) => {
+      // Antes de liquidar, la firma queda ligada a esta consulta: con otra no se cobra ni se entrega
+      if (res.statusCode === 200 && res.locals.ligar && !res.locals.ligar()) {
+        return res.status(409) && json({ error: "Ese pago ya se utilizó para otra consulta. No se generó cobro." });
+      }
       if (res.statusCode === 200) res.locals.porEntregar?.((res.locals.entrega = Buffer.from(JSON.stringify(cuerpo))));
       return json(cuerpo);
     };

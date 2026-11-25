@@ -159,6 +159,43 @@ test("una firma enviada a la vez con dos preguntas paga una sola, aunque se reen
   assert.equal(liquidados, antes + 1);
 });
 
+test("cortar la conexión, o usar otra API con la misma base, tampoco da dos respuestas por un pago", async () => {
+  const otra = "¿Puedo pedir que borren mis datos personales?";
+  const firma = await firmar("/buscar", PREGUNTA, "corte");
+  const antes = liquidados;
+  const real = facilitador.verify;
+  facilitador.verify = async () => ({ isValid: true, payer: PAGO_A });
+  let terminar;
+  const llego = new Promise((r) => {
+    liquidar = () => (r(), new Promise((ok) => (terminar = ok)));
+  });
+  const corte = new AbortController();
+  const q1 = fetch(`${base}/buscar?q=${encodeURIComponent(PREGUNTA)}`, { headers: { "PAYMENT-SIGNATURE": firma }, signal: corte.signal }).catch(() => null);
+  await llego;
+  corte.abort();
+  await q1;
+  await new Promise((r) => setTimeout(r, 50));
+  liquidar = async () => ({ success: false, transaction: "", network: RED, payer: PAGO_A, errorReason: "nonce" });
+  // otra API (el respaldo del demo) con la misma base de ventas
+  const ventas2 = abrirVentas(archivo);
+  const s2 = crearApp({ payTo: PAGO_A, facilitador, ventas: ventas2, traducir: async () => undefined, escoger: async () => undefined, rastrear: async () => enRed }).listen(0);
+  await new Promise((r) => s2.once("listening", r));
+  const pedir2 = () => fetch(`http://localhost:${s2.address().port}/buscar?q=${encodeURIComponent(otra)}`, { headers: { "PAYMENT-SIGNATURE": firma } });
+  const estados = [(await pedir("/buscar", otra, firma)).status, (await pedir2()).status];
+  enRed = { estado: "cobrado", hash: "hash-corte" };
+  estados.push((await pedir("/buscar", otra, firma)).status, (await pedir2()).status);
+  terminar({ success: true, transaction: "hash-corte", network: RED, payer: PAGO_A });
+  await new Promise((r) => setTimeout(r, 50));
+  const buena = await pedir("/buscar", PREGUNTA, firma);
+  s2.closeAllConnections();
+  await new Promise((r) => s2.close(r));
+  ventas2.cerrar();
+  [liquidar, enRed, facilitador.verify] = [null, { estado: "pendiente" }, real];
+  assert.deepEqual(estados, [409, 409, 409, 409]);
+  assert.equal(buena.status, 200);
+  assert.equal(liquidados, antes);
+});
+
 test("si la API se cae mientras liquida, la respuesta ya quedó guardada y se entrega si se cobró", async () => {
   const firma = await firmar("/buscar", PREGUNTA, "apagon");
   let cortar;

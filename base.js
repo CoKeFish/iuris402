@@ -118,6 +118,8 @@ export function abrirVentas(archivo = VENTAS_DB) {
       pagador TEXT, precio TEXT NOT NULL, recibo TEXT NOT NULL, pregunta TEXT, respuesta BLOB
     );
     CREATE INDEX IF NOT EXISTS pagos_creado ON pagos(creado);
+    -- cada firma sirve para una sola consulta: la primera que llega a cobrarse
+    CREATE TABLE IF NOT EXISTS usos (pago TEXT PRIMARY KEY, clave TEXT NOT NULL, creado INTEGER NOT NULL);
     -- respuestas listas cuyo pago no se confirmó: se entregan si la red dice que se cobró
     CREATE TABLE IF NOT EXISTS pendientes (
       clave TEXT PRIMARY KEY, creado INTEGER NOT NULL, transaccion TEXT, pregunta TEXT NOT NULL, respuesta BLOB NOT NULL
@@ -129,6 +131,9 @@ export function abrirVentas(archivo = VENTAS_DB) {
   );
   const olvidar = db.prepare("UPDATE pagos SET pregunta = NULL, respuesta = NULL WHERE creado <= ? AND respuesta IS NOT NULL");
   const porHash = db.prepare("SELECT 1 FROM pagos WHERE transaccion = ?");
+  const usar = db.prepare("INSERT OR IGNORE INTO usos (pago, clave, creado) VALUES (?, ?, ?)");
+  const usoDe = db.prepare("SELECT clave FROM usos WHERE pago = ?");
+  const olvidarUsos = db.prepare("DELETE FROM usos WHERE creado <= ?");
   const leerPendiente = db.prepare("SELECT transaccion, pregunta, respuesta FROM pendientes WHERE clave = ? AND creado > ?");
   const anotar = db.prepare("INSERT OR REPLACE INTO pendientes (clave, creado, transaccion, pregunta, respuesta) VALUES (?, ?, ?, ?, ?)");
   const quitar = db.prepare("DELETE FROM pendientes WHERE clave = ? OR creado <= ?");
@@ -137,9 +142,14 @@ export function abrirVentas(archivo = VENTAS_DB) {
     buscar: (clave) => leer.get(clave, limite()),
     guardar(p) {
       olvidar.run(limite());
+      olvidarUsos.run(limite());
       escribir.run(p.clave, Date.now(), p.ruta, p.transaccion, p.pagador ?? null, p.precio, p.recibo, p.pregunta, p.respuesta);
     },
     pendiente: (clave) => leerPendiente.get(clave, limite()),
+    ligar(pago, clave) {
+      usar.run(pago, clave, Date.now());
+      return usoDe.get(pago).clave === clave;
+    },
     usada: (transaccion) => Boolean(porHash.get(transaccion)),
     anotarPendiente: (p) => anotar.run(p.clave, Date.now(), p.transaccion || null, p.pregunta, p.respuesta),
     quitarPendiente: (clave) => quitar.run(clave, limite()),
